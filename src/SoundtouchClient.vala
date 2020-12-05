@@ -1,13 +1,17 @@
+using Xml;
 using Soup;
 
 public class SoundtouchClient : GLib.Object {
 
     private Connection connection;
 
+    private string host;
+
     public signal void event_from_soundtouch_received(int type, string message);
 
-    public SoundtouchClient(Connection connection) {
+    public SoundtouchClient(Connection connection, string host) {
         this.connection = connection;
+        this.host = host;
 
         this.connection.ws_message.connect((type, mes) => {
             message(@"received $mes");
@@ -22,7 +26,7 @@ public class SoundtouchClient : GLib.Object {
             try {
                 Soup.Session session = new Soup.Session();
 
-                string uri = "http://" + "192.168.1.100" + ":8090/key";
+                string uri = "http://" + host + ":8090/key";
                 Soup.Message msg = new Soup.Message("POST", uri);
                 msg.set_request("text/xml", MemoryUse.COPY, "<key state=\"press\" sender=\"Gabbo\">POWER</key>".data);
 
@@ -34,7 +38,7 @@ public class SoundtouchClient : GLib.Object {
                 response_json = communicate_with_server(session, msg);
                 message(response_json);
 
-            } catch (Error error) {
+            } catch (GLib.Error error) {
                 message("error occured at sending to server " + error.message);
                 assert_not_reached();
             }
@@ -50,7 +54,7 @@ public class SoundtouchClient : GLib.Object {
             try {
                 Soup.Session session = new Soup.Session();
 
-                string uri = "http://" + "192.168.1.100" + ":8090/key";
+                string uri = "http://" + host + ":8090/key";
                 Soup.Message msg = new Soup.Message("POST", uri);
                 msg.set_request("text/xml", MemoryUse.COPY, "<key state=\"press\" sender=\"Gabbo\">PLAY</key>".data);
 
@@ -62,7 +66,7 @@ public class SoundtouchClient : GLib.Object {
                 response_json = communicate_with_server(session, msg);
                 message(response_json);
 
-            } catch (Error error) {
+            } catch (GLib.Error error) {
                 message("error occured at sending to server " + error.message);
                 assert_not_reached();
             }
@@ -95,7 +99,7 @@ public class SoundtouchClient : GLib.Object {
         try {
             Soup.Session session = new Soup.Session();
 
-            string uri = "http://" + "192.168.1.100" + ":8090/key";
+            string uri = "http://" + host + ":8090/key";
             Soup.Message msg = new Soup.Message("POST", uri);
             msg.set_request("text/xml", MemoryUse.COPY, "<key state=\"press\" sender=\"Gabbo\">PAUSE</key>".data);
 
@@ -107,7 +111,7 @@ public class SoundtouchClient : GLib.Object {
             response_json = communicate_with_server(session, msg);
             message(response_json);
 
-        } catch (Error error) {
+        } catch (GLib.Error error) {
             message("error occured at sending to server " + error.message);
             assert_not_reached();
         }
@@ -115,23 +119,36 @@ public class SoundtouchClient : GLib.Object {
 
 
     public string get_speaker_name() {
-        try {
-            Soup.Session session = new Soup.Session();
+        Soup.Session session = new Soup.Session();
 
-            string uri = "http://" + "192.168.1.100" + ":8090/info";
-            Soup.Message msg = new Soup.Message("GET", uri);
+        string uri = "http://" + host + ":8090/info";
+        Soup.Message msg = new Soup.Message("GET", uri);
 
+        string response_xml = communicate_with_server(session, msg);
 
-            message("get speaker name...");
-            string response_xml = communicate_with_server(session, msg);
-            message("INFO " + response_xml);
+        Xml.Doc* doc = Xml.Parser.parse_doc(response_xml);
+        Xml.XPath.Context cntx = new Xml.XPath.Context(doc);
+        Xml.XPath.Object* res = cntx.eval_expression("/info/name");
 
+        string speaker_name = res->nodesetval->item(0)->get_content();
+        message("resolved speaker name " + speaker_name );
+        return speaker_name;
+    }
 
+    public string get_currently_playing_track() {
+        Soup.Session session = new Soup.Session();
 
-            return "";
-        } catch (Error error) {
-            message("error occured at sending to server " + error.message);
-            assert_not_reached();
-        }
+        string uri = "http://" + host + ":8090/now_playing";
+        Soup.Message msg = new Soup.Message("GET", uri);
+
+        string response_xml = communicate_with_server(session, msg);
+
+        Xml.Doc* doc = Xml.Parser.parse_doc(response_xml);
+        Xml.XPath.Context cntx = new Xml.XPath.Context(doc);
+        Xml.XPath.Object* res = cntx.eval_expression("/nowPlaying/track");
+
+        var track = res->nodesetval->item(0)->get_content();
+        message("tttt" + track);
+        return track;
     }
 }

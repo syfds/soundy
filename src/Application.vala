@@ -15,10 +15,20 @@ public class MyApp : Gtk.Application {
         main_window.default_height = 500;
         main_window.default_width = 500;
         main_window.window_position = WindowPosition.CENTER;
-        var connection = new Connection("192.168.1.100", "8080");
+        string host = "soundtouch-speaker";
+        var connection = new Connection(host, "8080");
         connection.init_ws();
-        var controller = new Controller(new SoundtouchClient(connection));
-        main_window.add(new MainPanel(controller));
+
+        var controller = new Controller(new SoundtouchClient(connection, host));
+
+        Model model = new Model();
+
+        model.model_changed.connect((model) => {
+            main_window.set_title(model.soundtouch_speaker_name);
+        });
+
+        main_window.add(new MainPanel(controller, model));
+
         main_window.show_all();
     }
 
