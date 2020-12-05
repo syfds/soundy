@@ -20,11 +20,15 @@ public class MyApp : Gtk.Application {
         connection.init_ws();
 
         var controller = new Controller(new SoundtouchClient(connection, host));
+        var header_bar = new HeaderBar(controller);
+
+        main_window.set_titlebar(header_bar);
+
 
         Model model = new Model();
 
         model.model_changed.connect((model) => {
-            main_window.set_title(model.soundtouch_speaker_name);
+            header_bar.update_title(model.soundtouch_speaker_name);
         });
 
         main_window.add(new MainPanel(controller, model));

@@ -34,6 +34,16 @@ public class Model : GLib.Object {
             model_changed(this);
         }
     }
+    string _artist = "";
+    public string artist {
+        get {
+            return _artist;
+        }
+        set {
+            _artist = value;
+            model_changed(this);
+        }
+    }
 
 
 

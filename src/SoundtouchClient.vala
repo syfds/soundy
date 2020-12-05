@@ -131,7 +131,7 @@ public class SoundtouchClient : GLib.Object {
         Xml.XPath.Object* res = cntx.eval_expression("/info/name");
 
         string speaker_name = res->nodesetval->item(0)->get_content();
-        message("resolved speaker name " + speaker_name );
+        message("resolved speaker name " + speaker_name);
         return speaker_name;
     }
 
@@ -143,11 +143,6 @@ public class SoundtouchClient : GLib.Object {
 
         string response_xml = communicate_with_server(session, msg);
 
-        Xml.Doc* doc = Xml.Parser.parse_doc(response_xml);
-        Xml.XPath.Context cntx = new Xml.XPath.Context(doc);
-        Xml.XPath.Object* res = cntx.eval_expression("/nowPlaying/track");
-
-        var track = res->nodesetval->item(0)->get_content();
-        return track;
+        return response_xml;
     }
 }

@@ -3,7 +3,7 @@ public class SoundtouchMessageParser: GLib.Object {
     public SoundtouchMessage read(string xml) {
 
         if (xml.contains("nowPlayingUpdated")) {
-            return new NowPlayingChangeMessage(xml);
+            return new NowPlayingChangeMessage.from_websocket(xml);
         }
 
         return new SoundtouchMessage(NotificationType.NOW_PLAYING_CHANGE);
@@ -36,12 +36,42 @@ public class SoundtouchMessage : GLib.Object {
 }
 public class NowPlayingChangeMessage : SoundtouchMessage {
     public PlayState play_state {get;set;}
-    public NowPlayingChangeMessage(string xml) {
+    public string track {get;set; default="";}
+    public string artist {get;set; default="";}
+
+    private string base_xpath;
+
+    public NowPlayingChangeMessage.from_rest_api(string xml) {
+        this(xml, false);
+    }
+
+    public NowPlayingChangeMessage.from_websocket(string xml) {
+        this(xml, true);
+    }
+
+    private NowPlayingChangeMessage(string xml, bool from_websocket) {
+
         base(NotificationType.NOW_PLAYING_CHANGE);
 
+        this.base_xpath = from_websocket ? "/updates/nowPlayingUpdated" : "";
+
         var ctx = context(xml);
-        string play_state_value = get_value(ctx, "/updates/nowPlayingUpdated/nowPlaying/playStatus");
+        this.read_play_state(ctx);
+        this.read_track(ctx);
+        this.read_artist(ctx);
+    }
+
+    private void read_play_state(Xml.XPath.Context ctx) {
+        string play_state_value = get_value(ctx, @"$base_xpath/nowPlaying/playStatus");
         play_state = play_state_value == "STOP_STATE" ? PlayState.STOP_STATE : PlayState.PLAY_STATE;
+    }
+
+    public void read_track(Xml.XPath.Context ctx) {
+        track = get_value(ctx, @"$base_xpath/nowPlaying/track");
+    }
+
+    public void read_artist(Xml.XPath.Context ctx) {
+        artist = get_value(ctx, @"$base_xpath/nowPlaying/artist");
     }
 }
 
