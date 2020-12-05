@@ -9,8 +9,17 @@ public class Controller : GLib.Object {
 
     public Controller(SoundtouchClient client) {
         this.client = client;
-        this.client.event_from_soundtouch_received.connect((type, message) => {
-
+        this.client.event_from_soundtouch_received.connect((type, xml) => {
+            var m = new SoundtouchMessageParser().read(xml);
+            if (m is NowPlayingChangeMessage) {
+                if (((NowPlayingChangeMessage)m).play_state == PlayState.PLAY_STATE) {
+                    message("playing!!!");
+                    this.model.is_playing = true;
+                } else {
+                    message("paused!!!");
+                    this.model.is_playing = false;
+                }
+            }
 
         });
     }
@@ -27,12 +36,12 @@ public class Controller : GLib.Object {
     }
     public void play_clicked() {
         this.client.play_clicked();
-//        this.model.is_playing = true;
+        //        this.model.is_playing = true;
     }
 
     public void pause_clicked() {
         this.client.pause_clicked();
-//        this.model.is_playing = false;
+        //        this.model.is_playing = false;
     }
 
     public void update_currently_playing_track() {

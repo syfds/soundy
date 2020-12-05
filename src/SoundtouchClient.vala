@@ -148,7 +148,6 @@ public class SoundtouchClient : GLib.Object {
         Xml.XPath.Object* res = cntx.eval_expression("/nowPlaying/track");
 
         var track = res->nodesetval->item(0)->get_content();
-        message("tttt" + track);
         return track;
     }
 }
