@@ -46,11 +46,7 @@ public class SoundtouchClient : GLib.Object {
     }
     public void play_clicked() {
 
-        message("play clicked");
         if (connection.ws_connected) {
-            message("connected");
-
-
             try {
                 Soup.Session session = new Soup.Session();
 
@@ -135,7 +131,7 @@ public class SoundtouchClient : GLib.Object {
         return speaker_name;
     }
 
-    public string get_currently_playing_track() {
+    public string get_now_playing() {
         Soup.Session session = new Soup.Session();
 
         string uri = "http://" + host + ":8090/now_playing";

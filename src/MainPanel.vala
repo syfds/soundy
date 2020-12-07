@@ -59,7 +59,7 @@ public class MainPanel : Gtk.Box {
 
         title_panel.show_all();
 
-//        string str = "socss me text";
+        //        string str = "socss me text";
 //        string format = "<span style=\"italic\">%s</span>";
 //        var markup = Markup.printf_escaped (format, str);
 
@@ -68,7 +68,7 @@ public class MainPanel : Gtk.Box {
         currently_playing_panel.set_halign(Align.CENTER);
 
         currently_playing_track = new Gtk.Label("no track available");
-//        currently_playing_track.set_markup(markup);
+        //        currently_playing_track.set_markup(markup);
         currently_playing_artist = new Gtk.Label("no artist available");
 
         currently_playing_panel.attach(currently_playing_track, 0, 0);
@@ -105,6 +105,17 @@ public class MainPanel : Gtk.Box {
 
         if (model.artist != "") {
             this.currently_playing_artist.set_text(model.artist);
+        }
+        if (model.image_url != "") {
+
+            Soup.Message msg = new Soup.Message("GET", model.image_url);
+            Soup.Session session = new Soup.Session();
+
+            var input_stream = session.send(msg);
+
+            var image = new Gtk.Image();
+            image.set_from_pixbuf(new Gdk.Pixbuf.from_stream(input_stream));
+            currently_playing_panel.attach(image, 0, 2);
         }
 
         buttons.show_all();

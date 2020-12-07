@@ -2,6 +2,7 @@ public class HeaderBar : Gtk.HeaderBar {
 
     private Gtk.Label title;
     private Gtk.Button power_on_off;
+    private Gtk.Button favourites;
     private Gtk.Button settings;
 
     public HeaderBar(Controller controller) {
@@ -15,6 +16,7 @@ public class HeaderBar : Gtk.HeaderBar {
             controller.power_on_clicked();
         });
 
+        favourites = create_button("non-starred-symbolic", 16);
         settings = create_button("preferences-system-symbolic", 16);
 
         var main_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 6);
@@ -22,12 +24,9 @@ public class HeaderBar : Gtk.HeaderBar {
 
         main_box.pack_start(title);
         main_box.pack_start(power_on_off);
-//        pack_start(main_box);
-//        pack_start(power_on_off);
 
         pack_end(settings);
-        //        main_box.pack_start (next_button, false, false, 0);
-//        main_box.pack_start (shuffle_button, false, false, 24);
+        pack_end(favourites);
 
         custom_title = main_box;
     }

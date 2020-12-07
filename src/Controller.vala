@@ -23,6 +23,7 @@ public class Controller : GLib.Object {
 
                 this.model.track = nowPlaying.track;
                 this.model.artist = nowPlaying.artist;
+                this.model.image_url = nowPlaying.image_url;
             }
 
         });
@@ -47,12 +48,13 @@ public class Controller : GLib.Object {
     }
 
     public void update_currently_playing_track() {
-        if (this.model.is_playing) {
-            var xml = this.client.get_currently_playing_track();
-            var message = new NowPlayingChangeMessage.from_rest_api(xml);
+        var xml = this.client.get_now_playing();
+        var m = new NowPlayingChangeMessage.from_rest_api(xml);
 
-            this.model.track = message.track;
-            this.model.artist = message.artist;
-        }
+
+        this.model.is_playing = true;
+        this.model.track = m.track;
+        this.model.artist = m.artist;
+        this.model.image_url = m.image_url;
     }
 }

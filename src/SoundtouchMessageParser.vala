@@ -38,6 +38,7 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
     public PlayState play_state {get;set;}
     public string track {get;set; default="";}
     public string artist {get;set; default="";}
+    public string image_url {get;set; default="";}
 
     private string base_xpath;
 
@@ -59,11 +60,12 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
         this.read_play_state(ctx);
         this.read_track(ctx);
         this.read_artist(ctx);
+        this.read_image_url(ctx);
     }
 
     private void read_play_state(Xml.XPath.Context ctx) {
-        string play_state_value = get_value(ctx, @"$base_xpath/nowPlaying/playStatus");
-        play_state = play_state_value == "STOP_STATE" ? PlayState.STOP_STATE : PlayState.PLAY_STATE;
+        string value = get_value(ctx, @"$base_xpath/nowPlaying/playStatus");
+        play_state = value == "PAUSE_STATE" || value == "STOP_STATE" ? PlayState.STOP_STATE : PlayState.PLAY_STATE;
     }
 
     public void read_track(Xml.XPath.Context ctx) {
@@ -72,6 +74,10 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
 
     public void read_artist(Xml.XPath.Context ctx) {
         artist = get_value(ctx, @"$base_xpath/nowPlaying/artist");
+    }
+
+    public void read_image_url(Xml.XPath.Context ctx) {
+        image_url = get_value(ctx, @"$base_xpath/nowPlaying/art");
     }
 }
 

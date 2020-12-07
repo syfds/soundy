@@ -44,7 +44,14 @@ public class Model : GLib.Object {
             model_changed(this);
         }
     }
-
-
-
+    string _image_url = "";
+    public string image_url {
+        get {
+            return _image_url;
+        }
+        set {
+            _image_url = value;
+            model_changed(this);
+        }
+    }
 }
