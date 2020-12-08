@@ -10,7 +10,6 @@ public class Model : GLib.Object {
         }
         set {
             _is_playing = value;
-            model_changed(this);
         }
     }
 
@@ -21,7 +20,6 @@ public class Model : GLib.Object {
         }
         set {
             _soundtouch_speaker_name = value;
-            model_changed(this);
         }
     }
     string _track = "";
@@ -31,7 +29,6 @@ public class Model : GLib.Object {
         }
         set {
             _track = value;
-            model_changed(this);
         }
     }
     string _artist = "";
@@ -41,7 +38,6 @@ public class Model : GLib.Object {
         }
         set {
             _artist = value;
-            model_changed(this);
         }
     }
     string _image_url = "";
@@ -51,7 +47,10 @@ public class Model : GLib.Object {
         }
         set {
             _image_url = value;
-            model_changed(this);
         }
+    }
+
+    public void fire_changed() {
+        this.model_changed(this);
     }
 }

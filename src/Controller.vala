@@ -1,11 +1,8 @@
 public class Controller : GLib.Object {
 
-
     private SoundtouchClient client;
 
-
     public Model model {get; set;}
-
 
     public Controller(SoundtouchClient client) {
         this.client = client;
@@ -13,19 +10,13 @@ public class Controller : GLib.Object {
             var m = new SoundtouchMessageParser().read(xml);
             if (m is NowPlayingChangeMessage) {
                 NowPlayingChangeMessage nowPlaying = (NowPlayingChangeMessage)m;
-                if (nowPlaying.play_state == PlayState.PLAY_STATE) {
-                    message("playing!!!");
-                    this.model.is_playing = true;
-                } else {
-                    message("paused!!!");
-                    this.model.is_playing = false;
-                }
 
+                this.model.is_playing = nowPlaying.play_state == PlayState.PLAY_STATE;
                 this.model.track = nowPlaying.track;
                 this.model.artist = nowPlaying.artist;
                 this.model.image_url = nowPlaying.image_url;
+                this.model.fire_changed();
             }
-
         });
     }
 
@@ -51,10 +42,24 @@ public class Controller : GLib.Object {
         var xml = this.client.get_now_playing();
         var m = new NowPlayingChangeMessage.from_rest_api(xml);
 
+        message("NOW_PLAYING " + xml);
 
-        this.model.is_playing = true;
-        this.model.track = m.track;
-        this.model.artist = m.artist;
-        this.model.image_url = m.image_url;
+        if (m.standby) {
+            this.model.is_playing = false;
+        } else {
+            this.model.is_playing = m.play_state == PlayState.PLAY_STATE;
+            this.model.track = m.track;
+            this.model.artist = m.artist;
+            this.model.image_url = m.image_url;
+        }
+        this.model.fire_changed();
+    }
+
+    public void next_clicked() {
+        this.client.next_clicked();
+    }
+
+    public void prev_clicked() {
+        this.client.prev_clicked();
     }
 }

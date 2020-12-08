@@ -36,6 +36,7 @@ public class SoundtouchMessage : GLib.Object {
 }
 public class NowPlayingChangeMessage : SoundtouchMessage {
     public PlayState play_state {get;set;}
+    public bool standby {get;set; default=false;}
     public string track {get;set; default="";}
     public string artist {get;set; default="";}
     public string image_url {get;set; default="";}
@@ -57,15 +58,20 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
         this.base_xpath = from_websocket ? "/updates/nowPlayingUpdated" : "";
 
         var ctx = context(xml);
-        this.read_play_state(ctx);
-        this.read_track(ctx);
-        this.read_artist(ctx);
-        this.read_image_url(ctx);
+        if (xml.contains("STANDBY")) {
+            this.standby = true;
+        } else {
+            this.read_play_state(ctx);
+            this.read_track(ctx);
+            this.read_artist(ctx);
+            this.read_image_url(ctx);
+        }
     }
 
     private void read_play_state(Xml.XPath.Context ctx) {
         string value = get_value(ctx, @"$base_xpath/nowPlaying/playStatus");
         play_state = value == "PAUSE_STATE" || value == "STOP_STATE" ? PlayState.STOP_STATE : PlayState.PLAY_STATE;
+
     }
 
     public void read_track(Xml.XPath.Context ctx) {

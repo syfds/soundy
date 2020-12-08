@@ -7,8 +7,6 @@ public class HeaderBar : Gtk.HeaderBar {
 
     public HeaderBar(Controller controller) {
         set_show_close_button(true);
-
-
         title = new Gtk.Label("No title");
 
         power_on_off = create_button("system-shutdown-symbolic", 16);

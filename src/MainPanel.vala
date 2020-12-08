@@ -9,6 +9,8 @@ public class MainPanel : Gtk.Box {
     private Grid currently_playing_panel;
     private Gtk.Label currently_playing_track;
     private Gtk.Label currently_playing_artist;
+    private Gtk.Image image;
+
 
     private Grid buttons;
     private Gtk.Button middle_btn_placeholder;
@@ -39,6 +41,9 @@ public class MainPanel : Gtk.Box {
         set_baseline_position(BaselinePosition.CENTER);
 
         this.prev_btn = create_button("media-skip-backward-symbolic", 32);
+        this.prev_btn.clicked.connect((event) => {
+            this.controller.prev_clicked();
+        });
         this.play_btn = create_button("media-playback-start-symbolic", 48);
 
         play_btn.clicked.connect((event) => {
@@ -52,6 +57,9 @@ public class MainPanel : Gtk.Box {
         });
 
         this.next_btn = create_button("media-skip-forward-symbolic", 32);
+        this.next_btn.clicked.connect((event) => {
+            this.controller.next_clicked();
+        });
 
         title_panel = new Grid();
         title_panel.set_orientation(Orientation.HORIZONTAL);
@@ -59,17 +67,13 @@ public class MainPanel : Gtk.Box {
 
         title_panel.show_all();
 
-        //        string str = "socss me text";
-//        string format = "<span style=\"italic\">%s</span>";
-//        var markup = Markup.printf_escaped (format, str);
-
         currently_playing_panel = new Gtk.Grid();
         currently_playing_panel.set_orientation(Orientation.HORIZONTAL);
         currently_playing_panel.set_halign(Align.CENTER);
 
-        currently_playing_track = new Gtk.Label("no track available");
-        //        currently_playing_track.set_markup(markup);
-        currently_playing_artist = new Gtk.Label("no artist available");
+        currently_playing_track = create_label("no track available", Granite.STYLE_CLASS_H1_LABEL);
+
+        currently_playing_artist = create_label("no artist available", Granite.STYLE_CLASS_H2_LABEL);
 
         currently_playing_panel.attach(currently_playing_track, 0, 0);
         currently_playing_panel.attach(currently_playing_artist, 0, 1);
@@ -91,6 +95,12 @@ public class MainPanel : Gtk.Box {
     }
 
     public void update_gui(Model model) {
+        message("Update GUI:");
+        message("is playing: " + model.is_playing.to_string());
+        message("track: " + model.track);
+        message("artist: " + model.artist);
+        message("image_url: " + model.image_url);
+
         if (model.is_playing) {
             buttons.remove(play_btn);
             buttons.attach(pause_btn, 1, 0);
@@ -108,13 +118,11 @@ public class MainPanel : Gtk.Box {
         }
         if (model.image_url != "") {
 
-            Soup.Message msg = new Soup.Message("GET", model.image_url);
-            Soup.Session session = new Soup.Session();
+            if (image != null) {
+                currently_playing_panel.remove(image);
+            }
 
-            var input_stream = session.send(msg);
-
-            var image = new Gtk.Image();
-            image.set_from_pixbuf(new Gdk.Pixbuf.from_stream(input_stream));
+            var image = this.create_image_from_url(model.image_url);
             currently_playing_panel.attach(image, 0, 2);
         }
 
@@ -139,4 +147,24 @@ public class MainPanel : Gtk.Box {
         return button;
     }
 
+    private Gtk.Label create_label(string text, string style_class) {
+        var label = new Gtk.Label(text);
+        label.margin_top = 5;
+        label.margin_bottom = 5;
+        label.get_style_context().add_class(style_class);
+
+        return label;
+    }
+
+    public Gtk.Image create_image_from_url(string image_url) {
+        Soup.Message msg = new Soup.Message("GET", image_url);
+        Soup.Session session = new Soup.Session();
+
+        var input_stream = session.send(msg);
+
+        image = new Gtk.Image();
+        Gdk.Pixbuf image_pixbuf = new Gdk.Pixbuf.from_stream_at_scale(input_stream, 250, 250, true);
+        image.set_from_pixbuf(image_pixbuf);
+        return image;
+    }
 }
