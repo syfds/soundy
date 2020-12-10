@@ -198,4 +198,14 @@ public class SoundtouchClient : GLib.Object {
             }
         }
     }
+
+    public string get_presets() {
+        Soup.Session session = new Soup.Session();
+
+        string uri = "http://" + host + ":8090/presets";
+        Soup.Message msg = new Soup.Message("GET", uri);
+
+        string response_xml = communicate_with_server(session, msg);
+        return response_xml;
+    }
 }

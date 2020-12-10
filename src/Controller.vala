@@ -62,4 +62,9 @@ public class Controller : GLib.Object {
     public void prev_clicked() {
         this.client.prev_clicked();
     }
+
+    public PresetsMessage get_presets() {
+        string xml = this.client.get_presets();
+        return new PresetsMessage(xml);
+    }
 }

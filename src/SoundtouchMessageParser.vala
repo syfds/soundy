@@ -6,21 +6,16 @@ public class SoundtouchMessageParser: GLib.Object {
             return new NowPlayingChangeMessage.from_websocket(xml);
         }
 
-        return new SoundtouchMessage(NotificationType.NOW_PLAYING_CHANGE);
+        return new SoundtouchMessage();
     }
 }
 
 
 public class SoundtouchMessage : GLib.Object {
-    public NotificationType notification_type;
 
-    public SoundtouchMessage(NotificationType notification_type) {
-        this.notification_type = notification_type;
+    public SoundtouchMessage() {
     }
 
-    public NotificationType get_notification_type() {
-        return notification_type;
-    }
 
     public Xml.XPath.Context context(string xml) {
         Xml.Doc* doc = Xml.Parser.parse_doc(xml);
@@ -53,7 +48,7 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
 
     private NowPlayingChangeMessage(string xml, bool from_websocket) {
 
-        base(NotificationType.NOW_PLAYING_CHANGE);
+        base();
 
         this.base_xpath = from_websocket ? "/updates/nowPlayingUpdated" : "";
 
@@ -94,4 +89,37 @@ public enum PlayState {
 
 public enum NotificationType {
     NOW_PLAYING_CHANGE
+}
+
+public class PresetsMessage : SoundtouchMessage {
+
+    private Gee.ArrayList<Preset> presets = new Gee.ArrayList<Preset>();
+
+    public PresetsMessage(string xml) {
+
+        var ctx = context(xml);
+        Xml.XPath.Object* result = ctx.eval_expression("count(//preset)");
+        double count_preset = result->floatval;
+
+        for (var i=1; i <= (int)count_preset; i++) {
+            var item_name = get_value(ctx, @"/presets/preset[@id='$i']/ContentItem/itemName");
+            var item_image_url = get_value(ctx, @"/presets/preset[@id='$i']/ContentItem/containerArt");
+            var preset = new Preset();
+            preset.item_name = item_name;
+            preset.item_image_url = item_image_url;
+            presets.add(preset);
+
+        }
+        message("count preset " + result->floatval.to_string());
+
+    }
+
+    public Gee.ArrayList<Preset> get_presets() {
+        return this.presets;
+    }
+}
+
+public class Preset : GLib.Object {
+    public string item_name {get;set;}
+    public string item_image_url {get;set;}
 }

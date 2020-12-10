@@ -7,7 +7,7 @@ dependencies = [
     xml
 ]
 
-src_files = files(['SoundtouchClient.vala', 'Connection.vala', 'Controller.vala', 'Model.vala', 'SoundtouchMessageParser.vala', 'MainPanel.vala', 'HeaderBar.vala'])
+src_files = files(['SoundtouchClient.vala', 'Connection.vala', 'Controller.vala', 'Model.vala', 'SoundtouchMessageParser.vala', 'MainPanel.vala', 'HeaderBar.vala', 'FavouriteMenuItem.vala'])
 src_files_with_main = src_files + files(['Application.vala'])
 
 executable(
