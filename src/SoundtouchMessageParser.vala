@@ -102,9 +102,12 @@ public class PresetsMessage : SoundtouchMessage {
         double count_preset = result->floatval;
 
         for (var i=1; i <= (int)count_preset; i++) {
+            var item_id = get_value(ctx, @"/presets/preset[@id='$i']/@id");
             var item_name = get_value(ctx, @"/presets/preset[@id='$i']/ContentItem/itemName");
             var item_image_url = get_value(ctx, @"/presets/preset[@id='$i']/ContentItem/containerArt");
             var preset = new Preset();
+
+            preset.item_id = item_id;
             preset.item_name = item_name;
             preset.item_image_url = item_image_url;
             presets.add(preset);
@@ -120,6 +123,7 @@ public class PresetsMessage : SoundtouchMessage {
 }
 
 public class Preset : GLib.Object {
+    public string item_id {get;set;}
     public string item_name {get;set;}
     public string item_image_url {get;set;}
 }

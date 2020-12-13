@@ -8,6 +8,7 @@ public class Controller : GLib.Object {
         this.client = client;
         this.client.event_from_soundtouch_received.connect((type, xml) => {
             var m = new SoundtouchMessageParser().read(xml);
+            message("received message parsed!");
             if (m is NowPlayingChangeMessage) {
                 NowPlayingChangeMessage nowPlaying = (NowPlayingChangeMessage)m;
 
@@ -64,7 +65,12 @@ public class Controller : GLib.Object {
     }
 
     public PresetsMessage get_presets() {
+        message("get presets");
         string xml = this.client.get_presets();
         return new PresetsMessage(xml);
+    }
+
+    public void play_preset(string item_id) {
+        this.client.play_preset(item_id);
     }
 }

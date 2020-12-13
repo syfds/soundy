@@ -24,12 +24,12 @@ public class SoundtouchClient : GLib.Object {
     }
 
     public void play_clicked() {
-        send_key_action_to_speaker_with_release(KeyAction.PLAY);
+        send_key_action_to_speaker(KeyAction.PLAY, false);
     }
 
 
     public void pause_clicked() {
-        send_key_action_to_speaker_with_release(KeyAction.PAUSE);
+        send_key_action_to_speaker(KeyAction.PAUSE, false);
     }
 
     public void next_clicked() {
@@ -78,19 +78,22 @@ public class SoundtouchClient : GLib.Object {
 
             string uri = "http://" + host + ":8090/key";
             Soup.Message msg = new Soup.Message("POST", uri);
-            msg.set_request("text/xml", MemoryUse.COPY,
-                    generate_key_message(action, KeyState.PRESS).data);
 
-            string response_json = communicate_with_server(session, msg);
-            message(response_json);
-
+            string response_json;
             if (with_release) {
                 msg.set_request("text/xml", MemoryUse.COPY,
                         generate_key_message(action, KeyState.RELEASE).data);
 
                 response_json = communicate_with_server(session, msg);
-                message(response_json);
+            } else {
+                msg.set_request("text/xml", MemoryUse.COPY,
+                        generate_key_message(action, KeyState.PRESS).data);
+
+                response_json = communicate_with_server(session, msg);
+
             }
+
+            message(response_json);
 
         } catch (GLib.Error error) {
             message("error occured at sending to server " + error.message);
@@ -206,6 +209,23 @@ public class SoundtouchClient : GLib.Object {
         Soup.Message msg = new Soup.Message("GET", uri);
 
         string response_xml = communicate_with_server(session, msg);
+        message(response_xml);
         return response_xml;
+    }
+
+    public void play_preset(string item_id) {
+        if (item_id == "1") {
+            send_key_action_to_speaker_with_release(KeyAction.PRESET_1);
+        } else if (item_id == "2") {
+            send_key_action_to_speaker_with_release(KeyAction.PRESET_2);
+        } else if (item_id == "3") {
+            send_key_action_to_speaker_with_release(KeyAction.PRESET_3);
+        } else if (item_id == "4") {
+            send_key_action_to_speaker_with_release(KeyAction.PRESET_4);
+        } else if (item_id == "5") {
+            send_key_action_to_speaker_with_release(KeyAction.PRESET_5);
+        } else if (item_id == "6") {
+            send_key_action_to_speaker_with_release(KeyAction.PRESET_6);
+        }
     }
 }

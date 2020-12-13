@@ -22,7 +22,7 @@ public class HeaderBar : Gtk.HeaderBar {
         PresetsMessage presets = controller.get_presets();
         foreach(Preset p in presets.get_presets()){
             message(p.item_image_url);
-            var item = new FavouriteMenuItem(p.item_name, this.create_image_from_url(p.item_image_url));
+            var item = new FavouriteMenuItem(p, this.create_image_from_url(p.item_image_url), controller);
             menu_grid.add(item);
         }
 
