@@ -9,6 +9,11 @@ public class SoundtouchClient : GLib.Object {
 
     public signal void event_from_soundtouch_received(int type, string message);
 
+
+    public SoundtouchClient.from_host(string host) {
+        this.host = host;
+    }
+
     public SoundtouchClient(Connection connection, string host) {
         this.connection = connection;
         this.host = host;
@@ -41,14 +46,23 @@ public class SoundtouchClient : GLib.Object {
     }
 
 
-    public string get_speaker_name() {
+    public string get_info() {
         Soup.Session session = new Soup.Session();
 
         string uri = "http://" + host + ":8090/info";
         Soup.Message msg = new Soup.Message("GET", uri);
+        session.timeout = 1;
 
-        string response_xml = communicate_with_server(session, msg);
 
+        var input_stream = session.request(uri);
+        var data = input_stream.send();
+
+        uint8[] data_arr = new uint8[10000];
+        data.read_all(data_arr, null);
+        string response_xml = (string) data_arr;
+        //        string response_xml = communicate_with_server(session, msg);
+
+        message(response_xml);
         Xml.Doc* doc = Xml.Parser.parse_doc(response_xml);
         Xml.XPath.Context cntx = new Xml.XPath.Context(doc);
         Xml.XPath.Object* res = cntx.eval_expression("/info/name");

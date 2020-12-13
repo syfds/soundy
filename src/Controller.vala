@@ -22,7 +22,7 @@ public class Controller : GLib.Object {
     }
 
     public void update_speaker_name() {
-        string name = this.client.get_speaker_name();
+        string name = this.client.get_info();
         this.model.soundtouch_speaker_name = name;
 
     }

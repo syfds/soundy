@@ -65,7 +65,6 @@ public class Connection {
         if (!ws_connected) {
             MainLoop loop = new MainLoop ();
             var socket_client = new Soup.Session ();
-//            socket_client.https_aliases = { "wss" };
             string url = "ws://%s:%s/".printf (ip_address, port_number);
             message(@"connect to $url");
             var message = new Soup.Message ("POST", url);

@@ -15,6 +15,11 @@ public class MyApp : Gtk.Application {
         main_window.default_height = 500;
         main_window.default_width = 500;
         main_window.window_position = WindowPosition.CENTER;
+
+
+        //        string soundtouch_host = SoundtouchFinder.find("192.168.1.0","192.168.1.254");
+
+
         string host = "soundtouch-speaker";
         var connection = new Connection(host, "8080");
         connection.init_ws();
