@@ -10,4 +10,7 @@ soup = dependency('libsoup-2.4')
 xml = dependency('libxml-2.0')
 
 subdir('src')
+subdir('data')
 subdir('test')
+
+meson.add_install_script('meson/post_install.py')
