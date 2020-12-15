@@ -2,7 +2,9 @@ using Gtk;
 
 public class SoundyApp : Gtk.Application {
 
+
     public const string APP_ID = "com.github.sergejdobryak.soundy";
+    public static GLib.Settings settings = new GLib.Settings(APP_ID);
 
 
     public SoundyApp() {
@@ -22,14 +24,17 @@ public class SoundyApp : Gtk.Application {
 
 
 
-        this.check_connection();
-        string soundtouch_host = SoundtouchFinder.find("192.168.1.0", "192.168.1.254");
 
-        string host = "soundtouch-speaker";
+        //        string soundtouch_host = SoundtouchFinder.find("192.168.1.0", "192.168.1.254");
+
+        var speaker_host = settings.get_string("soundtouch-host");
+        message(@"trying to connecto to $speaker_host");
+
+        string host = speaker_host;
         var connection = new Connection(host, "8080");
-        connection.init_ws();
 
-        var controller = new Controller(new SoundtouchClient(connection, host));
+        var client = new SoundtouchClient(connection, host);
+        var controller = new Controller(client);
         var header_bar = new HeaderBar(controller);
 
         main_window.set_titlebar(header_bar);
@@ -38,7 +43,11 @@ public class SoundyApp : Gtk.Application {
         Model model = new Model();
 
         model.model_changed.connect((model) => {
-            header_bar.update_title(model.soundtouch_speaker_name);
+            if (!model.connection_established) {
+                header_bar.update_title("No connection possible");
+            } else {
+                header_bar.update_title(model.soundtouch_speaker_name);
+            }
         });
 
         main_window.add(new MainPanel(controller, model));
@@ -49,17 +58,5 @@ public class SoundyApp : Gtk.Application {
     public static int main(string[] args) {
         var app = new SoundyApp();
         return app.run(args);
-    }
-
-
-    public void check_connection() {
-        var settings = new GLib.Settings(APP_ID);
-        var speaker_host = settings.get_string("soundtouch-host");
-        var client = new SoundtouchClient.from_host(speaker_host);
-        var info = client.get_info();
-        if (info == null || info.size() == 0) {
-            var dialog = new ConnectionDialog();
-            dialog.run();
-        }
     }
 }

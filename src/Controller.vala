@@ -19,12 +19,22 @@ public class Controller : GLib.Object {
                 this.model.fire_changed();
             }
         });
+
+        this.client.connection_to_soundtouch_succeeded.connect(() => {
+            this.model.connection_established = true;
+            this.model.fire_changed();
+        });
+        this.client.connection_to_soundtouch_failed.connect(() => {
+            this.model.connection_established = false;
+            this.model.fire_changed();
+        });
+
     }
 
     public void update_speaker_name() {
         string name = this.client.get_info();
         this.model.soundtouch_speaker_name = name;
-
+        this.model.fire_changed();
     }
 
     public void power_on_clicked() {
@@ -72,5 +82,9 @@ public class Controller : GLib.Object {
 
     public void play_preset(string item_id) {
         this.client.play_preset(item_id);
+    }
+
+    public async void init() {
+        this.client.init_ws_connection();
     }
 }

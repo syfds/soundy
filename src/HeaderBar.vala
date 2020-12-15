@@ -14,19 +14,6 @@ public class HeaderBar : Gtk.HeaderBar {
             controller.power_on_clicked();
         });
 
-        var menu_grid = new Gtk.Grid();
-        menu_grid.margin_top = 6;
-        menu_grid.margin_bottom = 6;
-        menu_grid.orientation = Gtk.Orientation.VERTICAL;
-
-        PresetsMessage presets = controller.get_presets();
-        foreach(Preset p in presets.get_presets()){
-            message(p.item_image_url);
-            var item = new FavouriteMenuItem(p, this.create_image_from_url(p.item_image_url), controller);
-            menu_grid.add(item);
-        }
-
-        menu_grid.show_all();
 
         favourites = new Gtk.MenuButton();
         var menu_icon = new Gtk.Image();
@@ -36,11 +23,6 @@ public class HeaderBar : Gtk.HeaderBar {
         favourites.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
         favourites.image = menu_icon;
         favourites.can_focus = false;
-
-        var popover = new Gtk.Popover(null);
-        popover.add(menu_grid);
-        favourites.popover = popover;
-
 
         settings = create_button("preferences-system-symbolic", 16);
 
@@ -83,5 +65,27 @@ public class HeaderBar : Gtk.HeaderBar {
         button.image = menu_icon;
         button.can_focus = false;
         return button;
+    }
+
+    public void create_preset_items(Controller controller) {
+
+        var menu_grid = new Gtk.Grid();
+        menu_grid.margin_top = 6;
+        menu_grid.margin_bottom = 6;
+        menu_grid.orientation = Gtk.Orientation.VERTICAL;
+
+
+        PresetsMessage presets = controller.get_presets();
+        foreach(Preset p in presets.get_presets()){
+            message(p.item_image_url);
+            var item = new FavouriteMenuItem(p, this.create_image_from_url(p.item_image_url), controller);
+            menu_grid.add(item);
+        }
+
+        menu_grid.show_all();
+
+        var popover = new Gtk.Popover(null);
+        popover.add(menu_grid);
+        favourites.popover = popover;
     }
 }

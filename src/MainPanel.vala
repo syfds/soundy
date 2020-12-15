@@ -32,8 +32,11 @@ public class MainPanel : Gtk.Box {
         this.create_gui();
         this.show_all();
 
-        this.controller.update_speaker_name();
-        this.controller.update_currently_playing_track();
+        new Thread<void>("create connection", () => {
+            this.controller.init();
+            this.controller.update_speaker_name();
+            this.controller.update_currently_playing_track();
+        });
     }
 
     public void create_gui() {
@@ -96,6 +99,7 @@ public class MainPanel : Gtk.Box {
 
     public void update_gui(Model model) {
         message("Update GUI:");
+        message("connection established : " + model.connection_established.to_string());
         message("is playing: " + model.is_playing.to_string());
         message("track: " + model.track);
         message("artist: " + model.artist);

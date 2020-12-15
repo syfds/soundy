@@ -8,6 +8,9 @@ public class SoundtouchClient : GLib.Object {
     private string host;
 
     public signal void event_from_soundtouch_received(int type, string message);
+    public signal void connection_to_soundtouch_established();
+    public signal void connection_to_soundtouch_succeeded();
+    public signal void connection_to_soundtouch_failed();
 
 
     public SoundtouchClient.from_host(string host) {
@@ -53,23 +56,26 @@ public class SoundtouchClient : GLib.Object {
         Soup.Message msg = new Soup.Message("GET", uri);
         session.timeout = 1;
 
+        try {
+            var input_stream = session.request(uri);
+            var data = input_stream.send();
 
-        var input_stream = session.request(uri);
-        var data = input_stream.send();
+            uint8[] data_arr = new uint8[10000];
+            data.read_all(data_arr, null);
+            string response_xml = (string) data_arr;
+            //        string response_xml = communicate_with_server(session, msg);
 
-        uint8[] data_arr = new uint8[10000];
-        data.read_all(data_arr, null);
-        string response_xml = (string) data_arr;
-        //        string response_xml = communicate_with_server(session, msg);
+            message(response_xml);
+            Xml.Doc* doc = Xml.Parser.parse_doc(response_xml);
+            Xml.XPath.Context cntx = new Xml.XPath.Context(doc);
+            Xml.XPath.Object* res = cntx.eval_expression("/info/name");
 
-        message(response_xml);
-        Xml.Doc* doc = Xml.Parser.parse_doc(response_xml);
-        Xml.XPath.Context cntx = new Xml.XPath.Context(doc);
-        Xml.XPath.Object* res = cntx.eval_expression("/info/name");
-
-        string speaker_name = res->nodesetval->item(0)->get_content();
-        message("resolved speaker name " + speaker_name);
-        return speaker_name;
+            string speaker_name = res->nodesetval->item(0)->get_content();
+            message("resolved speaker name " + speaker_name);
+            return speaker_name;
+        } catch (GLib.Error e) {
+            return "";
+        }
     }
 
     public string get_now_playing() {
@@ -241,5 +247,32 @@ public class SoundtouchClient : GLib.Object {
         } else if (item_id == "6") {
             send_key_action_to_speaker_with_release(KeyAction.PRESET_6);
         }
+    }
+
+    public void init_ws_connection() {
+        this.connection.ws_message.connect((type, mes) => {
+            message(@"received $mes");
+            this.event_from_soundtouch_received(type, mes);
+        });
+
+        this.connection.connection_succeeded.connect(() => {
+            message("connection succeeded");
+            this.connection_to_soundtouch_succeeded();
+        });
+
+        this.connection.connection_failed.connect(() => {
+            message("connection failed");
+            this.connection_to_soundtouch_failed();
+        });
+
+        this.connection.connection_disengaged.connect(() => {
+            message("connection disengaged");
+        });
+
+        this.connection.connection_established.connect(() => {
+            this.connection_to_soundtouch_established();
+        });
+
+        this.connection.init_ws();
     }
 }

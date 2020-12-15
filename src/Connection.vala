@@ -1,6 +1,7 @@
 public class Connection {
-    public signal void ws_message (int type, string message);
-    public signal void connection_established ();
+    public signal void ws_message(int type, string message);
+    public signal void connection_succeeded();
+    public signal void connection_established();
     public signal void connection_failed ();
     public signal void connection_disengaged ();
     public signal void check_connection (bool connected);
@@ -10,9 +11,6 @@ public class Connection {
     private string port_number = "8090";
     public bool ws_connected { public get; private set; }
 
-    /**
-     * Constructs a new {@code Connection} object
-     */
     public Connection (string ip_address, string port_number) {
         this.ip_address = ip_address;
         this.port_number = port_number;
@@ -23,17 +21,10 @@ public class Connection {
         this.ip_address = ip_address;
         this.port_number = port_number;
     }
-    /**
-     * Get the websocket connection reference
-     * @return {@code Soup.WebsocketConnection}
-     */
     public Soup.WebsocketConnection get_web_socket () {
         return websocket_connection;
     }
 
-    /**
-     * Attempt reconnection with Mycroft.
-     */
     public void init_ws_after_starting_mycroft () {
         int count = 0;
         if (!ws_connected) {
@@ -47,9 +38,6 @@ public class Connection {
         }
     }
 
-    /**
-     * Attempt connection to check if Mycroft is running.
-     */
     public void init_ws_before_starting_mycroft () {
         init_ws ();
         Timeout.add (5000, () => {
@@ -58,34 +46,32 @@ public class Connection {
         });
     }
 
-    /**
-     * Starts a web socket connection with Mycroft asynchronously.
-     */
     public void init_ws () {
         if (!ws_connected) {
-            MainLoop loop = new MainLoop ();
-            var socket_client = new Soup.Session ();
-            string url = "ws://%s:%s/".printf (ip_address, port_number);
+            MainLoop loop = new MainLoop();
+            var socket_client = new Soup.Session();
+            string url = "ws://%s:%s/".printf(ip_address, port_number);
             message(@"connect to $url");
-            var message = new Soup.Message ("POST", url);
-            socket_client.websocket_connect_async.begin (message, null, new string[]{"gabbo"}, null, (obj, res) => {
+            var websocket_message = new Soup.Message("POST", url);
+            socket_client.websocket_connect_async.begin(websocket_message, null, new string[]{"gabbo"}, null, (obj, res) => {
                 try {
-                    websocket_connection = socket_client.websocket_connect_async.end (res);
-                    print ("Connected!\n");
+                    websocket_connection = socket_client.websocket_connect_async.end(res);
+                    message("Connected!\n");
                     ws_connected = true;
+                    connection_succeeded();
                     if (websocket_connection != null) {
-                        websocket_connection.message.connect ((type, m_message) => {
-                            ws_message (type, decode_bytes(m_message, m_message.length));
+                        websocket_connection.message.connect((type, m_message) => {
+                            ws_message(type, decode_bytes(m_message, m_message.length));
                         });
-                        websocket_connection.closed.connect (() => {
+                        websocket_connection.closed.connect(() => {
                             print ("Connection closed\n");
                             connection_disengaged ();
                             ws_connected = false;
                         });
                     }
                 } catch (Error e) {
-                    stderr.printf ("Remote error\n");
-                    connection_failed ();
+                    message("Remote error");
+                    connection_failed();
                     loop.quit ();
                 }
                 loop.quit ();
