@@ -2,7 +2,7 @@ using Gtk;
 
 public class MainPanel : Gtk.Box {
 
-
+    private GLib.Settings settings;
     private Controller controller;
 
     private Grid title_panel;
@@ -19,9 +19,10 @@ public class MainPanel : Gtk.Box {
     private Gtk.Button next_btn;
     private Gtk.Button prev_btn;
 
-    public MainPanel(Controller controller, Model model) {
+    public MainPanel(Controller controller, Model model, GLib.Settings settings) {
 
         this.controller = controller;
+        this.settings = settings;
 
         model.model_changed.connect((model) => {
             this.update_gui(model);
@@ -128,6 +129,22 @@ public class MainPanel : Gtk.Box {
 
             var image = this.create_image_from_url(model.image_url);
             currently_playing_panel.attach(image, 0, 2);
+        }
+
+        if (!model.connection_established) {
+            var dialog = new ConnectionDialog(settings);
+            dialog.run();
+
+            string host = settings.get_string("soundtouch-host");
+
+            var connection = new Connection(host, "8080");
+
+            var client = new SoundtouchClient(connection, host);
+
+            this.controller.update_client(client);
+            this.controller.init();
+            this.controller.update_speaker_name();
+            this.controller.update_currently_playing_track();
         }
 
         buttons.show_all();

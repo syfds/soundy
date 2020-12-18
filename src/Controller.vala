@@ -5,30 +5,7 @@ public class Controller : GLib.Object {
     public Model model {get; set;}
 
     public Controller(SoundtouchClient client) {
-        this.client = client;
-        this.client.event_from_soundtouch_received.connect((type, xml) => {
-            var m = new SoundtouchMessageParser().read(xml);
-            message("received message parsed!");
-            if (m is NowPlayingChangeMessage) {
-                NowPlayingChangeMessage nowPlaying = (NowPlayingChangeMessage)m;
-
-                this.model.is_playing = nowPlaying.play_state == PlayState.PLAY_STATE;
-                this.model.track = nowPlaying.track;
-                this.model.artist = nowPlaying.artist;
-                this.model.image_url = nowPlaying.image_url;
-                this.model.fire_changed();
-            }
-        });
-
-        this.client.connection_to_soundtouch_succeeded.connect(() => {
-            this.model.connection_established = true;
-            this.model.fire_changed();
-        });
-        this.client.connection_to_soundtouch_failed.connect(() => {
-            this.model.connection_established = false;
-            this.model.fire_changed();
-        });
-
+        this.update_client(client);
     }
 
     public void update_speaker_name() {
@@ -86,5 +63,31 @@ public class Controller : GLib.Object {
 
     public async void init() {
         this.client.init_ws_connection();
+    }
+
+    public void update_client(SoundtouchClient client) {
+        this.client = client;
+        this.client.event_from_soundtouch_received.connect((type, xml) => {
+            var m = new SoundtouchMessageParser().read(xml);
+            message("received message parsed!");
+            if (m is NowPlayingChangeMessage) {
+                NowPlayingChangeMessage nowPlaying = (NowPlayingChangeMessage)m;
+
+                this.model.is_playing = nowPlaying.play_state == PlayState.PLAY_STATE;
+                this.model.track = nowPlaying.track;
+                this.model.artist = nowPlaying.artist;
+                this.model.image_url = nowPlaying.image_url;
+                this.model.fire_changed();
+            }
+        });
+
+        this.client.connection_to_soundtouch_succeeded.connect(() => {
+            this.model.connection_established = true;
+            this.model.fire_changed();
+        });
+        this.client.connection_to_soundtouch_failed.connect(() => {
+            this.model.connection_established = false;
+            this.model.fire_changed();
+        });
     }
 }

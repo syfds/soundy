@@ -4,10 +4,21 @@ public class HeaderBar : Gtk.HeaderBar {
     private Gtk.Button power_on_off;
     private Gtk.MenuButton favourites;
     private Gtk.Button settings;
+    private Gtk.Box main_box;
 
-    public HeaderBar(Controller controller) {
+    public HeaderBar(Controller controller, Model model) {
         set_show_close_button(true);
         title = new Gtk.Label("No title");
+
+        model.model_changed.connect(() => {
+            if (!model.connection_established) {
+                update_title("No connection possible");
+                power_on_off.visible = false;
+            } else {
+                update_title(model.soundtouch_speaker_name);
+                power_on_off.visible = true;
+            }
+        });
 
         power_on_off = create_button("system-shutdown-symbolic", 16);
         power_on_off.clicked.connect((event) => {
@@ -26,7 +37,7 @@ public class HeaderBar : Gtk.HeaderBar {
 
         settings = create_button("preferences-system-symbolic", 16);
 
-        var main_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 6);
+        main_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 6);
         main_box.halign = Gtk.Align.CENTER;
 
         main_box.pack_start(title);
