@@ -131,7 +131,8 @@ public class MainPanel : Gtk.Box {
             currently_playing_panel.attach(image, 0, 2);
         }
 
-        if (!model.connection_established) {
+        if (!model.connection_established && !model.connection_dialog_tried) {
+            model.connection_dialog_tried = true;
             var dialog = new ConnectionDialog(settings);
             dialog.run();
 

@@ -3,6 +3,7 @@ public class Model : GLib.Object {
     public signal void model_changed(Model model);
 
     public bool connection_established {get;set;default=false;}
+    public bool connection_dialog_tried {get;set;default=false;}
 
     bool _is_playing = false;
     public bool is_playing {
