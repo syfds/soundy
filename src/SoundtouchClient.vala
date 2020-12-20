@@ -3,7 +3,7 @@ using Soup;
 
 public class SoundtouchClient : GLib.Object {
 
-    private Connection connection;
+    private WebsocketConnection connection;
 
     private string host;
 
@@ -17,7 +17,7 @@ public class SoundtouchClient : GLib.Object {
         this.host = host;
     }
 
-    public SoundtouchClient(Connection connection, string host) {
+    public SoundtouchClient(WebsocketConnection connection, string host) {
         this.connection = connection;
         this.host = host;
 

@@ -138,7 +138,7 @@ public class MainPanel : Gtk.Box {
 
             string host = settings.get_string("soundtouch-host");
 
-            var connection = new Connection(host, "8080");
+            var connection = new WebsocketConnection(host, "8080");
 
             var client = new SoundtouchClient(connection, host);
 

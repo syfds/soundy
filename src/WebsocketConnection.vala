@@ -1,4 +1,4 @@
-public class Connection {
+public class WebsocketConnection {
     public signal void ws_message(int type, string message);
     public signal void connection_succeeded();
     public signal void connection_established();
@@ -11,7 +11,7 @@ public class Connection {
     private string port_number = "8090";
     public bool ws_connected { public get; private set; }
 
-    public Connection(string ip_address, string port_number) {
+    public WebsocketConnection(string ip_address, string port_number) {
         this.ip_address = ip_address;
         this.port_number = port_number;
         this.ws_connected = false;

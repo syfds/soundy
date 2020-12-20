@@ -28,7 +28,7 @@ public class SoundyApp : Gtk.Application {
         message(@"trying to connecto to $speaker_host");
 
         string host = speaker_host;
-        var connection = new Connection(host, "8080");
+        var connection = new WebsocketConnection(host, "8080");
 
         var client = new SoundtouchClient(connection, host);
         var controller = new Controller(client);
