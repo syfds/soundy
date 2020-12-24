@@ -13,6 +13,7 @@ src_files = files([
 'Controller.vala',
 'Model.vala',
 'SoundtouchMessageParser.vala',
+'Settings.vala',
 'Widget/MainPanel.vala',
 'Widget/HeaderBar.vala',
 'Widget/FavouriteMenuItem.vala',

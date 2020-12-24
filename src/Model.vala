@@ -5,6 +5,10 @@ public class Model : GLib.Object {
     public bool connection_established {get;set;default=false;}
     public bool connection_dialog_tried {get;set;default=false;}
 
+    public uint8 actual_volume {get;set;}
+    public uint8 target_volume {get;set;}
+    public bool mute_enabled {get;set;default=false;}
+
     bool _is_playing = false;
     public bool is_playing {
         get {

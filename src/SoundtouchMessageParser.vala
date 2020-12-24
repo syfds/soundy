@@ -5,6 +5,9 @@ public class SoundtouchMessageParser: GLib.Object {
         if (xml.contains("nowPlayingUpdated")) {
             return new NowPlayingChangeMessage.from_websocket(xml);
         }
+        if (xml.contains("volumeUpdated")) {
+            return new VolumeUpdatedMessage.from_websocket(xml);
+        }
 
         return new SoundtouchMessage();
     }
@@ -28,6 +31,40 @@ public class SoundtouchMessage : GLib.Object {
         return res->nodesetval->item(0)->get_content();
     }
 
+    public int get_int_value(Xml.XPath.Context context, string xpath) {
+        string value = get_value(context, xpath);
+        return value.to_int();
+    }
+
+}
+public class VolumeUpdatedMessage : SoundtouchMessage {
+
+    public bool mute_enabled {get;set; default=false;}
+    public uint8 target_volume {get;set; }
+    public uint8 actual_volume {get;set;}
+
+
+    public VolumeUpdatedMessage.from_websocket(string xml) {
+        base();
+        var ctx = this.context(xml);
+        this.read_mute_enabled(ctx);
+        this.read_target_volume(ctx);
+        this.read_actual_volume(ctx);
+    }
+
+
+    public void read_mute_enabled(Xml.XPath.Context ctx) {
+        var mute_enabled_string = get_value(ctx, "/updates/volumeUpdated/volume/muteenabled");
+        this.mute_enabled = mute_enabled_string == "false" ? false : true;
+    }
+
+    public void read_target_volume(Xml.XPath.Context ctx) {
+        this.target_volume = (uint8)get_int_value(ctx, "/updates/volumeUpdated/volume/targetvolume");
+    }
+
+    public void read_actual_volume(Xml.XPath.Context ctx) {
+        this.actual_volume = (uint8)get_int_value(ctx, "/updates/volumeUpdated/volume/actualvolume");
+    }
 }
 public class NowPlayingChangeMessage : SoundtouchMessage {
     public PlayState play_state {get;set;}

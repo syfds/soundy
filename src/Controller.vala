@@ -78,7 +78,13 @@ public class Controller : GLib.Object {
                 this.model.artist = nowPlaying.artist;
                 this.model.image_url = nowPlaying.image_url;
                 this.model.fire_changed();
+            } else if (m is VolumeUpdatedMessage) {
+                this.model.actual_volume = ((VolumeUpdatedMessage)m).actual_volume;
+                this.model.target_volume = ((VolumeUpdatedMessage)m).target_volume;
+                this.model.mute_enabled = ((VolumeUpdatedMessage)m).mute_enabled;
+                this.model.fire_changed();
             }
+
         });
 
         this.client.connection_to_soundtouch_succeeded.connect(() => {
@@ -89,5 +95,9 @@ public class Controller : GLib.Object {
             this.model.connection_established = false;
             this.model.fire_changed();
         });
+    }
+
+    public void update_volume(uint8 double) {
+        this.client.update_volume(double);
     }
 }

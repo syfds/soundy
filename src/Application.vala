@@ -2,10 +2,7 @@ using Gtk;
 
 public class SoundyApp : Gtk.Application {
 
-
     public const string APP_ID = "com.github.sergejdobryak.soundy";
-    public static GLib.Settings settings = new GLib.Settings(APP_ID);
-
 
     public SoundyApp() {
         Object(
@@ -22,9 +19,9 @@ public class SoundyApp : Gtk.Application {
         main_window.default_width = 500;
         main_window.window_position = WindowPosition.CENTER;
 
-        //        string soundtouch_host = SoundtouchFinder.find("192.168.1.0", "192.168.1.254");
+        var settings = new Soundy.Settings(APP_ID);
+        var speaker_host = settings.get_speaker_host();
 
-        var speaker_host = settings.get_string("soundtouch-host");
         message(@"trying to connecto to $speaker_host");
 
         string host = speaker_host;

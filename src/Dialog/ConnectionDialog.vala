@@ -1,12 +1,14 @@
 public class ConnectionDialog : Gtk.Dialog {
-    private GLib.Settings settings;
+
+    private Soundy.Settings settings;
+
     private Gtk.Label connection_state_label;
     private Gtk.Box connection_state_container;
     private Gtk.Image connection_state_icon;
     private Gtk.Entry host_input;
 
 
-    public ConnectionDialog(GLib.Settings settings) {
+    public ConnectionDialog(Soundy.Settings settings) {
         Object(
                 border_width: 5,
                 deletable: false,
@@ -28,7 +30,7 @@ public class ConnectionDialog : Gtk.Dialog {
 
         host_input = new Gtk.Entry();
 
-        var host = this.settings.get_string("soundtouch-host");
+        var host = this.settings.get_speaker_host();
         host_input.set_text(host);
         host_input.changed.connect(() => this.try_connection());
 
@@ -41,7 +43,9 @@ public class ConnectionDialog : Gtk.Dialog {
         var ok_button = new Gtk.Button.with_label("OK");
         ok_button.clicked.connect((event) => {
             var entered_host = host_input.get_text();
-            this.settings.set_string("soundtouch-host", entered_host);
+
+            this.settings.set_speaker_host(entered_host);
+
             this.destroy();
         });
 

@@ -2,6 +2,7 @@ public class HeaderBar : Gtk.HeaderBar {
 
     private Gtk.Label title;
     private Gtk.Button power_on_off;
+    private Gtk.VolumeButton volume_button;
     private Gtk.MenuButton favourites;
     private Gtk.Button settings;
     private Gtk.Box main_box;
@@ -10,14 +11,8 @@ public class HeaderBar : Gtk.HeaderBar {
         set_show_close_button(true);
         title = new Gtk.Label("No title");
 
-        model.model_changed.connect(() => {
-            if (!model.connection_established) {
-                update_title("No connection");
-                power_on_off.visible = false;
-            } else {
-                update_title(model.soundtouch_speaker_name);
-                power_on_off.visible = true;
-            }
+        model.model_changed.connect((model) => {
+            this.update_gui(model);
         });
 
         power_on_off = create_button("system-shutdown-symbolic", 16);
@@ -25,6 +20,13 @@ public class HeaderBar : Gtk.HeaderBar {
             controller.power_on_clicked();
         });
 
+
+        volume_button = new Gtk.VolumeButton();
+        volume_button.use_symbolic = true;
+        volume_button.value_changed.connect((value) => {
+            controller.update_volume((uint8)(value * 100));
+            message("value changed: " + value.to_string());
+        });
 
         favourites = new Gtk.MenuButton();
         var menu_icon = new Gtk.Image();
@@ -47,6 +49,7 @@ public class HeaderBar : Gtk.HeaderBar {
 
         pack_end(settings);
         pack_end(favourites);
+        pack_end(volume_button);
 
         custom_title = main_box;
     }
@@ -88,5 +91,26 @@ public class HeaderBar : Gtk.HeaderBar {
         var popover = new Gtk.Popover(null);
         popover.add(menu_grid);
         favourites.popover = popover;
+    }
+
+    public void update_gui(Model model) {
+        if (!model.connection_established) {
+            update_title("No connection");
+            power_on_off.visible = false;
+        } else {
+            update_title(model.soundtouch_speaker_name);
+            power_on_off.visible = true;
+        }
+
+
+        if (model.mute_enabled) {
+            message("mute");
+            this.volume_button.set_value(0);
+        } else {
+            message("current volume: " + model.actual_volume.to_string());
+            double actual_volume = (double)model.actual_volume / 100;
+            this.volume_button.set_value(actual_volume);
+
+        }
     }
 }

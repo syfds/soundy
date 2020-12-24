@@ -35,7 +35,6 @@ public class SoundtouchClient : GLib.Object {
         send_key_action_to_speaker(KeyAction.PLAY, false);
     }
 
-
     public void pause_clicked() {
         send_key_action_to_speaker(KeyAction.PAUSE, false);
     }
@@ -46,6 +45,24 @@ public class SoundtouchClient : GLib.Object {
 
     public void prev_clicked() {
         send_key_action_to_speaker(KeyAction.PREV_TRACK, false);
+    }
+
+    public void update_volume(uint8 actual_volume) {
+        try {
+            Soup.Session session = new Soup.Session();
+
+            string uri = "http://" + host + ":8090/volume";
+            Soup.Message msg = new Soup.Message("POST", uri);
+            msg.set_request("text/xml", MemoryUse.COPY,
+                    @"<volume>$actual_volume</volume>".data);
+
+            string response_json = communicate_with_server(session, msg);
+
+            message(response_json);
+        } catch (GLib.Error error) {
+            message("error occured at sending to server " + error.message);
+            assert_not_reached();
+        }
     }
 
 

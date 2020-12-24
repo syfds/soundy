@@ -1,8 +1,7 @@
 using Gtk;
 
 public class MainPanel : Gtk.Box {
-
-    private GLib.Settings settings;
+    private Soundy.Settings settings;
     private Controller controller;
 
     private Grid title_panel;
@@ -19,10 +18,9 @@ public class MainPanel : Gtk.Box {
     private Gtk.Button next_btn;
     private Gtk.Button prev_btn;
 
-    public MainPanel(Controller controller, Model model, GLib.Settings settings) {
-
-        this.controller = controller;
+    public MainPanel(Controller controller, Model model, Soundy.Settings settings) {
         this.settings = settings;
+        this.controller = controller;
 
         model.model_changed.connect((model) => {
             this.update_gui(model);
@@ -133,14 +131,13 @@ public class MainPanel : Gtk.Box {
 
         if (!model.connection_established && !model.connection_dialog_tried) {
             model.connection_dialog_tried = true;
-            var dialog = new ConnectionDialog(settings);
+            var dialog = new ConnectionDialog(this.settings);
             dialog.run();
 
-            string host = settings.get_string("soundtouch-host");
+            string updated_host = this.settings.get_speaker_host();
 
-            var connection = new WebsocketConnection(host, "8080");
-
-            var client = new SoundtouchClient(connection, host);
+            var connection = new WebsocketConnection(updated_host, "8080");
+            var client = new SoundtouchClient(connection, updated_host);
 
             this.controller.update_client(client);
             this.controller.init();
