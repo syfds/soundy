@@ -16,9 +16,13 @@ public class SoundtouchMessageParser: GLib.Object {
 
 public class SoundtouchMessage : GLib.Object {
 
+    public string base_xpath {set; get; }
+
+    public SoundtouchMessage.with_base_path(string base_xpath) {
+        this.base_xpath = base_xpath;
+    }
     public SoundtouchMessage() {
     }
-
 
     public Xml.XPath.Context context(string xml) {
         Xml.Doc* doc = Xml.Parser.parse_doc(xml);
@@ -45,25 +49,33 @@ public class VolumeUpdatedMessage : SoundtouchMessage {
 
 
     public VolumeUpdatedMessage.from_websocket(string xml) {
-        base();
+        this.with_base_path("/updates/volumeUpdated");
+        init(xml);
+    }
+
+    public VolumeUpdatedMessage.from_rest_api(string xml) {
+        this.with_base_path("");
+        init(xml);
+    }
+
+    public void init(string xml) {
         var ctx = this.context(xml);
         this.read_mute_enabled(ctx);
         this.read_target_volume(ctx);
         this.read_actual_volume(ctx);
     }
 
-
     public void read_mute_enabled(Xml.XPath.Context ctx) {
-        var mute_enabled_string = get_value(ctx, "/updates/volumeUpdated/volume/muteenabled");
+        var mute_enabled_string = get_value(ctx, @"$base_xpath/volume/muteenabled");
         this.mute_enabled = mute_enabled_string == "false" ? false : true;
     }
 
     public void read_target_volume(Xml.XPath.Context ctx) {
-        this.target_volume = (uint8)get_int_value(ctx, "/updates/volumeUpdated/volume/targetvolume");
+        this.target_volume = (uint8)get_int_value(ctx, @"$base_xpath/volume/targetvolume");
     }
 
     public void read_actual_volume(Xml.XPath.Context ctx) {
-        this.actual_volume = (uint8)get_int_value(ctx, "/updates/volumeUpdated/volume/actualvolume");
+        this.actual_volume = (uint8)get_int_value(ctx, @"$base_xpath/volume/actualvolume");
     }
 }
 public class NowPlayingChangeMessage : SoundtouchMessage {
@@ -73,23 +85,19 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
     public string artist {get;set; default="";}
     public string image_url {get;set; default="";}
 
-    private string base_xpath;
-
     public NowPlayingChangeMessage.from_rest_api(string xml) {
-        this(xml, false);
+        this.with_base_path("");
+        init(xml);
     }
 
     public NowPlayingChangeMessage.from_websocket(string xml) {
-        this(xml, true);
+        this.with_base_path("/updates/nowPlayingUpdated");
+        init(xml);
     }
 
-    private NowPlayingChangeMessage(string xml, bool from_websocket) {
-
-        base();
-
-        this.base_xpath = from_websocket ? "/updates/nowPlayingUpdated" : "";
-
+    private void init(string xml) {
         var ctx = context(xml);
+
         if (xml.contains("STANDBY")) {
             this.standby = true;
         } else {
@@ -133,7 +141,7 @@ public class PresetsMessage : SoundtouchMessage {
     private Gee.ArrayList<Preset> presets = new Gee.ArrayList<Preset>();
 
     public PresetsMessage(string xml) {
-
+        base();
         var ctx = context(xml);
         Xml.XPath.Object* result = ctx.eval_expression("count(//preset)");
         double count_preset = result->floatval;

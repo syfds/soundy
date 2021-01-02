@@ -10,7 +10,7 @@ public class SoundtouchFinder : Object {
 
             message(@"will check $next_host_to_try");
 
-            var client = new SoundtouchClient.from_host(next_host_to_try);
+            var client = new Soundy.API.from_host(next_host_to_try);
 
             try {
                 string info = client.get_info();

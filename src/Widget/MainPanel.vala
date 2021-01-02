@@ -30,8 +30,6 @@ public class MainPanel : Gtk.Box {
 
         this.create_gui();
         this.show_all();
-
-        this.controller.init();
     }
 
     public void create_gui() {
@@ -93,7 +91,7 @@ public class MainPanel : Gtk.Box {
     }
 
     public void update_gui(Model model) {
-        message("Update GUI:");
+        message("Update GUI");
         message("connection established : " + model.connection_established.to_string());
         message("is playing: " + model.is_playing.to_string());
         message("track: " + model.track);
@@ -133,7 +131,7 @@ public class MainPanel : Gtk.Box {
             string updated_host = this.settings.get_speaker_host();
 
             var connection = new WebsocketConnection(updated_host, "8080");
-            var client = new SoundtouchClient(connection, updated_host);
+            var client = new Soundy.API(connection, updated_host);
 
             this.controller.update_client(client);
             this.controller.init();

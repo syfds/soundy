@@ -27,7 +27,7 @@ public class SoundyApp : Gtk.Application {
         string host = speaker_host;
         var connection = new WebsocketConnection(host, "8080");
 
-        var client = new SoundtouchClient(connection, host);
+        var client = new Soundy.API(connection, host);
         var controller = new Controller(client);
         var model = new Model();
 
@@ -35,6 +35,8 @@ public class SoundyApp : Gtk.Application {
         main_window.set_titlebar(header_bar);
 
         main_window.add(new MainPanel(controller, model, settings));
+
+        controller.init();
 
         main_window.show_all();
     }

@@ -1,10 +1,10 @@
 public class Controller : GLib.Object {
 
-    private SoundtouchClient client;
+    private Soundy.API client;
 
     public Model model {get; set;}
 
-    public Controller(SoundtouchClient client) {
+    public Controller(Soundy.API client) {
         this.update_client(client);
     }
 
@@ -65,7 +65,7 @@ public class Controller : GLib.Object {
         this.client.init_ws_connection();
     }
 
-    public void update_client(SoundtouchClient client) {
+    public void update_client(Soundy.API client) {
         this.client = client;
         this.client.event_from_soundtouch_received.connect((type, xml) => {
             var m = new SoundtouchMessageParser().read(xml);
@@ -91,6 +91,7 @@ public class Controller : GLib.Object {
             this.model.connection_established = true;
             this.update_speaker_name();
             this.update_currently_playing_track();
+            this.update_actual_volume();
         });
         this.client.connection_to_soundtouch_failed.connect(() => {
             this.model.connection_established = false;
@@ -100,5 +101,12 @@ public class Controller : GLib.Object {
 
     public void update_volume(uint8 double) {
         this.client.update_volume(double);
+    }
+
+    public void update_actual_volume() {
+        var response = this.client.get_volume();
+        var volume_message = new VolumeUpdatedMessage.from_rest_api(response);
+        this.model.actual_volume = volume_message.actual_volume;
+        this.model.fire_changed();
     }
 }

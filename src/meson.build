@@ -8,7 +8,9 @@ dependencies = [
 ]
 
 src_files = files([
-'SoundtouchClient.vala',
+'Api/API.vala',
+'Api/HttpClient.vala',
+'Api/APIMethods.vala',
 'WebsocketConnection.vala',
 'Controller.vala',
 'Model.vala',
