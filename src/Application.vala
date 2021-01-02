@@ -31,7 +31,7 @@ public class SoundyApp : Gtk.Application {
         var controller = new Controller(client);
         var model = new Model();
 
-        var header_bar = new HeaderBar(controller, model);
+        var header_bar = new Soundy.HeaderBar(controller, model);
         main_window.set_titlebar(header_bar);
 
         main_window.add(new MainPanel(controller, model, settings));

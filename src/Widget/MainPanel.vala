@@ -31,11 +31,7 @@ public class MainPanel : Gtk.Box {
         this.create_gui();
         this.show_all();
 
-        new Thread<void>("create connection", () => {
-            this.controller.init();
-            this.controller.update_speaker_name();
-            this.controller.update_currently_playing_track();
-        });
+        this.controller.init();
     }
 
     public void create_gui() {
@@ -141,8 +137,6 @@ public class MainPanel : Gtk.Box {
 
             this.controller.update_client(client);
             this.controller.init();
-            this.controller.update_speaker_name();
-            this.controller.update_currently_playing_track();
         }
 
         buttons.show_all();

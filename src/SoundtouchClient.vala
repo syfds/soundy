@@ -21,10 +21,10 @@ public class SoundtouchClient : GLib.Object {
         this.connection = connection;
         this.host = host;
 
-        this.connection.ws_message.connect((type, mes) => {
-            message(@"received $mes");
-            this.event_from_soundtouch_received(type, mes);
-        });
+        //        this.connection.ws_message.connect((type, mes) => {
+//            message(@"received $mes");
+//            this.event_from_soundtouch_received(type, mes);
+//        });
     }
 
     public void power_on_clicked() {
@@ -80,7 +80,6 @@ public class SoundtouchClient : GLib.Object {
             uint8[] data_arr = new uint8[10000];
             data.read_all(data_arr, null);
             string response_xml = (string) data_arr;
-            //        string response_xml = communicate_with_server(session, msg);
 
             message(response_xml);
             Xml.Doc* doc = Xml.Parser.parse_doc(response_xml);

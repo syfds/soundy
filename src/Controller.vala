@@ -89,7 +89,8 @@ public class Controller : GLib.Object {
 
         this.client.connection_to_soundtouch_succeeded.connect(() => {
             this.model.connection_established = true;
-            this.model.fire_changed();
+            this.update_speaker_name();
+            this.update_currently_playing_track();
         });
         this.client.connection_to_soundtouch_failed.connect(() => {
             this.model.connection_established = false;
