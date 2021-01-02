@@ -61,22 +61,6 @@ public class WebsocketConnection {
     }
 
     private static string decode_bytes(Bytes byt, int n) {
-        Intl.setlocale();
-
-        /* The reason for the for loop is to remove
-         * garbage after the main JSON string.
-         * Store contents of the byte array in to
-         * another array and stop when the expected
-         * array length is reached
-         */
-
-        uint8[] chars = new uint8 [n];
-        uint8[] capdata = byt.get_data();
-        for (int i = 0; i < n; i++) {
-            chars[i] = capdata[i];
-        }
-        string output = """%s""".printf(@"$((string) chars)\n");
-
-        return output;
+        return (string)byt.get_data();
     }
 }
