@@ -23,8 +23,9 @@ public class HeaderBar : Gtk.HeaderBar {
 
         volume_button = new Gtk.VolumeButton();
         volume_button.use_symbolic = true;
+        volume_button.adjustment = new Gtk.Adjustment(0.0, 0.0, 100.0, 5.0, 5.0, 5.0);
         volume_button.value_changed.connect((value) => {
-            controller.update_volume((uint8)(value * 100));
+            controller.update_volume((uint8)(value));
             message("value changed: " + value.to_string());
         });
 
@@ -108,7 +109,7 @@ public class HeaderBar : Gtk.HeaderBar {
             this.volume_button.set_value(0);
         } else {
             message("current volume: " + model.actual_volume.to_string());
-            double actual_volume = (double)model.actual_volume / 100;
+            double actual_volume = (double) model.actual_volume;
             this.volume_button.set_value(actual_volume);
 
         }
