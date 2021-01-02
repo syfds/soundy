@@ -22,10 +22,3 @@ src_files = files([
 ])
 
 src_files_with_main = src_files + files(['Application.vala'])
-
-executable(
-    meson.project_name(),
-    sources: src_files_with_main,
-    dependencies: dependencies,
-    install: true
-)
