@@ -5,7 +5,7 @@ namespace Soundy {
         private Gtk.Button power_on_off;
         private Gtk.VolumeButton volume_button;
         private Gtk.MenuButton favourites;
-        private Gtk.Button settings;
+        private Gtk.MenuButton settings;
         private Gtk.Box main_box;
 
         public HeaderBar(Controller controller, Model model) {
@@ -30,18 +30,11 @@ namespace Soundy {
                 message("value changed: " + value.to_string());
             });
 
-            favourites = new Gtk.MenuButton();
-            var menu_icon = new Gtk.Image();
-            menu_icon.gicon = new ThemedIcon("non-starred-symbolic");
-            menu_icon.pixel_size = 16;
-
-            favourites.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
-            favourites.image = menu_icon;
-            favourites.can_focus = false;
-
+            favourites = this.create_menu_button("non-starred-symbolic", 16);
             this.create_preset_items(controller);
 
-            settings = create_button("preferences-system-symbolic", 16);
+            settings = this.create_menu_button("preferences-system-symbolic", 16);
+            this.create_settings_items();
 
             main_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 6);
             main_box.halign = Gtk.Align.CENTER;
@@ -113,6 +106,53 @@ namespace Soundy {
                 double actual_volume = (double) model.actual_volume;
                 this.volume_button.set_value(actual_volume);
             }
+        }
+
+
+        public Gtk.MenuButton create_menu_button(string icon_name, int pixel_size) {
+            var menu_button = new Gtk.MenuButton();
+            var menu_icon = new Gtk.Image();
+            menu_icon.gicon = new ThemedIcon(icon_name);
+            menu_icon.pixel_size = pixel_size;
+
+            menu_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+            menu_button.image = menu_icon;
+            menu_button.can_focus = false;
+            return menu_button;
+        }
+
+
+        public void create_settings_items() {
+            var menu_grid = new Gtk.Grid();
+            menu_grid.margin_top = 6;
+            menu_grid.margin_bottom = 6;
+            menu_grid.orientation = Gtk.Orientation.VERTICAL;
+
+            var wifi_button = new Gtk.Button.with_label("Wifi signal");
+            wifi_button.can_focus = false;
+            wifi_button.get_style_context().add_class(Gtk.STYLE_CLASS_MENUITEM);
+            wifi_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+
+            var speaker_host_button = new Gtk.Button.with_label("Speaker host");
+            speaker_host_button.can_focus = false;
+            speaker_host_button.get_style_context().add_class(Gtk.STYLE_CLASS_MENUITEM);
+            speaker_host_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+
+
+            var about_button = new Gtk.Button.with_label("About");
+            about_button.can_focus = false;
+            about_button.get_style_context().add_class(Gtk.STYLE_CLASS_MENUITEM);
+            about_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+
+            menu_grid.add(wifi_button);
+            menu_grid.add(new Gtk.Separator(Gtk.Orientation.HORIZONTAL));
+            menu_grid.add(speaker_host_button);
+            menu_grid.add(about_button);
+            menu_grid.show_all();
+
+            var popover = new Gtk.Popover(null);
+            popover.add(menu_grid);
+            settings.popover = popover;
         }
     }
 }

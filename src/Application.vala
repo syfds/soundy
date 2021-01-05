@@ -15,7 +15,7 @@ public class SoundyApp : Gtk.Application {
 
         var main_window = new Gtk.ApplicationWindow(this);
         main_window.resizable = true;
-        main_window.default_height = 500;
+        main_window.default_height = 300;
         main_window.default_width = 500;
         main_window.window_position = WindowPosition.CENTER;
 
@@ -25,7 +25,7 @@ public class SoundyApp : Gtk.Application {
         message(@"trying to connecto to $speaker_host");
 
         string host = speaker_host;
-        var connection = new WebsocketConnection(host, "8080");
+        var connection = new Soundy.WebsocketConnection(host, "8080");
 
         var client = new Soundy.API(connection, host);
         var controller = new Controller(client);

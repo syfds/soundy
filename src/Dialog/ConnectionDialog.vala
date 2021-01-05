@@ -71,7 +71,7 @@ public class ConnectionDialog : Gtk.Dialog {
 
         connection_state_label.set_text("Trying to connect to " + changed_host);
 
-        var connection = new WebsocketConnection(changed_host, "8080");
+        var connection = new Soundy.WebsocketConnection(changed_host, "8080");
 
         connection.connection_failed.connect(() => {
             message("Connection failed");

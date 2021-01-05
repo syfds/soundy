@@ -28,48 +28,32 @@ namespace Soundy {
         }
 
         public void power_on_clicked() {
-            send_key_action_to_speaker(KeyAction.POWER, false);
+            this.client.invoke(APIMethods.power());
         }
 
         public void play_clicked() {
-            send_key_action_to_speaker(KeyAction.PLAY, false);
+            this.client.invoke(APIMethods.play());
         }
 
         public void pause_clicked() {
-            send_key_action_to_speaker(KeyAction.PAUSE, false);
+            this.client.invoke(APIMethods.pause());
         }
 
         public void next_clicked() {
-            send_key_action_to_speaker(KeyAction.NEXT_TRACK, false);
+            this.client.invoke(APIMethods.next());
         }
 
         public void prev_clicked() {
-            send_key_action_to_speaker(KeyAction.PREV_TRACK, false);
+            this.client.invoke(APIMethods.previous());
         }
 
         public string get_volume() {
-            var response = this.client.invoke(new GetVolume());
-            return response;
+            return this.client.invoke(new GetVolume());
         }
 
         public void update_volume(uint8 actual_volume) {
-            try {
-                Soup.Session session = new Soup.Session();
-
-                string uri = "http://" + host + ":8090/volume";
-                Soup.Message msg = new Soup.Message("POST", uri);
-                msg.set_request("text/xml", MemoryUse.COPY,
-                        @"<volume>$actual_volume</volume>".data);
-
-                string response_json = communicate_with_server(session, msg);
-
-                message(response_json);
-            } catch (GLib.Error error) {
-                message("error occured at sending to server " + error.message);
-                assert_not_reached();
-            }
+            this.client.invoke(APIMethods.update_volume(actual_volume));
         }
-
 
         public string get_info() {
             string response = this.client.invoke(new GetMethod("/info"));
@@ -84,8 +68,7 @@ namespace Soundy {
         }
 
         public string get_now_playing() {
-            var response = this.client.invoke(new GetNowPlaying());
-            return response;
+            return this.client.invoke(APIMethods.get_now_playing());
         }
 
         private void send_key_action_to_speaker_with_release(KeyAction action) {
@@ -145,7 +128,7 @@ namespace Soundy {
             return response_json;
         }
 
-        private enum KeyState {
+        enum KeyState {
             RELEASE, PRESS;
 
             public string to_string() {
@@ -157,7 +140,7 @@ namespace Soundy {
             }
         }
 
-        private enum KeyAction {
+        enum KeyAction {
             PLAY,
             PAUSE,
             STOP,

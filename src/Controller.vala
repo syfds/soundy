@@ -8,7 +8,7 @@ public class Controller : GLib.Object {
         this.update_client(client);
     }
 
-    public void update_speaker_name() {
+    private void update_speaker_name() {
         string name = this.client.get_info();
         this.model.soundtouch_speaker_name = name;
         this.model.fire_changed();
@@ -16,8 +16,8 @@ public class Controller : GLib.Object {
 
     public void power_on_clicked() {
         this.client.power_on_clicked();
-        this.model.is_playing = true;
     }
+
     public void play_clicked() {
         this.client.play_clicked();
     }
@@ -26,11 +26,9 @@ public class Controller : GLib.Object {
         this.client.pause_clicked();
     }
 
-    public void update_currently_playing_track() {
+    private void update_currently_playing_track() {
         var xml = this.client.get_now_playing();
         var m = new NowPlayingChangeMessage.from_rest_api(xml);
-
-        message("NOW_PLAYING " + xml);
 
         if (m.standby) {
             this.model.is_playing = false;
@@ -52,7 +50,6 @@ public class Controller : GLib.Object {
     }
 
     public PresetsMessage get_presets() {
-        message("get presets");
         string xml = this.client.get_presets();
         return new PresetsMessage(xml);
     }
@@ -69,7 +66,6 @@ public class Controller : GLib.Object {
         this.client = client;
         this.client.event_from_soundtouch_received.connect((type, xml) => {
             var m = new SoundtouchMessageParser().read(xml);
-            message("received message parsed!");
             if (m is NowPlayingChangeMessage) {
                 NowPlayingChangeMessage nowPlaying = (NowPlayingChangeMessage)m;
 
@@ -103,7 +99,7 @@ public class Controller : GLib.Object {
         this.client.update_volume(double);
     }
 
-    public void update_actual_volume() {
+    private void update_actual_volume() {
         var response = this.client.get_volume();
         var volume_message = new VolumeUpdatedMessage.from_rest_api(response);
         this.model.actual_volume = volume_message.actual_volume;

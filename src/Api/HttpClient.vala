@@ -17,8 +17,9 @@ namespace Soundy {
 
             Soup.Message msg = new Soup.Message(action.get_method(), uri);
 
-            if (action.with_body()) {
-                msg.set_request("text/xml", MemoryUse.COPY, action.get_body());
+            message("body " + action.get_body());
+            if (action.get_body() != null && action.get_body() != "" && action.get_body().length > 0) {
+                msg.set_request("text/xml", MemoryUse.COPY, action.get_body().data);
             }
 
             string response = communicate_with_server(session, msg);
@@ -36,6 +37,7 @@ namespace Soundy {
             timeout.set_callback(() => {
                 session.queue_message(msg, (sess, msg) => {
                     response = (string) msg.response_body.data;
+                    message("got response" + response);
                     loop.quit();
                 });
 
@@ -45,6 +47,8 @@ namespace Soundy {
             timeout.attach(loop.get_context());
             loop.run();
 
+
+            message("return response " + response);
             return response;
         }
     }
@@ -52,7 +56,6 @@ namespace Soundy {
     public interface APIMethod: GLib.Object {
         public abstract string get_path();
         public abstract string get_method();
-        public abstract bool with_body();
-        public abstract uint8[] get_body();
+        public abstract string get_body();
     }
 }
