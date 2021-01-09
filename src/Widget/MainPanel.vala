@@ -4,6 +4,7 @@ public class MainPanel : Gtk.Box {
     private Soundy.Settings settings;
     private Controller controller;
 
+    private Gtk.Spinner loading_spinner;
     private Grid title_panel;
     private Grid currently_playing_panel;
     private Gtk.Label currently_playing_track;
@@ -35,6 +36,14 @@ public class MainPanel : Gtk.Box {
     public void create_gui() {
         set_orientation(Orientation.VERTICAL);
         set_baseline_position(BaselinePosition.CENTER);
+
+
+        loading_spinner = new Gtk.Spinner();
+        loading_spinner.halign = Gtk.Align.FILL;
+        loading_spinner.valign = Gtk.Align.FILL;
+        loading_spinner.expand = true;
+        loading_spinner.active = true;
+
 
         this.prev_btn = create_button("media-skip-backward-symbolic", 32);
         this.prev_btn.clicked.connect((event) => {
@@ -97,6 +106,8 @@ public class MainPanel : Gtk.Box {
         message("track: " + model.track);
         message("artist: " + model.artist);
         message("image_url: " + model.image_url);
+        message("is_radio_streaming: " + model.is_radio_streaming.to_string());
+
 
         if (model.is_playing) {
             buttons.remove(play_btn);
@@ -104,6 +115,17 @@ public class MainPanel : Gtk.Box {
         } else {
             buttons.remove(pause_btn);
             buttons.attach(play_btn, 1, 0);
+        }
+
+        if (model.is_radio_streaming) {
+            buttons.remove(next_btn);
+            buttons.remove(prev_btn);
+        } else {
+            buttons.remove(next_btn);
+            buttons.attach(next_btn, 2, 0);
+
+            buttons.remove(prev_btn);
+            buttons.attach(prev_btn, 0, 0);
         }
 
         if (model.track != "") {
@@ -119,8 +141,22 @@ public class MainPanel : Gtk.Box {
                 currently_playing_panel.remove(image);
             }
 
+
             var image = this.create_image_from_url(model.image_url);
-            currently_playing_panel.attach(image, 0, 2);
+
+            if (model.is_buffering_in_progress) {
+                loading_spinner.start();
+                var overlay = new Gtk.Overlay();
+
+                overlay.add_overlay(loading_spinner);
+
+                overlay.add(image);
+
+                currently_playing_panel.attach(overlay, 0, 2);
+            } else {
+                loading_spinner.stop();
+                currently_playing_panel.attach(image, 0, 2);
+            }
         }
 
         if (!model.connection_established && !model.connection_dialog_tried) {

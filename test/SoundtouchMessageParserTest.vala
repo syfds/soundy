@@ -35,6 +35,7 @@ public void test_now_playing_message_read() {
     assert(m.image_url == "http://cdn-albums.tunein.com/gn/95TC6BCT5Mg.jpg");
     assert(m.artist == "Martin Solveig - Hey Now");
     assert(m.standby == false);
+    assert(m.play_state == PlayState.STOP_STATE);
 }
 
 
@@ -49,6 +50,7 @@ public void test_now_playing_update_message_read() {
     assert(nowPlaying.artist == "Snow Patrol - Chasing Cars");
     assert(nowPlaying.image_url == "http://cdn-albums.tunein.com/gn/VDR068M5JDg.jpg");
     assert(nowPlaying.standby == false);
+    assert(nowPlaying.is_radio_streaming == true);
 }
 
 public int main(string[] args) {

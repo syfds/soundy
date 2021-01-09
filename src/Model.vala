@@ -9,6 +9,9 @@ public class Model : GLib.Object {
     public uint8 target_volume {get;set;}
     public bool mute_enabled {get;set;default=false;}
 
+    public bool is_radio_streaming {get;set;default=false;}
+    public bool is_buffering_in_progress {get;set;default=false;}
+
     bool _is_playing = false;
     public bool is_playing {
         get {

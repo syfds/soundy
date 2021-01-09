@@ -26,6 +26,35 @@ public class APIMethods : GLib.Object {
     public static Soundy.APIMethod get_now_playing() {
         return new GetNowPlaying();
     }
+
+    public static Soundy.APIMethod get_volume() {
+        return new GetMethod("/volume");
+    }
+
+    public static Soundy.APIMethod get_info() {
+        return new GetMethod("/info");
+    }
+
+    public static Soundy.APIMethod play_preset(string item_id, KeyState state) {
+        KeyAction preset;
+        if (item_id == "1") {
+            preset = KeyAction.PRESET_1;
+        } else if (item_id == "2") {
+            preset = KeyAction.PRESET_2;
+        } else if (item_id == "3") {
+            preset = KeyAction.PRESET_3;
+        } else if (item_id == "4") {
+            preset = KeyAction.PRESET_4;
+        } else if (item_id == "5") {
+            preset = KeyAction.PRESET_5;
+        } else if (item_id == "6") {
+            preset = KeyAction.PRESET_6;
+        } else {
+            assert_not_reached();
+        }
+
+        return new KeyMethod(preset, state);
+    }
 }
 
 internal class GetMethod : Soundy.APIMethod, GLib.Object {
@@ -40,11 +69,6 @@ internal class GetMethod : Soundy.APIMethod, GLib.Object {
     public override string get_path() {return path;}
 }
 
-internal class GetVolume : GetMethod {
-    public GetVolume() {
-        base("/volume");
-    }
-}
 
 internal class UpdateVolume : Soundy.APIMethod, GLib.Object {
     public uint8 actual_volume {set construct; get;}

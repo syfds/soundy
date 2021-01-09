@@ -9,8 +9,10 @@ public class Controller : GLib.Object {
     }
 
     private void update_speaker_name() {
-        string name = this.client.get_info();
-        this.model.soundtouch_speaker_name = name;
+        string response = this.client.get_info();
+        var info_message = new GetInfoMessage.from_rest_api(response);
+
+        this.model.soundtouch_speaker_name = info_message.speaker_name;
         this.model.fire_changed();
     }
 
@@ -34,9 +36,11 @@ public class Controller : GLib.Object {
             this.model.is_playing = false;
         } else {
             this.model.is_playing = m.play_state == PlayState.PLAY_STATE;
+            this.model.is_buffering_in_progress = m.play_state == PlayState.BUFFERING_STATE;
             this.model.track = m.track;
             this.model.artist = m.artist;
             this.model.image_url = m.image_url;
+            this.model.is_radio_streaming = m.is_radio_streaming;
         }
         this.model.fire_changed();
     }
@@ -70,9 +74,11 @@ public class Controller : GLib.Object {
                 NowPlayingChangeMessage nowPlaying = (NowPlayingChangeMessage)m;
 
                 this.model.is_playing = nowPlaying.play_state == PlayState.PLAY_STATE;
+                this.model.is_buffering_in_progress = nowPlaying.play_state == PlayState.BUFFERING_STATE;
                 this.model.track = nowPlaying.track;
                 this.model.artist = nowPlaying.artist;
                 this.model.image_url = nowPlaying.image_url;
+                this.model.is_radio_streaming = nowPlaying.is_radio_streaming;
                 this.model.fire_changed();
             } else if (m is VolumeUpdatedMessage) {
                 this.model.actual_volume = ((VolumeUpdatedMessage)m).actual_volume;

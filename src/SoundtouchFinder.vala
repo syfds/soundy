@@ -14,7 +14,8 @@ public class SoundtouchFinder : Object {
 
             try {
                 string info = client.get_info();
-                if ("" != info && null != info && info.size() > 0) {
+                var info_message = new GetInfoMessage.from_rest_api(info);
+                if ("" != info_message.speaker_name && null != info_message.speaker_name && info_message.speaker_name.size() > 0) {
 
                     message(@"got it for $next_host_to_try");
 

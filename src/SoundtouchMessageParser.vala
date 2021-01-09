@@ -78,9 +78,26 @@ public class VolumeUpdatedMessage : SoundtouchMessage {
         this.actual_volume = (uint8)get_int_value(ctx, @"$base_xpath/volume/actualvolume");
     }
 }
+
+public class GetInfoMessage: SoundtouchMessage {
+
+    public string speaker_name {get; set;}
+
+    public GetInfoMessage.from_rest_api(string xml) {
+        this.with_base_path("");
+        init(xml);
+    }
+
+    private void init(string xml) {
+        var ctx = context(xml);
+        speaker_name = get_value(ctx, "/info/name");
+    }
+}
+
 public class NowPlayingChangeMessage : SoundtouchMessage {
     public PlayState play_state {get;set;}
     public bool standby {get;set; default=false;}
+    public bool is_radio_streaming {get;set; default=false;}
     public string track {get;set; default="";}
     public string artist {get;set; default="";}
     public string image_url {get;set; default="";}
@@ -105,12 +122,20 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
             this.read_track(ctx);
             this.read_artist(ctx);
             this.read_image_url(ctx);
+            this.read_radio_streaming(ctx);
         }
     }
 
     private void read_play_state(Xml.XPath.Context ctx) {
         string value = get_value(ctx, @"$base_xpath/nowPlaying/playStatus");
-        play_state = value == "PAUSE_STATE" || value == "STOP_STATE" ? PlayState.STOP_STATE : PlayState.PLAY_STATE;
+
+        if (value == "PAUSE_STATE" || value == "STOP_STATE") {
+            play_state = PlayState.STOP_STATE;
+        } else if (value == "BUFFERING_STATE") {
+            play_state = PlayState.BUFFERING_STATE;
+        } else {
+            play_state = PlayState.PLAY_STATE;
+        }
 
     }
 
@@ -125,10 +150,20 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
     public void read_image_url(Xml.XPath.Context ctx) {
         image_url = get_value(ctx, @"$base_xpath/nowPlaying/art");
     }
+
+    public void read_radio_streaming(Xml.XPath.Context ctx) {
+        string stream_type  = get_value(ctx, @"$base_xpath/nowPlaying/streamType");
+        if (stream_type == "RADIO_STREAMING") {
+            is_radio_streaming = true;
+        } else {
+            is_radio_streaming = false;
+        }
+    }
 }
 
 public enum PlayState {
     STOP_STATE,
+    BUFFERING_STATE,
     PLAY_STATE
 }
 
