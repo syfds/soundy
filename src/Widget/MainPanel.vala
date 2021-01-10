@@ -9,7 +9,7 @@ public class MainPanel : Gtk.Box {
     private Grid currently_playing_panel;
     private Gtk.Label currently_playing_track;
     private Gtk.Label currently_playing_artist;
-    private Gtk.Image image;
+    private LoadableImagePanel image_container;
 
 
     private Grid buttons;
@@ -39,8 +39,8 @@ public class MainPanel : Gtk.Box {
 
 
         loading_spinner = new Gtk.Spinner();
-        loading_spinner.halign = Gtk.Align.FILL;
-        loading_spinner.valign = Gtk.Align.FILL;
+        loading_spinner.halign = Gtk.Align.CENTER;
+        loading_spinner.valign = Gtk.Align.CENTER;
         loading_spinner.expand = true;
         loading_spinner.active = true;
 
@@ -137,26 +137,38 @@ public class MainPanel : Gtk.Box {
         }
         if (model.image_url != "") {
 
-            if (image != null) {
-                currently_playing_panel.remove(image);
+            if (image_container != null) {
+                currently_playing_panel.remove(image_container);
             }
 
-
-            var image = this.create_image_from_url(model.image_url);
+            image_container = new LoadableImagePanel(model.image_url, 250, 250);
 
             if (model.is_buffering_in_progress) {
-                loading_spinner.start();
-                var overlay = new Gtk.Overlay();
-
-                overlay.add_overlay(loading_spinner);
-
-                overlay.add(image);
-
-                currently_playing_panel.attach(overlay, 0, 2);
+                image_container.start_loading_spinner();
             } else {
-                loading_spinner.stop();
-                currently_playing_panel.attach(image, 0, 2);
+                image_container.stop_loading_spinner();
             }
+
+            currently_playing_panel.attach(image_container, 0, 2);
+
+
+            //            image_container = this.create_image_from_url(model.image_url, 250, 250);
+//
+//            if (model.is_buffering_in_progress) {
+//                loading_spinner.start();
+//                var overlay = new Gtk.Overlay();
+//
+//                overlay.add_overlay(loading_spinner);
+//
+//                overlay.add(image_container);
+//
+//                currently_playing_panel.attach(overlay, 0, 2);
+//            } else {
+//                loading_spinner.stop();
+//                //            image.set_size_request(250, 250);
+//
+//                currently_playing_panel.attach(image_container, 0, 2);
+//            }
         }
 
         if (!model.connection_established && !model.connection_dialog_tried) {
@@ -203,15 +215,13 @@ public class MainPanel : Gtk.Box {
         return label;
     }
 
-    public Gtk.Image create_image_from_url(string image_url) {
-        Soup.Message msg = new Soup.Message("GET", image_url);
-        Soup.Session session = new Soup.Session();
-
-        var input_stream = session.send(msg);
-
-        image = new Gtk.Image();
-        Gdk.Pixbuf image_pixbuf = new Gdk.Pixbuf.from_stream_at_scale(input_stream, 250, 250, true);
-        image.set_from_pixbuf(image_pixbuf);
-        return image;
-    }
+    //    public Gtk.Widget create_image_from_url(string image_url, int width, int height) {
+//        Soup.Message msg = new Soup.Message("GET", image_url);
+//        Soup.Session session = new Soup.Session();
+//
+//        var input_stream = session.send(msg);
+//
+//        Gdk.Pixbuf image_pixbuf = new Gdk.Pixbuf.from_stream_at_scale(input_stream, width, height, true);
+//        return new LoadableImage.from(image_pixbuf, width, height);
+//    }
 }
