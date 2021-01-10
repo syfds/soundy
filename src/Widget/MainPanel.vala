@@ -108,6 +108,22 @@ public class MainPanel : Gtk.Box {
         message("image_url: " + model.image_url);
         message("is_radio_streaming: " + model.is_radio_streaming.to_string());
 
+        if (model.image_url != "") {
+
+            if (image_container != null) {
+                currently_playing_panel.remove(image_container);
+            }
+
+            image_container = new LoadableImagePanel(model.image_url, 250, 250);
+
+            if (model.is_buffering_in_progress) {
+                image_container.start_loading_spinner();
+            } else {
+                image_container.stop_loading_spinner();
+            }
+
+            currently_playing_panel.attach(image_container, 0, 2);
+        }
 
         if (model.is_playing) {
             buttons.remove(play_btn);
@@ -134,41 +150,6 @@ public class MainPanel : Gtk.Box {
 
         if (model.artist != "") {
             this.currently_playing_artist.set_text(model.artist);
-        }
-        if (model.image_url != "") {
-
-            if (image_container != null) {
-                currently_playing_panel.remove(image_container);
-            }
-
-            image_container = new LoadableImagePanel(model.image_url, 250, 250);
-
-            if (model.is_buffering_in_progress) {
-                image_container.start_loading_spinner();
-            } else {
-                image_container.stop_loading_spinner();
-            }
-
-            currently_playing_panel.attach(image_container, 0, 2);
-
-
-            //            image_container = this.create_image_from_url(model.image_url, 250, 250);
-//
-//            if (model.is_buffering_in_progress) {
-//                loading_spinner.start();
-//                var overlay = new Gtk.Overlay();
-//
-//                overlay.add_overlay(loading_spinner);
-//
-//                overlay.add(image_container);
-//
-//                currently_playing_panel.attach(overlay, 0, 2);
-//            } else {
-//                loading_spinner.stop();
-//                //            image.set_size_request(250, 250);
-//
-//                currently_playing_panel.attach(image_container, 0, 2);
-//            }
         }
 
         if (!model.connection_established && !model.connection_dialog_tried) {
@@ -214,14 +195,4 @@ public class MainPanel : Gtk.Box {
 
         return label;
     }
-
-    //    public Gtk.Widget create_image_from_url(string image_url, int width, int height) {
-//        Soup.Message msg = new Soup.Message("GET", image_url);
-//        Soup.Session session = new Soup.Session();
-//
-//        var input_stream = session.send(msg);
-//
-//        Gdk.Pixbuf image_pixbuf = new Gdk.Pixbuf.from_stream_at_scale(input_stream, width, height, true);
-//        return new LoadableImage.from(image_pixbuf, width, height);
-//    }
 }

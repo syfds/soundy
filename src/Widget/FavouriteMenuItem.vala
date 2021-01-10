@@ -10,6 +10,9 @@ public class FavouriteMenuItem : Gtk.Button {
         this.image_url = image_url;
         this.can_focus = false;
         this.always_show_image = true;
+        this.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+        this.get_style_context().add_class(Gtk.STYLE_CLASS_MENUITEM);
+
 
         this.item_id = preset.item_id;
         this.controller = controller;

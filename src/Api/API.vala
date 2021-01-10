@@ -29,7 +29,7 @@ namespace Soundy {
 
         public void init_ws_connection() {
             this.connection.ws_message.connect((type, mes) => {
-                message(@"received $mes");
+                debug(@"received $mes");
                 this.event_from_soundtouch_received(type, mes);
             });
 

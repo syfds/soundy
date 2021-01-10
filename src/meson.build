@@ -21,7 +21,6 @@ src_files = files([
 'Widget/FavouriteMenuItem.vala',
 'Widget/LoadableImage.vala',
 'Widget/LoadableImagePanel.vala',
-'SoundtouchFinder.vala',
 'Dialog/ConnectionDialog.vala'
 ])
 

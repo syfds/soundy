@@ -37,7 +37,7 @@ namespace Soundy {
             timeout.set_callback(() => {
                 session.queue_message(msg, (sess, msg) => {
                     response = (string) msg.response_body.data;
-                    message("got response" + response);
+                    debug("got response" + response);
                     loop.quit();
                 });
 

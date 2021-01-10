@@ -18,7 +18,7 @@ namespace Soundy {
             this.ws_connected = false;
         }
 
-        public void set_connection_address(string ip, string port_number) {
+        public void set_connection_address(string ip_address, string port_number) {
             this.ip_address = ip_address;
             this.port_number = port_number;
         }
