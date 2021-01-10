@@ -13,7 +13,6 @@ public class MainPanel : Gtk.Box {
 
 
     private Grid buttons;
-    private Gtk.Button middle_btn_placeholder;
     private Gtk.Button play_btn;
     private Gtk.Button pause_btn;
     private Gtk.Button next_btn;
@@ -168,10 +167,6 @@ public class MainPanel : Gtk.Box {
 
         buttons.show_all();
         this.show_all();
-    }
-
-    private void attach(Gtk.Widget w, int left, int top) {
-        this.pack_start(w, false, false, 10);
     }
 
     private Gtk.Button create_button(string icon, int size) {

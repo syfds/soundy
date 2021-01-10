@@ -37,7 +37,7 @@ public class SoundtouchMessage : GLib.Object {
 
     public int get_int_value(Xml.XPath.Context context, string xpath) {
         string value = get_value(context, xpath);
-        return value.to_int();
+        return int.parse(value);
     }
 
 }

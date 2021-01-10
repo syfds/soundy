@@ -48,7 +48,7 @@ namespace Soundy {
             loop.run();
 
 
-            message("return response " + response);
+            debug("return response " + response);
             return response;
         }
     }
