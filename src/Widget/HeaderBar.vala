@@ -133,10 +133,14 @@ namespace Soundy {
             wifi_button.get_style_context().add_class(Gtk.STYLE_CLASS_MENUITEM);
             wifi_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
 
-            var speaker_host_button = new Gtk.Button.with_label("Speaker host");
+            var speaker_host_button = new Gtk.Button.with_label("Find speaker...");
             speaker_host_button.can_focus = false;
             speaker_host_button.get_style_context().add_class(Gtk.STYLE_CLASS_MENUITEM);
             speaker_host_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+            speaker_host_button.clicked.connect(() => {
+                var dialog = new ConnectionDialog(Soundy.Settings.get_instance());
+                dialog.run();
+            });
 
 
             var about_button = new Gtk.Button.with_label("About");
