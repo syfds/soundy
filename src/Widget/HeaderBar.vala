@@ -128,30 +128,17 @@ namespace Soundy {
             menu_grid.margin_bottom = 6;
             menu_grid.orientation = Gtk.Orientation.VERTICAL;
 
-            var wifi_button = new Gtk.Button.with_label("Wifi signal");
-            wifi_button.can_focus = false;
-            wifi_button.get_style_context().add_class(Gtk.STYLE_CLASS_MENUITEM);
-            wifi_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
-
-            var speaker_host_button = new Gtk.Button.with_label("Find speaker...");
+            var speaker_host_button = new Gtk.Button.with_label("Speaker host");
             speaker_host_button.can_focus = false;
             speaker_host_button.get_style_context().add_class(Gtk.STYLE_CLASS_MENUITEM);
             speaker_host_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
+
             speaker_host_button.clicked.connect(() => {
                 var dialog = new ConnectionDialog(Soundy.Settings.get_instance());
                 dialog.run();
             });
 
-
-            var about_button = new Gtk.Button.with_label("About");
-            about_button.can_focus = false;
-            about_button.get_style_context().add_class(Gtk.STYLE_CLASS_MENUITEM);
-            about_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
-
-            menu_grid.add(wifi_button);
-            menu_grid.add(new Gtk.Separator(Gtk.Orientation.HORIZONTAL));
             menu_grid.add(speaker_host_button);
-            menu_grid.add(about_button);
             menu_grid.show_all();
 
             var popover = new Gtk.Popover(null);

@@ -11,9 +11,9 @@ public class ConnectionDialog : Gtk.Dialog {
     public ConnectionDialog(Soundy.Settings settings) {
         Object(
                 border_width: 5,
-                deletable: false,
                 resizable: false,
-                deletable: true
+                deletable: true,
+                window_position: Gtk.WindowPosition.CENTER_ON_PARENT
         );
 
         this.settings = settings;
@@ -41,6 +41,7 @@ public class ConnectionDialog : Gtk.Dialog {
         });
 
         var ok_button = new Gtk.Button.with_label("OK");
+        ok_button.has_focus = true;
         ok_button.clicked.connect((event) => {
             var entered_host = host_input.get_text();
 
