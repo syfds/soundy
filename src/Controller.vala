@@ -33,8 +33,10 @@ public class Controller : GLib.Object {
         var m = new NowPlayingChangeMessage.from_rest_api(xml);
 
         if (m.standby) {
+            this.model.is_standby = true;
             this.model.is_playing = false;
         } else {
+            this.model.is_standby = false;
             this.model.is_playing = m.play_state == PlayState.PLAY_STATE;
             this.model.is_buffering_in_progress = m.play_state == PlayState.BUFFERING_STATE;
             this.model.track = m.track;

@@ -1,18 +1,18 @@
 using Gtk;
 
-public class MainPanel : Gtk.Box {
+public class MainPanel : Gtk.Grid {
     private Soundy.Settings settings;
     private Controller controller;
 
-    private Gtk.Spinner loading_spinner;
+    private WelcomePanel welcome_panel;
+
     private Grid title_panel;
     private Grid currently_playing_panel;
     private Gtk.Label currently_playing_track;
     private Gtk.Label currently_playing_artist;
     private LoadableImagePanel image_container;
 
-
-    private Grid buttons;
+    private Grid buttons_panel;
     private Gtk.Button play_btn;
     private Gtk.Button pause_btn;
     private Gtk.Button next_btn;
@@ -34,15 +34,9 @@ public class MainPanel : Gtk.Box {
 
     public void create_gui() {
         set_orientation(Orientation.VERTICAL);
-        set_baseline_position(BaselinePosition.CENTER);
-
-
-        loading_spinner = new Gtk.Spinner();
-        loading_spinner.halign = Gtk.Align.CENTER;
-        loading_spinner.valign = Gtk.Align.CENTER;
-        loading_spinner.expand = true;
-        loading_spinner.active = true;
-
+        this.set_halign(Gtk.Align.CENTER);
+        this.set_valign(Gtk.Align.CENTER);
+        //        set_baseline_position(BaselinePosition.CENTER);
 
         this.prev_btn = create_button("media-skip-backward-symbolic", 32);
         this.prev_btn.clicked.connect((event) => {
@@ -75,97 +69,118 @@ public class MainPanel : Gtk.Box {
         currently_playing_panel.set_orientation(Orientation.HORIZONTAL);
         currently_playing_panel.set_halign(Align.CENTER);
 
-        currently_playing_track = create_label("no track available", Granite.STYLE_CLASS_H1_LABEL);
-
-        currently_playing_artist = create_label("no artist available", Granite.STYLE_CLASS_H2_LABEL);
+        currently_playing_track = create_label("", Granite.STYLE_CLASS_H1_LABEL);
+        currently_playing_artist = create_label("", Granite.STYLE_CLASS_H2_LABEL);
 
         currently_playing_panel.attach(currently_playing_track, 0, 0);
         currently_playing_panel.attach(currently_playing_artist, 0, 1);
         currently_playing_panel.show_all();
 
-        buttons = new Grid();
-        buttons.set_orientation(Orientation.HORIZONTAL);
-        buttons.set_halign(Align.CENTER);
-        buttons.attach(prev_btn, 0, 0);
-        buttons.attach(play_btn, 1, 0);
-        buttons.attach(next_btn, 2, 0);
+        buttons_panel = new Grid();
+        buttons_panel.set_orientation(Orientation.HORIZONTAL);
+        buttons_panel.set_halign(Align.CENTER);
+        buttons_panel.attach(prev_btn, 0, 0);
+        buttons_panel.attach(play_btn, 1, 0);
+        buttons_panel.attach(next_btn, 2, 0);
 
-        buttons.show_all();
+        buttons_panel.show_all();
 
-        pack_start(title_panel, false, false);
-        pack_start(currently_playing_panel, false, false);
-        pack_start(buttons, false, false);
+        welcome_panel = new WelcomePanel();
+        welcome_panel.toggle_power.connect((event) => {
+            controller.power_on_clicked();
+        });
+
+        //        pack_start(title_panel, false, false);
+//        pack_start(currently_playing_panel, false, false);
+//        pack_start(buttons_panel, false, false);
+
         this.show_all();
     }
 
     public void update_gui(Model model) {
-        message("Update GUI");
-        message("connection established : " + model.connection_established.to_string());
-        message("is playing: " + model.is_playing.to_string());
+        message("connection established: " + model.connection_established.to_string());
+        message("standby: " + model.is_standby.to_string());
+        message("playing: " + model.is_playing.to_string());
+        message("radio streaming: " + model.is_radio_streaming.to_string());
+
         message("track: " + model.track);
         message("artist: " + model.artist);
+
         message("image_url: " + model.image_url);
-        message("is_radio_streaming: " + model.is_radio_streaming.to_string());
 
-        if (model.image_url != "") {
+        if (model.is_standby && !model.is_playing) {
+            this.remove(currently_playing_panel);
+            this.remove(title_panel);
+            this.remove(buttons_panel);
 
-            if (image_container != null) {
-                currently_playing_panel.remove(image_container);
+            this.attach(welcome_panel, 0, 0, 1, 2);
+        } else {
+            this.remove(welcome_panel);
+            this.attach(title_panel, 0, 0);
+            this.attach(currently_playing_panel, 0, 1);
+            this.attach(buttons_panel, 0, 2);
+
+            if (model.image_url != "") {
+
+                if (image_container != null) {
+                    currently_playing_panel.remove(image_container);
+                }
+
+                image_container = new LoadableImagePanel(model.image_url, 250, 250);
+
+                if (model.is_buffering_in_progress) {
+                    image_container.start_loading_spinner();
+                } else {
+                    image_container.stop_loading_spinner();
+                }
+
+                currently_playing_panel.attach(image_container, 0, 2);
             }
 
-            image_container = new LoadableImagePanel(model.image_url, 250, 250);
-
-            if (model.is_buffering_in_progress) {
-                image_container.start_loading_spinner();
+            if (model.is_playing) {
+                buttons_panel.remove(play_btn);
+                buttons_panel.attach(pause_btn, 1, 0);
             } else {
-                image_container.stop_loading_spinner();
+                buttons_panel.remove(pause_btn);
+                buttons_panel.attach(play_btn, 1, 0);
             }
 
-            currently_playing_panel.attach(image_container, 0, 2);
+            if (model.is_radio_streaming) {
+                buttons_panel.remove(next_btn);
+                buttons_panel.remove(prev_btn);
+            } else {
+                buttons_panel.remove(next_btn);
+                buttons_panel.attach(next_btn, 2, 0);
+
+                buttons_panel.remove(prev_btn);
+                buttons_panel.attach(prev_btn, 0, 0);
+            }
+
+            if (model.track != "") {
+                this.currently_playing_track.set_text(model.track);
+            }
+
+            if (model.artist != "") {
+                this.currently_playing_artist.set_text(model.artist);
+            }
+
+            if (!model.connection_established && !model.connection_dialog_tried) {
+                model.connection_dialog_tried = true;
+                var dialog = new ConnectionDialog(this.settings);
+                dialog.run();
+
+                string updated_host = this.settings.get_speaker_host();
+
+                var connection = new Soundy.WebsocketConnection(updated_host, "8080");
+                var client = new Soundy.API(connection, updated_host);
+
+                this.controller.update_client(client);
+                this.controller.init();
+            }
+
+            buttons_panel.show_all();
         }
 
-        if (model.is_playing) {
-            buttons.remove(play_btn);
-            buttons.attach(pause_btn, 1, 0);
-        } else {
-            buttons.remove(pause_btn);
-            buttons.attach(play_btn, 1, 0);
-        }
-
-        if (model.is_radio_streaming) {
-            buttons.remove(next_btn);
-            buttons.remove(prev_btn);
-        } else {
-            buttons.remove(next_btn);
-            buttons.attach(next_btn, 2, 0);
-
-            buttons.remove(prev_btn);
-            buttons.attach(prev_btn, 0, 0);
-        }
-
-        if (model.track != "") {
-            this.currently_playing_track.set_text(model.track);
-        }
-
-        if (model.artist != "") {
-            this.currently_playing_artist.set_text(model.artist);
-        }
-
-        if (!model.connection_established && !model.connection_dialog_tried) {
-            model.connection_dialog_tried = true;
-            var dialog = new ConnectionDialog(this.settings);
-            dialog.run();
-
-            string updated_host = this.settings.get_speaker_host();
-
-            var connection = new Soundy.WebsocketConnection(updated_host, "8080");
-            var client = new Soundy.API(connection, updated_host);
-
-            this.controller.update_client(client);
-            this.controller.init();
-        }
-
-        buttons.show_all();
         this.show_all();
     }
 

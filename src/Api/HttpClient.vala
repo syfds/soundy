@@ -17,7 +17,9 @@ namespace Soundy {
 
             Soup.Message msg = new Soup.Message(action.get_method(), uri);
 
-            message("body " + action.get_body());
+            if (action.get_body() != null && action.get_body().length > 0) {
+                message("body " + action.get_body());
+            }
             if (action.get_body() != null && action.get_body() != "" && action.get_body().length > 0) {
                 msg.set_request("text/xml", MemoryUse.COPY, action.get_body().data);
             }
