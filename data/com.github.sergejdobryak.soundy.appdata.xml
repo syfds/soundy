@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Philipp Wolfer <ph.wolfer@gmail.com> -->
+<component type="desktop">
+    <id>com.github.sergejdobryak.soundy.desktop</id>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>GPL-3.0+</project_license>
+    <name>Soundy</name>
+    <summary>GTK client to control your soundtouch speaker</summary>
+
+    <description>
+        <p>
+            Soundy is small and easy tool to controle your soundtouch network speaker.
+        </p>
+        <p>Features:</p>
+        <ul>
+            <li>Power ON/OFF</li>
+            <li>Play/Pause the currently selected track</li>
+            <li>Playing next or previous track</li>
+            <li>Increasing/decreasing volume</li>
+            <li>Displaying and playing the favourites</li>
+        </ul>
+    </description>
+
+    <categories>
+        <category>Music</category>
+        <category>GNOME</category>
+        <category>GTK</category>
+    </categories>
+
+
+    <developer_name>Sergej Dobryak</developer_name>
+    <update_contact>sergej.dobryak@gmail.com</update_contact>
+
+    <releases>
+        <release version="0.1.0" date="2016-01-05"/>
+    </releases>
+</component>

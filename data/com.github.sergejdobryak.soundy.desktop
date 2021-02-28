@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Soundy
+Comment=Control your Soundtouch speaker
+GenericName=Soundy
+Exec=com.github.sergejdobryak.soundy %U
+Icon=com.github.sergejdobryak.soundy
+Terminal=false
+Categories=Music;GTK;
+Keywords=soundy;IDE;scratch;
+StartupNotify=true
