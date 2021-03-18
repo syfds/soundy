@@ -8,15 +8,15 @@ public class APIMethods : GLib.Object {
     }
 
     public static Soundy.APIMethod pause(KeyState state = KeyState.PRESS) {
-        return new KeyMethod(KeyAction.PAUSE, KeyState.PRESS);
+        return new KeyMethod(KeyAction.PAUSE, state);
     }
 
     public static Soundy.APIMethod next(KeyState state = KeyState.PRESS) {
-        return new KeyMethod(KeyAction.NEXT_TRACK, KeyState.PRESS);
+        return new KeyMethod(KeyAction.NEXT_TRACK, state);
     }
 
     public static Soundy.APIMethod previous(KeyState state = KeyState.PRESS) {
-        return new KeyMethod(KeyAction.PREV_TRACK, KeyState.PRESS);
+        return new KeyMethod(KeyAction.PREV_TRACK, state);
     }
 
     public static Soundy.APIMethod update_volume(uint8 actual_volume) {

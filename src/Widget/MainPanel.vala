@@ -36,7 +36,6 @@ public class MainPanel : Gtk.Grid {
         set_orientation(Orientation.VERTICAL);
         this.set_halign(Gtk.Align.CENTER);
         this.set_valign(Gtk.Align.CENTER);
-        //        set_baseline_position(BaselinePosition.CENTER);
 
         this.prev_btn = create_button("media-skip-backward-symbolic", 32);
         this.prev_btn.clicked.connect((event) => {
@@ -90,10 +89,6 @@ public class MainPanel : Gtk.Grid {
             controller.power_on_clicked();
         });
 
-        //        pack_start(title_panel, false, false);
-//        pack_start(currently_playing_panel, false, false);
-//        pack_start(buttons_panel, false, false);
-
         this.show_all();
     }
 
@@ -108,14 +103,14 @@ public class MainPanel : Gtk.Grid {
 
         message("image_url: " + model.image_url);
 
-        if (model.is_standby && !model.is_playing) {
-            this.remove(currently_playing_panel);
-            this.remove(title_panel);
-            this.remove(buttons_panel);
+        this.remove(currently_playing_panel);
+        this.remove(title_panel);
+        this.remove(buttons_panel);
+        this.remove(welcome_panel);
 
+        if (model.is_standby && !model.is_playing) {
             this.attach(welcome_panel, 0, 0, 1, 2);
         } else {
-            this.remove(welcome_panel);
             this.attach(title_panel, 0, 0);
             this.attach(currently_playing_panel, 0, 1);
             this.attach(buttons_panel, 0, 2);
@@ -137,11 +132,12 @@ public class MainPanel : Gtk.Grid {
                 currently_playing_panel.attach(image_container, 0, 2);
             }
 
+            buttons_panel.remove(play_btn);
+            buttons_panel.remove(pause_btn);
+
             if (model.is_playing) {
-                buttons_panel.remove(play_btn);
                 buttons_panel.attach(pause_btn, 1, 0);
             } else {
-                buttons_panel.remove(pause_btn);
                 buttons_panel.attach(play_btn, 1, 0);
             }
 

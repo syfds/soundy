@@ -12,7 +12,7 @@ public class Model : GLib.Object {
     public bool is_radio_streaming {get;set;default=false;}
     public bool is_buffering_in_progress {get;set;default=false;}
 
-    public bool is_standby {get;set;default=true;}
+    public bool is_standby {get;set;default=false;}
 
     bool _is_playing = false;
     public bool is_playing {

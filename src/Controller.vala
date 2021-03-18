@@ -71,10 +71,12 @@ public class Controller : GLib.Object {
     public void update_client(Soundy.API client) {
         this.client = client;
         this.client.event_from_soundtouch_received.connect((type, xml) => {
+            message("got: " + xml);
             var m = new SoundtouchMessageParser().read(xml);
             if (m is NowPlayingChangeMessage) {
                 NowPlayingChangeMessage nowPlaying = (NowPlayingChangeMessage)m;
 
+                this.model.is_standby = nowPlaying.standby;
                 this.model.is_playing = nowPlaying.play_state == PlayState.PLAY_STATE;
                 this.model.is_buffering_in_progress = nowPlaying.play_state == PlayState.BUFFERING_STATE;
                 this.model.track = nowPlaying.track;
@@ -83,6 +85,7 @@ public class Controller : GLib.Object {
                 this.model.is_radio_streaming = nowPlaying.is_radio_streaming;
                 this.model.fire_changed();
             } else if (m is VolumeUpdatedMessage) {
+                this.model.is_standby = false;
                 this.model.actual_volume = ((VolumeUpdatedMessage)m).actual_volume;
                 this.model.target_volume = ((VolumeUpdatedMessage)m).target_volume;
                 this.model.mute_enabled = ((VolumeUpdatedMessage)m).mute_enabled;

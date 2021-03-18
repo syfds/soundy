@@ -6,15 +6,17 @@ public class WelcomePanel : Gtk.Grid {
 
 
     public WelcomePanel() {
-
+        column_spacing = 10;
+        row_spacing = 10;
         this.set_orientation(Gtk.Orientation.VERTICAL);
         this.set_halign(Gtk.Align.CENTER);
         this.set_valign(Gtk.Align.CENTER);
 
-        title = new Gtk.Label("Welcome to Soundy");
-
+        title = new Gtk.Label("Welcome to Soundy!");
+        title.get_style_context().add_class("h1");
 
         sub_title = new Gtk.Label("Enjoy your soundtouch speaker");
+        sub_title.get_style_context().add_class("h2");
 
         power_button = create_button("system-shutdown-symbolic", 32);
         power_button.clicked.connect(() => {
@@ -38,20 +40,6 @@ public class WelcomePanel : Gtk.Grid {
         button.can_focus = false;
         return button;
     }
-
-    //    construct {
-//        append("applications-system-symbolic", "Power ON!", "Activates your connected soundtouch speaker");
-//
-//        activated.connect((i) => {
-//            if (i == 0) {
-//                this.toggle_power();
-//            }
-//        });
-//
-//        set_opacity(0);
-//
-//
-//    }
 
     public signal void toggle_power();
 
