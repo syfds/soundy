@@ -42,3 +42,15 @@ ninja test
 ```
 
 or `test.sh`
+
+## How-To
+I suggest to assign your soundtouch speaker to a static IP address (address reservation), so the desktop client can quickly find your speaker at startup.
+For TP-Link router: you have to login (something like 192.168.0.1) and go to `DHCP` -> `DHCP Client List` and copy the MAC-address of your speaker.
+Then you can create a static assignment in `Address Reservation`, after restarting the speaker the correct assignment can be checked in the `DHCP Client List`.
+Create a hosts entry in `/etc/hosts`
+
+```
+192.168.1.XXX   soundtouch-speaker
+```
+
+now you can set `soundtouch-speaker` as host in the app and connect to your soundtouch speaker ;-)
