@@ -12,7 +12,7 @@ public class WelcomePanel : Gtk.Grid {
         this.set_halign(Gtk.Align.CENTER);
         this.set_valign(Gtk.Align.CENTER);
 
-        title = new Gtk.Label("Welcome to Soundy!");
+        title = new Gtk.Label(_("Welcome to Soundy!"));
         title.get_style_context().add_class("h1");
 
         sub_title = new Gtk.Label("Enjoy your soundtouch speaker");
