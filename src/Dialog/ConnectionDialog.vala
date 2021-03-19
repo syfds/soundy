@@ -76,12 +76,12 @@ public class ConnectionDialog : Gtk.Dialog {
 
         connection.connection_failed.connect(() => {
             message("Connection failed");
-            connection_state_label.set_text("Connection failed");
+            connection_state_label.set_text(_("Connection failed"));
         });
 
         connection.connection_succeeded.connect(() => {
             message("Connection succeeded!");
-            connection_state_label.set_text("Connection succeeded!");
+            connection_state_label.set_text(_("Connection succeeded!"));
         });
 
         connection.init_ws();

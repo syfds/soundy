@@ -18,6 +18,7 @@ src_files = files([
 'Settings.vala',
 'Widget/MainPanel.vala',
 'Widget/HeaderBar.vala',
+'Widget/SettingsMenuItem.vala',
 'Widget/FavouriteMenuItem.vala',
 'Widget/LoadableImage.vala',
 'Widget/LoadableImagePanel.vala',

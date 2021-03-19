@@ -21,14 +21,16 @@ namespace Soundy {
                 controller.power_on_clicked();
             });
 
-
             volume_button = new Gtk.VolumeButton();
+
             volume_button.use_symbolic = true;
-            volume_button.adjustment = new Gtk.Adjustment(0.0, 0.0, 100.0, 5.0, 5.0, 5.0);
+            volume_button.adjustment = new Gtk.Adjustment(0.0, 0.0, 100.0, 2.0, 2.0, 2.0);
             volume_button.value_changed.connect((value) => {
+                message("updates volume to " + value.to_string());
                 controller.update_volume((uint8)(value));
-                message("value changed: " + value.to_string());
             });
+
+            volume_button.value = controller.get_volume();
 
             favourites = this.create_menu_button("non-starred-symbolic", 16);
             this.create_preset_items(controller);
@@ -102,9 +104,7 @@ namespace Soundy {
                 message("mute");
                 this.volume_button.set_value(0);
             } else {
-                message("current volume: " + model.actual_volume.to_string());
-                double actual_volume = (double) model.actual_volume;
-                this.volume_button.set_value(actual_volume);
+                message("current volume set " + model.actual_volume.to_string());
             }
         }
 
@@ -128,17 +128,7 @@ namespace Soundy {
             menu_grid.margin_bottom = 6;
             menu_grid.orientation = Gtk.Orientation.VERTICAL;
 
-            var speaker_host_button = new Gtk.Button.with_label(_("speaker host"));
-            speaker_host_button.can_focus = false;
-            speaker_host_button.get_style_context().add_class(Gtk.STYLE_CLASS_MENUITEM);
-            speaker_host_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
-
-            speaker_host_button.clicked.connect(() => {
-                var dialog = new ConnectionDialog(Soundy.Settings.get_instance());
-                dialog.run();
-            });
-
-            menu_grid.add(speaker_host_button);
+            menu_grid.add(new SettingsMenuItem(_("speaker host"), "network-transmit-receive-symbolic"));
             menu_grid.show_all();
 
             var popover = new Gtk.Popover(null);

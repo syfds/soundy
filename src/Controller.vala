@@ -106,14 +106,21 @@ public class Controller : GLib.Object {
         });
     }
 
-    public void update_volume(uint8 double) {
-        this.client.update_volume(double);
+    public void update_volume(uint8 actual_volume) {
+        this.client.update_volume(actual_volume);
     }
 
     private void update_actual_volume() {
         var response = this.client.get_volume();
         var volume_message = new VolumeUpdatedMessage.from_rest_api(response);
         this.model.actual_volume = volume_message.actual_volume;
+        this.model.target_volume = volume_message.target_volume;
         this.model.fire_changed();
+    }
+
+    public double get_volume() {
+        var response = this.client.get_volume();
+        var volume_message = new VolumeUpdatedMessage.from_rest_api(response);
+        return volume_message.actual_volume;
     }
 }
