@@ -10,7 +10,7 @@ namespace Soundy {
 
         public HeaderBar(Controller controller, Model model) {
             set_show_close_button(true);
-            title = new Gtk.Label("No title");
+            title = new Gtk.Label(_("No title"));
 
             model.model_changed.connect((model) => {
                 this.update_gui(model);
@@ -90,7 +90,7 @@ namespace Soundy {
 
         public void update_gui(Model model) {
             if (!model.connection_established) {
-                update_title("No connection");
+                update_title(_("No connection"));
                 power_on_off.visible = false;
             } else {
                 update_title(model.soundtouch_speaker_name);
@@ -128,7 +128,7 @@ namespace Soundy {
             menu_grid.margin_bottom = 6;
             menu_grid.orientation = Gtk.Orientation.VERTICAL;
 
-            var speaker_host_button = new Gtk.Button.with_label("Speaker host");
+            var speaker_host_button = new Gtk.Button.with_label(_("speaker host"));
             speaker_host_button.can_focus = false;
             speaker_host_button.get_style_context().add_class(Gtk.STYLE_CLASS_MENUITEM);
             speaker_host_button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);

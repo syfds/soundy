@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.sergejdobryak.soundy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-18 19:59+0100\n"
+"POT-Creation-Date: 2021-03-19 11:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,8 +17,24 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: src/Widget/HeaderBar.vala:13
+msgid "No title"
+msgstr ""
+
+#: src/Widget/HeaderBar.vala:93
+msgid "No connection"
+msgstr ""
+
+#: src/Widget/HeaderBar.vala:131
+msgid "speaker host"
+msgstr ""
+
 #: src/Widget/WelcomePanel.vala:15
 msgid "Welcome to Soundy!"
+msgstr ""
+
+#: src/Widget/WelcomePanel.vala:18
+msgid "Enjoy your soundtouch speaker"
 msgstr ""
 
 #: data/com.github.sergejdobryak.soundy.appdata.xml.in:7
@@ -33,7 +49,7 @@ msgstr ""
 
 #: data/com.github.sergejdobryak.soundy.appdata.xml.in:11
 msgid ""
-"Soundy is small and easy tool to controle your soundtouch network speaker."
+"Soundy is small and easy tool to control your soundtouch network speaker."
 msgstr ""
 
 #: data/com.github.sergejdobryak.soundy.appdata.xml.in:14
@@ -65,7 +81,7 @@ msgid "Sergej Dobryak"
 msgstr ""
 
 #: data/com.github.sergejdobryak.soundy.desktop.in:5
-msgid "Control your Soundtouch speaker"
+msgid "Control your soundtouch speaker"
 msgstr ""
 
 #: data/com.github.sergejdobryak.soundy.desktop.in:8
