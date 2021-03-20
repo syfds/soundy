@@ -127,8 +127,25 @@ namespace Soundy {
             menu_grid.margin_top = 6;
             menu_grid.margin_bottom = 6;
             menu_grid.orientation = Gtk.Orientation.VERTICAL;
+            menu_grid.halign = Gtk.Align.FILL;
+            //            menu_grid.valign = Gtk.Align.FILL;
 
-            menu_grid.add(new SettingsMenuItem(_("speaker host"), "network-transmit-receive-symbolic"));
+            var about = new SettingsMenuItem(_("About"), "dialog-information-symbolic");
+            about.clicked.connect(() => {
+                var dialog = new AboutDialog();
+                dialog.present();
+            });
+
+            var speaker_host = new SettingsMenuItem(_("Speaker host"), "network-transmit-receive-symbolic");
+
+            speaker_host.clicked.connect(() => {
+                var dialog = new ConnectionDialog(Soundy.Settings.get_instance());
+                dialog.run();
+            });
+
+            menu_grid.add(speaker_host);
+            menu_grid.add(new Gtk.Separator(Gtk.Orientation.HORIZONTAL));
+            menu_grid.add(about);
             menu_grid.show_all();
 
             var popover = new Gtk.Popover(null);

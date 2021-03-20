@@ -23,7 +23,8 @@ src_files = files([
 'Widget/LoadableImage.vala',
 'Widget/LoadableImagePanel.vala',
 'Widget/WelcomePanel.vala',
-'Dialog/ConnectionDialog.vala'
+'Dialog/ConnectionDialog.vala',
+'Dialog/AboutDialog.vala'
 ])
 
 src_files_with_main = src_files + files(['Application.vala'])
