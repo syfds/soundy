@@ -22,7 +22,9 @@ public class ConnectionDialog : Gtk.Dialog {
     private Gtk.Box connection_state_container;
     private Gtk.Image connection_state_icon;
     private Gtk.Entry host_input;
-
+    private Gtk.Image status_icon;
+    private Gtk.Button help_button;
+    private Gtk.Button ok_button;
 
     public ConnectionDialog(Soundy.Settings settings) {
         Object(
@@ -31,6 +33,14 @@ public class ConnectionDialog : Gtk.Dialog {
                 deletable: true,
                 window_position: Gtk.WindowPosition.CENTER_ON_PARENT
         );
+
+        this.set_destroy_with_parent(true);
+        this.set_modal(true);
+        response.connect((response_id) => {
+            if (response_id == Gtk.ResponseType.CANCEL || response_id == Gtk.ResponseType.DELETE_EVENT) {
+                this.hide_on_delete();
+            }
+        });
 
         this.settings = settings;
         this.show_dialog();
@@ -56,7 +66,14 @@ public class ConnectionDialog : Gtk.Dialog {
             this.try_connection();
         });
 
-        var ok_button = new Gtk.Button.with_label("OK");
+        help_button = new Gtk.Button.from_icon_name("dialog-question");
+        help_button.has_focus = true;
+        help_button.halign = Gtk.Align.END;
+        help_button.clicked.connect((event) => {
+            AppInfo.launch_default_for_uri("https://github.com/syfds/soundy#how-to", null);
+        });
+
+        ok_button = new Gtk.Button.with_label("OK");
         ok_button.has_focus = true;
         ok_button.clicked.connect((event) => {
             var entered_host = host_input.get_text();
@@ -67,6 +84,11 @@ public class ConnectionDialog : Gtk.Dialog {
         });
 
 
+        status_icon = new Gtk.Image();
+        status_icon.gicon = new ThemedIcon("process-completed-symbolic");
+        status_icon.pixel_size = 16;
+        status_icon.halign = Gtk.Align.END;
+
         connection_state_label = new Gtk.Label("");
         connection_state_label.halign = Gtk.Align.START;
         connection_state_label.valign = Gtk.Align.CENTER;
@@ -76,7 +98,9 @@ public class ConnectionDialog : Gtk.Dialog {
         main_panel.attach(host_label, 0, 0);
         main_panel.attach(host_input, 1, 0);
         main_panel.attach(test_connection_button, 2, 0);
-        main_panel.attach(connection_state_label, 0, 1, 2, 1);
+        main_panel.attach(status_icon, 0, 1);
+        main_panel.attach(connection_state_label, 1, 1, 2, 1);
+        main_panel.attach(help_button, 1, 2);
         main_panel.attach(ok_button, 2, 2);
 
         get_content_area().add(main_panel);
@@ -92,12 +116,16 @@ public class ConnectionDialog : Gtk.Dialog {
 
         connection.connection_failed.connect(() => {
             message("Connection failed");
+            status_icon.gicon = new ThemedIcon("dialog-warning");
             connection_state_label.set_text(_("Connection failed"));
+            ok_button.set_sensitive(false);
         });
 
         connection.connection_succeeded.connect(() => {
             message("Connection succeeded!");
+            status_icon.gicon = new ThemedIcon("process-completed-symbolic");
             connection_state_label.set_text(_("Connection succeeded!"));
+            ok_button.set_sensitive(true);
         });
 
         connection.init_ws();
