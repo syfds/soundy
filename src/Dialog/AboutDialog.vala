@@ -28,7 +28,7 @@ public class AboutDialog: Gtk.AboutDialog {
         wrap_license = true;
         website = "https://github.com/syfds/soundy";
         website_label = "Github";
-        version = Soundy.Settings.VERSION;
+        version = "v" + Soundy.Settings.VERSION;
 
         response.connect((response_id) => {
             if (response_id == Gtk.ResponseType.CANCEL || response_id == Gtk.ResponseType.DELETE_EVENT) {
