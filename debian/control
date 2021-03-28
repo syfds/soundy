@@ -1,0 +1,21 @@
+Source: com.github.sergejdobryak.soundy
+Section: x11
+Priority: optional
+Maintainer: Sergej Dobryak <sergej.dobryak@gmail.com>
+Build-Depends: meson,
+               debhelper (>= 9),
+               valac (>= 0.40.0),
+               libglib2.0-dev,
+               libgtk-3-dev,
+               libgranite-dev (>= 5.3.0),
+               libsoup2.4-dev,
+               libxml2-dev
+
+
+Standards-Version: 3.9.3
+
+Package: com.github.sergejdobryak.soundy
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Soundy
+ Soundy is a simple GTK client written in Vala to control a Soundtouch network speaker.
