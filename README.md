@@ -10,7 +10,9 @@ The app connects to the speaker over Soundtouch API (https://developer.bose.com/
 * Increasing/decreasing volume
 * Displaying and playing the favourites
 
-![Soundy Screenshot](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot_favourites.png)
+![Soundy Screenshot](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-1.png)
+![Soundy Screenshot](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-2.png)
+![Soundy Screenshot](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-3.png)
 
 ## Building and Installation
 You'll need the following dependencies:

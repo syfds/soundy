@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2017 Philipp Wolfer <ph.wolfer@gmail.com> -->
+<!--
+  ~ /* Copyright $year Sergej Dobryak <sergej.dobryak@gmail.com>
+  ~ *
+  ~ * This program is free software: you can redistribute it
+  ~ * and/or modify it under the terms of the GNU General Public License as
+  ~ * published by the Free Software Foundation, either version 3 of the
+  ~ * License, or (at your option) any later version.
+  ~ *
+  ~ * This program is distributed in the hope that it will be
+  ~ * useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+  ~ * Public License for more details.
+  ~ *
+  ~ * You should have received a copy of the GNU General Public License along
+  ~ * with this program. If not, see http://www.gnu.org/licenses/.
+  ~ */
+  -->
 <component type="desktop">
     <id>com.github.sergejdobryak.soundy.desktop</id>
     <metadata_license>CC0-1.0</metadata_license>
     <project_license>GPL-3.0+</project_license>
     <name>Soundy</name>
     <summary>GTK client to control your soundtouch speaker</summary>
+
+    <screenshots>
+        <screenshot type="default">
+            <image>https://raw.githubusercontent.com/syfds/soundy/master/data/screenshot/screenshot-1.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://raw.githubusercontent.com/syfds/soundy/master/data/screenshot/screenshot-2.png</image>
+        </screenshot>
+        <screenshot>
+            <image>https://raw.githubusercontent.com/syfds/soundy/master/data/screenshot/screenshot-3.png</image>
+        </screenshot>
+    </screenshots>
 
     <description>
         <p>
@@ -31,7 +59,13 @@
     <developer_name>Sergej Dobryak</developer_name>
     <update_contact>sergej.dobryak@gmail.com</update_contact>
 
+    <url type="homepage">https://github.com/syfds/soundy</url>
+    <url type="bugtracker">https://github.com/syfds/soundy/issues</url>
+    <url type="help">https://github.com/syfds/soundy</url>
+
     <releases>
-        <release version="0.1.0" date="2016-01-05"/>
+        <release version="0.0.1" date="2021-04-01"/>
     </releases>
+
+    <content_rating type="oars-1.0"/>
 </component>
