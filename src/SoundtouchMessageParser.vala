@@ -18,6 +18,9 @@ public class SoundtouchMessageParser: GLib.Object {
 
     public SoundtouchMessage read(string xml) {
 
+        if (xml.contains("nowSelectionUpdated")) {
+            return new NowSelectionChangeMessage(xml);
+        }
         if (xml.contains("nowPlayingUpdated")) {
             return new NowPlayingChangeMessage.from_websocket(xml);
         }
@@ -107,6 +110,31 @@ public class GetInfoMessage: SoundtouchMessage {
     private void init(string xml) {
         var ctx = context(xml);
         speaker_name = get_value(ctx, "/info/name");
+    }
+}
+
+public class NowSelectionChangeMessage : SoundtouchMessage {
+    public string track {get;set; default="";}
+    public string image_url {get;set; default="";}
+
+    public NowSelectionChangeMessage(string xml) {
+        this.with_base_path("/updates/nowSelectionUpdated");
+        this.init(xml);
+    }
+
+    public void init(string xml) {
+        var ctx = context(xml);
+
+        this.read_image_url(ctx);
+        this.read_track(ctx);
+    }
+
+    public void read_image_url(Xml.XPath.Context ctx) {
+        image_url = get_value(ctx, @"$base_xpath/preset/ContentItem/containerArt");
+    }
+
+    public void read_track(Xml.XPath.Context ctx) {
+        track = get_value(ctx, @"$base_xpath/preset/ContentItem/itemName");
     }
 }
 

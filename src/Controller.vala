@@ -106,6 +106,12 @@ public class Controller : GLib.Object {
                 this.model.target_volume = ((VolumeUpdatedMessage)m).target_volume;
                 this.model.mute_enabled = ((VolumeUpdatedMessage)m).mute_enabled;
                 this.model.fire_changed();
+            } else if (m is NowSelectionChangeMessage) {
+                this.model.is_standby = false;
+                this.model.is_buffering_in_progress = true;
+                this.model.track = ((NowSelectionChangeMessage)m).track;
+                this.model.image_url = ((NowSelectionChangeMessage)m).image_url;
+                this.model.fire_changed();
             }
 
         });
