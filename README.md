@@ -45,6 +45,30 @@ ninja test
 
 or `test.sh`
 
+## Installation on Ubuntu (no guarantee)
+
+install all dependencies
+```
+sudo apt-get install vala-0.48-doc valac-0.48-vapi valac build-essential libgtk-3-dev meson libgranite-dev libsoup2.4
+```
+
+clone the repository and run locally
+
+```
+cd ~
+mkdir workspace
+cd workspace
+git clone https://github.com/syfds/soundy.git
+cd soundy
+meson build --prefix=/usr
+sh compile.sh
+```
+
+cleanup (uninstall all the dependencies)
+```
+sudo apt-get remove valac-bin vala-0.48-doc valac-0.48-vapi valac build-essential libgtk-3-dev meson libgranite-dev libsoup2.4
+```
+
 ## How-To
 I suggest to assign your soundtouch speaker to a static IP address (address reservation), so the desktop client can quickly find your speaker at startup. Example for TP-Link (can be different for your router):
 * Login (something like 192.168.0.1 or similar) and go to `DHCP` -> `DHCP Client List` and copy the MAC-address of your speaker.
