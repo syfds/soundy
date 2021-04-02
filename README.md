@@ -45,15 +45,16 @@ ninja test
 
 or `test.sh`
 
-## Installation on Ubuntu (no guarantee)
+## Installation on Ubuntu (tested on ubuntu 20.04)
 
 install all dependencies
 ```
-sudo apt-get install vala-0.48-doc valac-0.48-vapi valac build-essential libgtk-3-dev meson libgranite-dev libsoup2.4
+sudo add-apt-repository ppa:vala-team
+sudo apt-get update
+sudo apt-get install vala-0.48-doc valac-0.48-vapi valac build-essential libgtk-3-dev meson libgranite-dev libsoup2.4-dev gettext
 ```
 
 clone the repository and run locally
-
 ```
 cd ~
 mkdir workspace
@@ -61,12 +62,15 @@ cd workspace
 git clone https://github.com/syfds/soundy.git
 cd soundy
 meson build --prefix=/usr
-sh compile.sh
+cd build
+sudo ninja install
 ```
+after that you can find "Soundy" in all your applications or alternatively run `com.github.sergejdobryak.soundy` from command line
 
-cleanup (uninstall all the dependencies)
+uninstall the app
 ```
-sudo apt-get remove valac-bin vala-0.48-doc valac-0.48-vapi valac build-essential libgtk-3-dev meson libgranite-dev libsoup2.4
+cd ~/workspace/soundy/build
+sudo ninja uninstall
 ```
 
 ## How-To
