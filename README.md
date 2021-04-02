@@ -54,7 +54,7 @@ sudo apt-get update
 sudo apt-get install vala-0.48-doc valac-0.48-vapi valac build-essential libgtk-3-dev meson libgranite-dev libsoup2.4-dev gettext
 ```
 
-clone the repository and run locally
+clone the repository and install locally
 ```
 cd ~
 mkdir workspace
