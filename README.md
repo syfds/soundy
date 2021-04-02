@@ -17,12 +17,12 @@ The app connects to the speaker over Soundtouch API (https://developer.bose.com/
 ## Building and Installation
 You'll need the following dependencies:
 
-* glib-2.0', version: '>=2.40'
-* gobject-2.0', version: '>=2.40'
-* gtk+-3.0'
-* granite', version: '>= 0.5.1'
-* libsoup-2.4'
-* libxml-2.0'
+* glib-2.0, version: '>=2.40'
+* gobject-2.0, version: '>=2.40'
+* gtk+-3.0
+* granite, version: '>= 0.5.1'
+* libsoup-2.4
+* libxml-2.0
 
 ## Building
 
