@@ -1,0 +1,106 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.syfds.soundy package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.syfds.soundy\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-03 13:22+0200\n"
+"PO-Revision-Date: 2021-04-03 14:51+0200\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.2\n"
+"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: nl\n"
+
+#: src/Widget/HeaderBar.vala:29
+msgid "No title"
+msgstr "Naamloos"
+
+#: src/Widget/HeaderBar.vala:111
+msgid "No connection"
+msgstr "Geen verbinding"
+
+#. menu_grid.valign = Gtk.Align.FILL;
+#: src/Widget/HeaderBar.vala:149
+msgid "About"
+msgstr "Over"
+
+#: src/Widget/HeaderBar.vala:155
+msgid "Speaker host"
+msgstr "Hoofdluidspreker"
+
+#: src/Widget/WelcomePanel.vala:31
+msgid "Welcome to Soundy!"
+msgstr "Welkom bij Soundy!"
+
+#: src/Widget/WelcomePanel.vala:34
+msgid "Enjoy your soundtouch speaker"
+msgstr "Geniet van je soundtouch-luidspreker"
+
+#: src/Dialog/ConnectionDialog.vala:120
+msgid "Connection failed"
+msgstr "Verbinding mislukt"
+
+#: src/Dialog/ConnectionDialog.vala:127
+msgid "Connection succeeded!"
+msgstr "Verbonden!"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:23
+#: data/com.github.syfds.soundy.desktop.in:4
+#: data/com.github.syfds.soundy.desktop.in:6
+msgid "Soundy"
+msgstr "Soundy"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:24
+msgid "GTK client to control your soundtouch speaker"
+msgstr "Een GTK-toepassing om je soundtouch-luidspreker mee te bedienen"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:39
+msgid "Soundy is small and easy tool to control your soundtouch network speaker."
+msgstr "Soundy is een klein, eenvoudig hulpmiddel om je soundtouch-netwerkluidspreker mee te bedienen."
+
+#: data/com.github.syfds.soundy.appdata.xml.in:42
+msgid "Features:"
+msgstr "Kenmerken:"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:44
+msgid "Power ON/OFF"
+msgstr "Zet de luidspreker aan en uit"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:45
+msgid "Play/Pause the currently selected track"
+msgstr "Pauzeer of speel het huidige nummer af"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:46
+msgid "Playing next or previous track"
+msgstr "Speel het volgende of vorige nummer af"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:47
+msgid "Increasing/decreasing volume"
+msgstr "Verhoog of verlaag het volume"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:48
+msgid "Displaying and playing the favourites"
+msgstr "Toon en speel je favorieten af"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:59
+msgid "Sergej Dobryak"
+msgstr "Sergej Dobryak"
+
+#: data/com.github.syfds.soundy.desktop.in:5
+msgid "Control your soundtouch speaker"
+msgstr "Bedien je soundtouch-luidspreker"
+
+#: data/com.github.syfds.soundy.desktop.in:8
+msgid "com.github.syfds.soundy"
+msgstr "com.github.syfds.soundy"
+
+#: data/com.github.syfds.soundy.desktop.in:11
+msgid "soundy;IDE;scratch;"
+msgstr "soundy;IDE;scratch;"
