@@ -14,5 +14,5 @@ src/Widget/LoadableImagePanel.vala
 src/Widget/WelcomePanel.vala
 src/Dialog/ConnectionDialog.vala
 
-data/com.github.sergejdobryak.soundy.appdata.xml.in
-data/com.github.sergejdobryak.soundy.desktop.in
+data/com.github.syfds.soundy.appdata.xml.in
+data/com.github.syfds.soundy.desktop.in

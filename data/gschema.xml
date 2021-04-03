@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <schemalist>
-    <schema path="/com/github/sergejdobryak/soundy/" id="com.github.sergejdobryak.soundy">
+    <schema path="/com/github/syfds/soundy/" id="com.github.syfds.soundy">
         <key name="soundtouch-host" type="s">
             <default>'192.168.0.1'</default>
             <summary>IP address of your soundtouch speaker</summary>

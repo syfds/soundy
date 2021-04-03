@@ -1,11 +1,11 @@
-# German translations for com.github.sergejdobryak.soundy package.
-# Copyright (C) 2021 THE com.github.sergejdobryak.soundy'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the com.github.sergejdobryak.soundy package.
+# German translations for com.github.syfds.soundy package.
+# Copyright (C) 2021 THE com.github.syfds.soundy'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.syfds.soundy package.
 # Automatically generated, 2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: com.github.sergejdobryak.soundy\n"
+"Project-Id-Version: com.github.syfds.soundy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-19 11:38+0100\n"
 "PO-Revision-Date: 2021-03-18 19:59+0100\n"
@@ -37,57 +37,57 @@ msgstr "Willkommen!"
 msgid "Enjoy your soundtouch speaker"
 msgstr ""
 
-#: data/com.github.sergejdobryak.soundy.appdata.xml.in:7
-#: data/com.github.sergejdobryak.soundy.desktop.in:4
-#: data/com.github.sergejdobryak.soundy.desktop.in:6
+#: data/com.github.syfds.soundy.appdata.xml.in:7
+#: data/com.github.syfds.soundy.desktop.in:4
+#: data/com.github.syfds.soundy.desktop.in:6
 msgid "Soundy"
 msgstr ""
 
-#: data/com.github.sergejdobryak.soundy.appdata.xml.in:8
+#: data/com.github.syfds.soundy.appdata.xml.in:8
 msgid "GTK client to control your soundtouch speaker"
 msgstr ""
 
-#: data/com.github.sergejdobryak.soundy.appdata.xml.in:11
+#: data/com.github.syfds.soundy.appdata.xml.in:11
 msgid ""
 "Soundy is small and easy tool to control your soundtouch network speaker."
 msgstr ""
 
-#: data/com.github.sergejdobryak.soundy.appdata.xml.in:14
+#: data/com.github.syfds.soundy.appdata.xml.in:14
 msgid "Features:"
 msgstr ""
 
-#: data/com.github.sergejdobryak.soundy.appdata.xml.in:16
+#: data/com.github.syfds.soundy.appdata.xml.in:16
 msgid "Power ON/OFF"
 msgstr ""
 
-#: data/com.github.sergejdobryak.soundy.appdata.xml.in:17
+#: data/com.github.syfds.soundy.appdata.xml.in:17
 msgid "Play/Pause the currently selected track"
 msgstr ""
 
-#: data/com.github.sergejdobryak.soundy.appdata.xml.in:18
+#: data/com.github.syfds.soundy.appdata.xml.in:18
 msgid "Playing next or previous track"
 msgstr ""
 
-#: data/com.github.sergejdobryak.soundy.appdata.xml.in:19
+#: data/com.github.syfds.soundy.appdata.xml.in:19
 msgid "Increasing/decreasing volume"
 msgstr ""
 
-#: data/com.github.sergejdobryak.soundy.appdata.xml.in:20
+#: data/com.github.syfds.soundy.appdata.xml.in:20
 msgid "Displaying and playing the favourites"
 msgstr ""
 
-#: data/com.github.sergejdobryak.soundy.appdata.xml.in:31
+#: data/com.github.syfds.soundy.appdata.xml.in:31
 msgid "Sergej Dobryak"
 msgstr ""
 
-#: data/com.github.sergejdobryak.soundy.desktop.in:5
+#: data/com.github.syfds.soundy.desktop.in:5
 msgid "Control your soundtouch speaker"
 msgstr ""
 
-#: data/com.github.sergejdobryak.soundy.desktop.in:8
-msgid "com.github.sergejdobryak.soundy"
+#: data/com.github.syfds.soundy.desktop.in:8
+msgid "com.github.syfds.soundy"
 msgstr ""
 
-#: data/com.github.sergejdobryak.soundy.desktop.in:11
+#: data/com.github.syfds.soundy.desktop.in:11
 msgid "soundy;IDE;scratch;"
 msgstr ""

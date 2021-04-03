@@ -1,4 +1,4 @@
-Source: com.github.sergejdobryak.soundy
+Source: com.github.syfds.soundy
 Section: x11
 Priority: optional
 Maintainer: Sergej Dobryak <sergej.dobryak@gmail.com>
@@ -14,7 +14,7 @@ Build-Depends: meson,
 
 Standards-Version: 3.9.3
 
-Package: com.github.sergejdobryak.soundy
+Package: com.github.syfds.soundy
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Soundy

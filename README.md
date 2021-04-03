@@ -65,7 +65,7 @@ meson build --prefix=/usr
 cd build
 sudo ninja install
 ```
-after that you can find "Soundy" in all your applications or alternatively run `com.github.sergejdobryak.soundy` from command line
+after that you can find "Soundy" in all your applications or alternatively run `com.github.syfds.soundy` from command line
 
 uninstall the app
 ```

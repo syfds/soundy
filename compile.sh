@@ -1,2 +1,2 @@
 cd build || exit
-ninja && ./com.github.sergejdobryak.soundy
+ninja && ./com.github.syfds.soundy

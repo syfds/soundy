@@ -1,4 +1,4 @@
-project('com.github.sergejdobryak.soundy', 'vala', 'c')
+project('com.github.syfds.soundy', 'vala', 'c')
 
 glib = dependency('glib-2.0', version: '>=2.40')
 gobject = dependency('gobject-2.0', version: '>=2.40')

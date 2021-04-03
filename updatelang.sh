@@ -1,3 +1,3 @@
 cd build || exit
-ninja com.github.sergejdobryak.soundy-pot
-ninja com.github.sergejdobryak.soundy-update-po
+ninja com.github.syfds.soundy-pot
+ninja com.github.syfds.soundy-update-po
