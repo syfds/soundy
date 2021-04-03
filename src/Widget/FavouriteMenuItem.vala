@@ -41,10 +41,12 @@ public class FavouriteMenuItem : Gtk.Button {
     }
 
     private void load_image_asynchronously() {
-        new Thread<void>("loading favourite image", () => {
+        new Thread<void*>("loading favourite image", () => {
             var image = this.create_image_from_url(this.image_url);
             this.set_image(image);
             this.show_all();
+
+            return null;
         });
 
     }

@@ -80,9 +80,9 @@ internal class GetMethod : Soundy.APIMethod, GLib.Object {
         this.path = path;
     }
 
-    public override string get_method() {return "GET";}
-    public override string get_body() {return ""; }
-    public override string get_path() {return path;}
+    public string get_method() {return "GET";}
+    public string get_body() {return ""; }
+    public string get_path() {return path;}
 }
 
 
@@ -93,9 +93,9 @@ internal class UpdateVolume : Soundy.APIMethod, GLib.Object {
         this.actual_volume = actual_volume;
     }
 
-    public override string get_path() {return "/volume";}
-    public override string get_method() {return "POST";}
-    public override string get_body() {
+    public string get_path() {return "/volume";}
+    public string get_method() {return "POST";}
+    public string get_body() {
         return @"<volume>$actual_volume</volume>";
     }
 }
@@ -114,8 +114,8 @@ internal class KeyMethod : Soundy.APIMethod, GLib.Object {
         this.action = action;
         this.state = state;
     }
-    public override string get_path() {return "/key";}
-    public override string get_method() {return "POST";}
+    public string get_path() {return "/key";}
+    public string get_method() {return "POST";}
     public string get_body() {
         string action_as_string = action.to_string();
         string state_as_string = state.to_string();
