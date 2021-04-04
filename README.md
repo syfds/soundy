@@ -45,33 +45,12 @@ ninja test
 
 or `test.sh`
 
-## Installation on Ubuntu (tested on ubuntu 20.04)
+## Installation on Ubuntu (tested on 20.04 and 18.04)
 
-install all dependencies
-```
-sudo add-apt-repository ppa:vala-team
-sudo apt-get update
-sudo apt-get install vala-0.48-doc valac-0.48-vapi valac build-essential libgtk-3-dev meson libgranite-dev libsoup2.4-dev gettext
-```
-
-clone the repository and install locally
-```
-cd ~
-mkdir workspace
-cd workspace
-git clone https://github.com/syfds/soundy.git
-cd soundy
-meson build --prefix=/usr
-cd build
-sudo ninja install
-```
-after that you can find "Soundy" in all your applications or alternatively run `com.github.syfds.soundy` from command line
-
-uninstall the app
-```
-cd ~/workspace/soundy/build
-sudo ninja uninstall
-```
+* download the .deb file from latest release: [https://github.com/syfds/soundy/releases]()
+* install with `sudo apt install ./com.github.syfds.soundy*.deb`
+* now you can find Soundy through the search
+* uninstall with `sudo apt remove com.github.syfds.soundy`
 
 ## How-To
 I suggest to assign your soundtouch speaker to a static IP address (address reservation), so the desktop client can quickly find your speaker at startup. Example for TP-Link (can be different for your router):
