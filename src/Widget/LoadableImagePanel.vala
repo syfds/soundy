@@ -62,12 +62,10 @@ public class LoadableImagePanel : Gtk.Grid {
         attach(image_container, 0, 0);
     }
 
-    public void create_image_from_url(string image_url, int width, int height) {
+    public async void create_image_from_url(string image_url, int width, int height) {
         Soup.Message msg = new Soup.Message("GET", image_url);
         Soup.Session session = new Soup.Session();
-
         var input_stream = session.send(msg);
-
         this.image_pixbuf = new Gdk.Pixbuf.from_stream_at_scale(input_stream, width, height, true);
     }
 

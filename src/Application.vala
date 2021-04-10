@@ -46,15 +46,14 @@ namespace Soundy {
 
             var client = new Soundy.API(connection, host);
             var controller = new Controller(client);
+
             var model = new Model();
 
-            var header_bar = new Soundy.HeaderBar(controller, model);
+            var header_bar = new Soundy.HeaderBar(controller, model, settings);
             main_window.set_titlebar(header_bar);
-
             main_window.add(new MainPanel(controller, model, settings));
 
             controller.init();
-
             main_window.show_all();
         }
 

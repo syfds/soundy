@@ -46,6 +46,8 @@ namespace Soundy {
             if (!ws_connected) {
                 MainLoop loop = new MainLoop();
                 var socket_client = new Soup.Session();
+                socket_client.timeout = 1;
+
                 string url = "ws://%s:%s/".printf(ip_address, port_number);
                 message(@"connect to $url");
                 var websocket_message = new Soup.Message("POST", url);

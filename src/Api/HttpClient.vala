@@ -1,5 +1,3 @@
-using Soup;
-
 /* Copyright 2021 Sergej Dobryak <sergej.dobryak@gmail.com>
 *
 * This program is free software: you can redistribute it
@@ -15,6 +13,7 @@ using Soup;
 * You should have received a copy of the GNU General Public License along
 * with this program. If not, see http://www.gnu.org/licenses/.
 */
+using Soup;
 
 namespace Soundy {
     public class HttpClient : GLib.Object {
@@ -27,6 +26,8 @@ namespace Soundy {
 
         public string invoke(APIMethod action) {
             Soup.Session session = new Soup.Session();
+            session.timeout = 1;
+            session.idle_timeout = 1;
 
             var uri = api_url + action.get_path();
 
@@ -60,7 +61,7 @@ namespace Soundy {
                     loop.quit();
                 });
 
-                return false;
+                return Source.REMOVE;
             });
 
             timeout.attach(loop.get_context());
