@@ -1,11 +1,11 @@
 src/Api/API.vala
 src/Api/HttpClient.vala
 src/Api/APIMethods.vala
-src/WebsocketConnection.vala
-src/Controller.vala
-src/Model.vala
-src/SoundtouchMessageParser.vala
-src/Settings.vala
+src/Api/WebsocketConnection.vala
+src/Controller/Controller.vala
+src/Controller/Model.vala
+src/Controller/SoundtouchMessageParser.vala
+src/Controller/Settings.vala
 src/Widget/MainPanel.vala
 src/Widget/HeaderBar.vala
 src/Widget/FavouriteMenuItem.vala

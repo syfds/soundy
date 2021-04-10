@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.syfds.soundy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-03 13:22+0200\n"
+"POT-Creation-Date: 2021-04-10 20:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,21 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Widget/HeaderBar.vala:29
-msgid "No title"
+#: src/Widget/HeaderBar.vala:35
+msgid "Cannot connect to your speaker"
 msgstr ""
 
-#: src/Widget/HeaderBar.vala:111
-msgid "No connection"
-msgstr ""
-
-#. menu_grid.valign = Gtk.Align.FILL;
-#: src/Widget/HeaderBar.vala:149
+#: src/Widget/HeaderBar.vala:160
 msgid "About"
 msgstr ""
 
-#: src/Widget/HeaderBar.vala:155
-msgid "Speaker host"
+#: src/Widget/HeaderBar.vala:166 src/Dialog/ConnectionDialog.vala:103
+msgid "Network address"
 msgstr ""
 
 #: src/Widget/WelcomePanel.vala:31
@@ -42,12 +37,32 @@ msgstr ""
 msgid "Enjoy your soundtouch speaker"
 msgstr ""
 
-#: src/Dialog/ConnectionDialog.vala:120
-msgid "Connection failed"
+#: src/Dialog/ConnectionDialog.vala:70
+msgid "Test connection"
 msgstr ""
 
-#: src/Dialog/ConnectionDialog.vala:127
-msgid "Connection succeeded!"
+#: src/Dialog/ConnectionDialog.vala:79
+msgid "Do you need help?"
+msgstr ""
+
+#: src/Dialog/ConnectionDialog.vala:84
+msgid "Save"
+msgstr ""
+
+#: src/Dialog/ConnectionDialog.vala:104
+msgid "Enter the IP-address or the hostname of your speaker"
+msgstr ""
+
+#: src/Dialog/ConnectionDialog.vala:123
+msgid "Trying to connect to "
+msgstr ""
+
+#: src/Dialog/ConnectionDialog.vala:130
+msgid "Connection failed to "
+msgstr ""
+
+#: src/Dialog/ConnectionDialog.vala:137
+msgid "Connection succeeded to "
 msgstr ""
 
 #: data/com.github.syfds.soundy.appdata.xml.in:23

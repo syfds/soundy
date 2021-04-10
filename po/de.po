@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.syfds.soundy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-03 13:22+0200\n"
+"POT-Creation-Date: 2021-04-10 20:25+0200\n"
 "PO-Revision-Date: 2021-03-18 19:59+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,22 +17,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/Widget/HeaderBar.vala:29
-msgid "No title"
-msgstr ""
+#: src/Widget/HeaderBar.vala:35
+msgid "Cannot connect to your speaker"
+msgstr "Es kann keine Verbindung zu deinem Lautsprecher hergestellt werden"
 
-#: src/Widget/HeaderBar.vala:111
-msgid "No connection"
-msgstr ""
-
-#. menu_grid.valign = Gtk.Align.FILL;
-#: src/Widget/HeaderBar.vala:149
+#: src/Widget/HeaderBar.vala:160
 msgid "About"
 msgstr ""
 
-#: src/Widget/HeaderBar.vala:155
-msgid "Speaker host"
-msgstr ""
+#: src/Widget/HeaderBar.vala:166 src/Dialog/ConnectionDialog.vala:103
+msgid "Network address"
+msgstr "Netzwerk-Adresse"
 
 #: src/Widget/WelcomePanel.vala:31
 msgid "Welcome to Soundy!"
@@ -40,15 +35,35 @@ msgstr "Willkommen!"
 
 #: src/Widget/WelcomePanel.vala:34
 msgid "Enjoy your soundtouch speaker"
-msgstr ""
+msgstr "Viel Spaß mit deinem soundtouch Lautsprecher"
 
-#: src/Dialog/ConnectionDialog.vala:120
-msgid "Connection failed"
-msgstr ""
+#: src/Dialog/ConnectionDialog.vala:70
+msgid "Test connection"
+msgstr "Verbindung-Test"
 
-#: src/Dialog/ConnectionDialog.vala:127
-msgid "Connection succeeded!"
-msgstr ""
+#: src/Dialog/ConnectionDialog.vala:79
+msgid "Do you need help?"
+msgstr "Brauchst du Hilfe?"
+
+#: src/Dialog/ConnectionDialog.vala:84
+msgid "Save"
+msgstr "Speichern"
+
+#: src/Dialog/ConnectionDialog.vala:104
+msgid "Enter the IP-address or the hostname of your speaker"
+msgstr "Gib die IP-Adresse oder den Hostnamen deines Lautsprechers ein"
+
+#: src/Dialog/ConnectionDialog.vala:123
+msgid "Trying to connect to "
+msgstr "Versuche die Verbindung zu "
+
+#: src/Dialog/ConnectionDialog.vala:130
+msgid "Connection failed to "
+msgstr "Verbindung fehlgeschlagen "
+
+#: src/Dialog/ConnectionDialog.vala:137
+msgid "Connection succeeded to "
+msgstr "Verbindung erfolgreich zu"
 
 #: data/com.github.syfds.soundy.appdata.xml.in:23
 #: data/com.github.syfds.soundy.desktop.in:4

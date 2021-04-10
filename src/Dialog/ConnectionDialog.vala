@@ -100,7 +100,7 @@ public class ConnectionDialog : Gtk.Dialog {
         connection_state_label.halign = Gtk.Align.START;
         connection_state_label.valign = Gtk.Align.CENTER;
 
-        var host_label = new Gtk.Label(_("Network address:"));
+        var host_label = new Gtk.Label(_("Network address") + ":");
         host_label.tooltip_text = _("Enter the IP-address or the hostname of your speaker");
 
         main_panel.attach(host_label, 0, 0);
@@ -127,7 +127,7 @@ public class ConnectionDialog : Gtk.Dialog {
         connection.connection_failed.connect(() => {
             message("Connection failed :-(");
             show_status_icon("dialog-warning");
-            connection_state_label.set_text(_("Connection failed to") + changed_host);
+            connection_state_label.set_text(_("Connection failed to ") + changed_host);
         });
 
         connection.connection_succeeded.connect(() => {
