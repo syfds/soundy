@@ -23,8 +23,11 @@ public class ConnectionDialog : Gtk.Dialog {
     private Gtk.Image connection_state_icon;
     private Gtk.Entry host_input;
     private Gtk.Image status_icon;
+    private Gtk.Spinner loading_spinner;
     private Gtk.Button help_button;
     private Gtk.Button ok_button;
+    private Gtk.Grid main_panel = new Gtk.Grid();
+
 
     public ConnectionDialog(Soundy.Settings settings) {
         Object(
@@ -49,18 +52,22 @@ public class ConnectionDialog : Gtk.Dialog {
 
     public void show_dialog() {
 
-        var main_panel = new Gtk.Grid();
         main_panel.margin = 10;
         main_panel.column_spacing = 6;
         main_panel.row_spacing = 6;
+
+        loading_spinner = new Gtk.Spinner();
+        loading_spinner.halign = Gtk.Align.END;
+        loading_spinner.valign = Gtk.Align.CENTER;
+        loading_spinner.expand = true;
+        loading_spinner.active = true;
 
         host_input = new Gtk.Entry();
 
         var host = this.settings.get_speaker_host();
         host_input.set_text(host);
-        host_input.changed.connect(() => this.try_connection());
 
-        var test_connection_button = new Gtk.Button.with_label("Test connection");
+        var test_connection_button = new Gtk.Button.with_label(_("Test connection"));
 
         test_connection_button.clicked.connect(() => {
             this.try_connection();
@@ -69,11 +76,12 @@ public class ConnectionDialog : Gtk.Dialog {
         help_button = new Gtk.Button.from_icon_name("dialog-question");
         help_button.has_focus = true;
         help_button.halign = Gtk.Align.END;
+        help_button.tooltip_text = _("Do you need help?");
         help_button.clicked.connect((event) => {
             AppInfo.launch_default_for_uri("https://github.com/syfds/soundy#how-to", null);
         });
 
-        ok_button = new Gtk.Button.with_label("OK");
+        ok_button = new Gtk.Button.with_label(_("Save"));
         ok_button.has_focus = true;
         ok_button.clicked.connect((event) => {
             var entered_host = host_input.get_text();
@@ -83,9 +91,8 @@ public class ConnectionDialog : Gtk.Dialog {
             this.destroy();
         });
 
-
         status_icon = new Gtk.Image();
-        status_icon.gicon = new ThemedIcon("process-completed-symbolic");
+        status_icon.gicon = new ThemedIcon("network-transmit-receive-symbolic");
         status_icon.pixel_size = 16;
         status_icon.halign = Gtk.Align.END;
 
@@ -93,12 +100,13 @@ public class ConnectionDialog : Gtk.Dialog {
         connection_state_label.halign = Gtk.Align.START;
         connection_state_label.valign = Gtk.Align.CENTER;
 
-        var host_label = new Gtk.Label("Soundtouch host:");
+        var host_label = new Gtk.Label(_("Network address:"));
+        host_label.tooltip_text = _("Enter the IP-address or the hostname of your speaker");
 
         main_panel.attach(host_label, 0, 0);
         main_panel.attach(host_input, 1, 0);
         main_panel.attach(test_connection_button, 2, 0);
-        main_panel.attach(status_icon, 0, 1);
+        main_panel.attach(loading_spinner, 0, 1);
         main_panel.attach(connection_state_label, 1, 1, 2, 1);
         main_panel.attach(help_button, 1, 2);
         main_panel.attach(ok_button, 2, 2);
@@ -110,24 +118,43 @@ public class ConnectionDialog : Gtk.Dialog {
     private void try_connection() {
         var changed_host = host_input.get_text();
 
-        connection_state_label.set_text("Trying to connect to " + changed_host);
+        this.show_loading_spinner();
+
+        connection_state_label.set_text(_("Trying to connect to ") + changed_host);
 
         var connection = new Soundy.WebsocketConnection(changed_host, "8080");
 
         connection.connection_failed.connect(() => {
-            message("Connection failed");
-            status_icon.gicon = new ThemedIcon("dialog-warning");
-            connection_state_label.set_text(_("Connection failed"));
-            ok_button.set_sensitive(false);
+            message("Connection failed :-(");
+            show_status_icon("dialog-warning");
+            connection_state_label.set_text(_("Connection failed to") + changed_host);
         });
 
         connection.connection_succeeded.connect(() => {
-            message("Connection succeeded!");
-            status_icon.gicon = new ThemedIcon("process-completed-symbolic");
-            connection_state_label.set_text(_("Connection succeeded!"));
-            ok_button.set_sensitive(true);
+            message("Connection succeeded to " + changed_host);
+            show_status_icon("process-completed-symbolic");
+
+            connection_state_label.set_text(_("Connection succeeded to ") + changed_host);
         });
 
         connection.init_ws();
+    }
+
+    public void show_loading_spinner() {
+        loading_spinner.start();
+        main_panel.remove(status_icon);
+        main_panel.remove(loading_spinner);
+        main_panel.attach(loading_spinner, 0, 1);
+        main_panel.show_all();
+    }
+
+    public void show_status_icon(string icon) {
+        loading_spinner.stop();
+        main_panel.remove(status_icon);
+        main_panel.remove(loading_spinner);
+
+        status_icon.gicon = new ThemedIcon(icon);
+        main_panel.attach(status_icon, 0, 1);
+        main_panel.show_all();
     }
 }

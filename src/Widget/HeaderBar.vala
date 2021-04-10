@@ -17,19 +17,28 @@
 namespace Soundy {
     public class HeaderBar : Gtk.HeaderBar {
 
+        private Soundy.Settings settings;
+        private Controller controller;
+
         private Gtk.Label title;
         private Gtk.Button power_on_off;
         private Gtk.VolumeButton volume_button;
         private Gtk.MenuButton favourites;
-        private Gtk.MenuButton settings;
+        private Gtk.MenuButton settings_button;
         private Gtk.Box main_box;
 
-        public HeaderBar(Controller controller, Model model) {
+        public HeaderBar(Controller controller, Model model, Soundy.Settings settings) {
+            this.settings = settings;
+            this.controller = controller;
+
             set_show_close_button(true);
-            title = new Gtk.Label(_("No title"));
+            title = new Gtk.Label(_("Cannot connect to your speaker") + " :-/");
 
             model.model_changed.connect((model) => {
-                this.update_gui(model);
+                Idle.add(() => {
+                    this.update_gui(controller, model);
+                    return false;
+                });
             });
 
             power_on_off = create_button("system-shutdown-symbolic", 16);
@@ -49,9 +58,8 @@ namespace Soundy {
             volume_button.value = controller.get_volume();
 
             favourites = this.create_menu_button("non-starred-symbolic", 16);
-            this.create_preset_items(controller);
 
-            settings = this.create_menu_button("preferences-system-symbolic", 16);
+            settings_button = this.create_menu_button("preferences-system-symbolic", 16);
             this.create_settings_items();
 
             main_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 6);
@@ -60,7 +68,7 @@ namespace Soundy {
             main_box.pack_start(title);
             main_box.pack_start(power_on_off);
 
-            pack_end(settings);
+            pack_end(settings_button);
             pack_end(favourites);
             pack_end(volume_button);
 
@@ -91,7 +99,6 @@ namespace Soundy {
             menu_grid.margin_bottom = 6;
             menu_grid.orientation = Gtk.Orientation.VERTICAL;
 
-
             PresetsMessage presets = controller.get_presets();
             foreach(Preset p in presets.get_presets()){
                 message(p.item_image_url);
@@ -106,15 +113,21 @@ namespace Soundy {
             favourites.popover = popover;
         }
 
-        public void update_gui(Model model) {
+        public void update_gui(Controller controller, Model model) {
             if (!model.connection_established) {
-                update_title(_("No connection"));
-                power_on_off.visible = false;
+                power_on_off.sensitive = false;
+                volume_button.sensitive = false;
+
+                var popover = new Gtk.Popover(null);
+                favourites.popover = popover;
+                favourites.sensitive = false;
             } else {
                 update_title(model.soundtouch_speaker_name);
-                power_on_off.visible = true;
+                power_on_off.sensitive = true;
+                volume_button.sensitive = true;
+                this.create_preset_items(controller);
+                favourites.sensitive = true;
             }
-
 
             if (model.mute_enabled) {
                 message("mute");
@@ -123,7 +136,6 @@ namespace Soundy {
                 message("current volume set " + model.actual_volume.to_string());
             }
         }
-
 
         public Gtk.MenuButton create_menu_button(string icon_name, int pixel_size) {
             var menu_button = new Gtk.MenuButton();
@@ -144,7 +156,6 @@ namespace Soundy {
             menu_grid.margin_bottom = 6;
             menu_grid.orientation = Gtk.Orientation.VERTICAL;
             menu_grid.halign = Gtk.Align.FILL;
-            //            menu_grid.valign = Gtk.Align.FILL;
 
             var about = new SettingsMenuItem(_("About"), "dialog-information-symbolic");
             about.clicked.connect(() => {
@@ -152,11 +163,22 @@ namespace Soundy {
                 dialog.present();
             });
 
-            var speaker_host = new SettingsMenuItem(_("Speaker host"), "network-transmit-receive-symbolic");
+            var speaker_host = new SettingsMenuItem(_("Network address"), "network-transmit-receive-symbolic");
 
             speaker_host.clicked.connect(() => {
                 var dialog = new ConnectionDialog(Soundy.Settings.get_instance());
                 dialog.run();
+
+                string updated_host = this.settings.get_speaker_host();
+
+                var connection = new Soundy.WebsocketConnection(updated_host, "8080");
+                var client = new Soundy.API(connection, updated_host);
+
+                new Thread<void*>(null, () => {
+                    this.controller.update_client(client);
+                    this.controller.init();
+                    return null;
+                });
             });
 
             menu_grid.add(speaker_host);
@@ -166,7 +188,7 @@ namespace Soundy {
 
             var popover = new Gtk.Popover(null);
             popover.add(menu_grid);
-            settings.popover = popover;
+            settings_button.popover = popover;
         }
     }
 }
