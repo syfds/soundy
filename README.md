@@ -47,7 +47,7 @@ or `test.sh`
 
 ## Installation on Ubuntu (tested on 20.04 and 18.04)
 
-* download the .deb file from latest release: [https://github.com/syfds/soundy/releases]()
+* download the .deb file from [latest release](https://github.com/syfds/soundy/releases)
 * install with `sudo apt install ./com.github.syfds.soundy*.deb`
 * now you can find Soundy through the search
 * uninstall with `sudo apt remove com.github.syfds.soundy`
