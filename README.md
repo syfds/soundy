@@ -1,8 +1,12 @@
 # Soundy
+
 Soundy is a simple GTK client written in Vala to control a SoundTouch network speaker. It is a free and simple alternative to the official client. The
 app connects to the speaker over SoundTouch API (https://developer.bose.com/guides/bose-soundtouch-api/bose-soundtouch-api-reference).
 
+[![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.syfds.soundy)
+
 ## Features
+
 * Power ON/OFF
 * Play/Pause the currently selected track
 * Playing next or previous track
