@@ -44,7 +44,7 @@ namespace Soundy {
 
             string response = communicate_with_server(session, msg);
 
-            message("got from soundtouch API: " + response);
+            message("got from SoundTouch API: " + response);
 
             return response;
 

@@ -1,7 +1,6 @@
 # Soundy
-Soundy is a simple GTK client written in Vala to control a Soundtouch network speaker. 
-It is a free and simple alternative to the official client.
-The app connects to the speaker over Soundtouch API (https://developer.bose.com/guides/bose-soundtouch-api/bose-soundtouch-api-reference).
+Soundy is a simple GTK client written in Vala to control a SoundTouch network speaker. It is a free and simple alternative to the official client. The
+app connects to the speaker over SoundTouch API (https://developer.bose.com/guides/bose-soundtouch-api/bose-soundtouch-api-reference).
 
 ## Features
 * Power ON/OFF
@@ -53,7 +52,9 @@ or `test.sh`
 * uninstall with `sudo apt remove com.github.syfds.soundy`
 
 ## How-To
-I suggest to assign your soundtouch speaker to a static IP address (address reservation), so the desktop client can quickly find your speaker at startup. Example for TP-Link (can be different for your router):
+
+I suggest to assign your SoundTouch speaker to a static IP address (address reservation), so the desktop client can quickly find your speaker at
+startup. Example for TP-Link (can be different for your router):
 * Login (something like 192.168.0.1 or similar) and go to `DHCP` -> `DHCP Client List` and copy the MAC-address of your speaker.
 * Then create a static assignment in `Address Reservation`, after restarting the speaker the correct assignment can be checked in the `DHCP Client List`.
 * Create a hosts entry in `/etc/hosts` where `192.168.1.XXX` is your static IP address

@@ -31,7 +31,7 @@ public class WelcomePanel : Gtk.Grid {
         title = new Gtk.Label(_("Welcome to Soundy!"));
         title.get_style_context().add_class("h1");
 
-        sub_title = new Gtk.Label(_("Enjoy your soundtouch speaker"));
+        sub_title = new Gtk.Label(_("Enjoy your SoundTouch speaker"));
         sub_title.get_style_context().add_class("h2");
 
         power_button = create_button("system-shutdown-symbolic", 32);

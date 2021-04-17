@@ -34,8 +34,8 @@ msgid "Welcome to Soundy!"
 msgstr "Willkommen!"
 
 #: src/Widget/WelcomePanel.vala:34
-msgid "Enjoy your soundtouch speaker"
-msgstr "Viel Spaß mit deinem soundtouch Lautsprecher"
+msgid "Enjoy your SoundTouch speaker"
+msgstr "Viel Spaß mit deinem SoundTouch Lautsprecher"
 
 #: src/Dialog/ConnectionDialog.vala:70
 msgid "Test connection"
@@ -72,12 +72,12 @@ msgid "Soundy"
 msgstr ""
 
 #: data/com.github.syfds.soundy.appdata.xml.in:24
-msgid "GTK client to control your soundtouch speaker"
+msgid "GTK client to control your SoundTouch speaker"
 msgstr ""
 
 #: data/com.github.syfds.soundy.appdata.xml.in:39
 msgid ""
-"Soundy is small and easy tool to control your soundtouch network speaker."
+"Soundy is small and easy tool to control your SoundTouch network speaker."
 msgstr ""
 
 #: data/com.github.syfds.soundy.appdata.xml.in:42
@@ -109,7 +109,7 @@ msgid "Sergej Dobryak"
 msgstr ""
 
 #: data/com.github.syfds.soundy.desktop.in:5
-msgid "Control your soundtouch speaker"
+msgid "Control your SoundTouch speaker"
 msgstr ""
 
 #: data/com.github.syfds.soundy.desktop.in:8

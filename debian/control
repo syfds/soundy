@@ -16,4 +16,4 @@ Package: com.github.syfds.soundy
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Soundy
- Soundy is a simple GTK client written in Vala to control a Soundtouch network speaker.
+ Soundy is a simple GTK client written in Vala to control a SoundTouch network speaker.

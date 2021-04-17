@@ -4,8 +4,8 @@
     <schema path="/com/github/syfds/soundy/" id="com.github.syfds.soundy">
         <key name="soundtouch-host" type="s">
             <default>'192.168.0.1'</default>
-            <summary>IP address of your soundtouch speaker</summary>
-            <description>Last used IP address of your soundtouch speaker in the local network</description>
+            <summary>IP address of your SoundTouch speaker</summary>
+            <description>Last used IP address of your SoundTouch speaker in the local network</description>
         </key>
     </schema>
 </schemalist>

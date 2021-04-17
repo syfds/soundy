@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=Soundy
-Comment=Control your soundtouch speaker
+Comment=Control your SoundTouch speaker
 GenericName=Soundy
 Exec=com.github.syfds.soundy %U
 Icon=com.github.syfds.soundy
