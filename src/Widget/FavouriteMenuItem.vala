@@ -16,6 +16,8 @@
 
 public class FavouriteMenuItem : Gtk.Button {
 
+    private const int ICON_SIZE = 60;
+
     private Controller controller;
     private string image_url;
     private string item_id;
@@ -41,13 +43,20 @@ public class FavouriteMenuItem : Gtk.Button {
     }
 
     private void load_image_asynchronously() {
-        new Thread<void*>("loading favourite image", () => {
-            var image = this.create_image_from_url(this.image_url);
-            this.set_image(image);
+        if (this.image_url != "") {
+            new Thread<void*>("loading favourite image", () => {
+                var image = this.create_image_from_url(this.image_url);
+                this.set_image(image);
+                this.show_all();
+                return null;
+            });
+        } else {
+            var menu_icon = new Gtk.Image();
+            menu_icon.gicon = new ThemedIcon("multimedia-audio-player");
+            menu_icon.pixel_size = ICON_SIZE;
+            this.set_image(menu_icon);
             this.show_all();
-            return null;
-        });
-
+        }
     }
 
     public Gtk.Image create_image_from_url(string image_url) {
@@ -57,7 +66,7 @@ public class FavouriteMenuItem : Gtk.Button {
         var input_stream = session.send(msg);
 
         var image = new Gtk.Image();
-        Gdk.Pixbuf image_pixbuf = new Gdk.Pixbuf.from_stream_at_scale(input_stream, 60, 60, true);
+        Gdk.Pixbuf image_pixbuf = new Gdk.Pixbuf.from_stream_at_scale(input_stream, ICON_SIZE, ICON_SIZE, true);
         image.set_from_pixbuf(image_pixbuf);
         return image;
     }

@@ -100,6 +100,8 @@ namespace Soundy {
             menu_grid.orientation = Gtk.Orientation.VERTICAL;
 
             PresetsMessage presets = controller.get_presets();
+            message("count presets loaded " + presets.get_presets().size.to_string());
+
             foreach(Preset p in presets.get_presets()){
                 message(p.item_image_url);
                 var item = new FavouriteMenuItem(p, p.item_image_url, controller);

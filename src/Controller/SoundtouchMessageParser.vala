@@ -225,20 +225,18 @@ public class PresetsMessage : SoundtouchMessage {
         Xml.XPath.Object* result = ctx.eval_expression("count(//preset)");
         double count_preset = result->floatval;
 
-        for (var i=1; i <= (int)count_preset; i++) {
-            var item_id = get_value(ctx, @"/presets/preset[@id='$i']/@id");
-            var item_name = get_value(ctx, @"/presets/preset[@id='$i']/ContentItem/itemName");
-            var item_image_url = get_value(ctx, @"/presets/preset[@id='$i']/ContentItem/containerArt");
+        for (var i=0; i < (int) count_preset; i++) {
+            var preset_id = i + 1;
+            var item_id = get_value(ctx, @"/presets/preset[@id='$preset_id']/@id");
+            var item_name = get_value(ctx, @"/presets/preset[@id='$preset_id']/ContentItem/itemName");
+            var item_image_url = get_value(ctx, @"/presets/preset[@id='$preset_id']/ContentItem/containerArt");
             var preset = new Preset();
 
             preset.item_id = item_id;
             preset.item_name = item_name;
             preset.item_image_url = item_image_url;
             presets.add(preset);
-
         }
-        message("count preset " + result->floatval.to_string());
-
     }
 
     public Gee.ArrayList<Preset> get_presets() {
