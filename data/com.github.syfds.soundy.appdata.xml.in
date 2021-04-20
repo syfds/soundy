@@ -49,7 +49,12 @@
         <value key="x-appcenter-suggested-price">0</value>
     </custom>
     <releases>
-        <release version="0.1.5" date="2021-04-17"/>
+        <release version="0.1.5" date="2021-04-17">
+            <description>
+                <p>Small improvements and Bugfix https://github.com/syfds/soundy/issues/6</p>
+            </description>
+        </release>
+        <release version="0.1.4" date="2021-04-10"/>
     </releases>
 
     <content_rating type="oars-1.1">
