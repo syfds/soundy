@@ -51,7 +51,7 @@
     <releases>
         <release version="0.1.5" date="2021-04-17">
             <description>
-                <p>Small improvements and Bugfix https://github.com/syfds/soundy/issues/6</p>
+                <p>Fix: in case a preset has no image url a default image will be shown (https://github.com/syfds/soundy/issues/6)</p>
             </description>
         </release>
         <release version="0.1.4" date="2021-04-10"/>
