@@ -171,12 +171,12 @@ namespace Soundy {
                 var dialog = new ConnectionDialog(Soundy.Settings.get_instance());
                 dialog.run();
 
-                string updated_host = this.settings.get_speaker_host();
-
-                var connection = new Soundy.WebsocketConnection(updated_host, "8080");
-                var client = new Soundy.API(connection, updated_host);
 
                 new Thread<void*>(null, () => {
+                    string updated_host = this.settings.get_speaker_host();
+
+                    var connection = new Soundy.WebsocketConnection(updated_host, "8080");
+                    var client = new Soundy.API(connection, updated_host);
                     this.controller.update_client(client);
                     this.controller.init();
                     return null;

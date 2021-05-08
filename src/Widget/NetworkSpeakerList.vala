@@ -44,6 +44,8 @@ public class NetworkSpeakerRow : Gtk.Box {
         connect_button.clicked.connect(() => {
             clicked(hostname);
         });
+        connect_button.halign = Gtk.Align.END;
+        connect_button.valign = Gtk.Align.CENTER;
 
         add(speaker_name_label);
         add(new Gtk.Label(hostname));
