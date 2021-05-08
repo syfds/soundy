@@ -4,7 +4,8 @@ dependencies = [
     gtk, 
     granite,
     soup,
-    xml
+    xml,
+    avahi
 ]
 
 src_files = files([
@@ -16,6 +17,8 @@ src_files = files([
 'Controller/Model.vala',
 'Controller/SoundtouchMessageParser.vala',
 'Controller/Settings.vala',
+'Controller/AvahiBrowser.vala',
+'Widget/NetworkSpeakerList.vala',
 'Widget/MainPanel.vala',
 'Widget/HeaderBar.vala',
 'Widget/SettingsMenuItem.vala',
