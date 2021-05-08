@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="371px" height="219px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
-    <g transform="matrix(1,0,0,1,0,-11)">
-        <g id="Artboard1" transform="matrix(1,0,0,1,7.21461,34.9438)">
-            <rect x="-7.215" y="-23.944" width="370.917" height="218.765" style="fill:none;"/>
-            <g id="Soundy-HIG-128" serif:id="Soundy HIG 128">
-                <g id="path3818-0-5-0" transform="matrix(1,0,0,1,0.78539,0.0561916)">
-                    <path d="M107.212,108.526L107.212,108.532C107.212,115.922 87.747,122.003 64.093,122.003C40.439,122.003 20.975,115.922 20.975,108.532L20.975,108.526C20.975,101.136 40.439,95.054 64.093,95.054C87.747,95.054 107.212,101.136 107.212,108.526Z" style="fill:url(#_Radial1);fill-rule:nonzero;"/>
-                </g>
-                <g id="Layer-3" serif:id="Layer 3" transform="matrix(1,0,0,1,0.285391,-3.94434)">
-                    <g transform="matrix(1,0,0,1,12.5,13.9985)">
-                        <g id="path2555-9">
-                            <use id="_Image2_" serif:id="_Image2" xlink:href="#_Image2" x="0" y="0" width="104px" height="104px"/>
-                        </g>
-                    </g>
-                    <g transform="matrix(2.2183,0,0,2.14557,-54.6413,-32.6181)">
-                        <ellipse cx="53.708" cy="45.963" rx="23.441" ry="24.236" style="fill:rgb(142,147,144);fill-opacity:0;stroke:rgb(45,182,82);stroke-width:0.46px;"/>
-                    </g>
-                    <g transform="matrix(1,0,0,1,13,14.4985)">
-                        <g id="path3019">
-                            <use id="_Image3_" serif:id="_Image3" xlink:href="#_Image3" x="0" y="0" width="103px" height="103px"/>
-                        </g>
+<svg width="128px" height="128px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g id="Artboard1" transform="matrix(0.34509,0,0,0.585102,2.48969,14.0096)">
+        <rect x="-7.215" y="-23.944" width="370.917" height="218.765" style="fill:none;"/>
+        <g id="Soundy-HIG-128" serif:id="Soundy HIG 128" transform="matrix(2.89779,0,0,1.7091,-9.49049,-27.4589)">
+            <g id="path3818-0-5-0" transform="matrix(1,0,0,1,0.78539,0.0561916)">
+                <path d="M107.212,108.526L107.212,108.532C107.212,115.922 87.747,122.003 64.093,122.003C40.439,122.003 20.975,115.922 20.975,108.532L20.975,108.526C20.975,101.136 40.439,95.054 64.093,95.054C87.747,95.054 107.212,101.136 107.212,108.526Z" style="fill:url(#_Radial1);fill-rule:nonzero;"/>
+            </g>
+            <g id="Layer-3" serif:id="Layer 3" transform="matrix(1,0,0,1,0.285391,-3.94434)">
+                <g transform="matrix(1,0,0,1,12.5,13.9985)">
+                    <g id="path2555-9">
+                        <use id="_Image2_" serif:id="_Image2" xlink:href="#_Image2" x="0" y="0" width="104px" height="104px"/>
                     </g>
                 </g>
-                <g id="path5860" transform="matrix(-0.983571,-0.180519,0.180519,-0.983571,117.544,138.704)">
-                    <path d="M83.464,85.467C80.979,87.619 39.707,73.318 39.085,70.089C38.464,66.86 71.486,38.269 74.593,39.345C77.699,40.422 85.95,83.315 83.464,85.467Z" style="fill-opacity:0.15;fill-rule:nonzero;stroke:black;stroke-opacity:0.15;stroke-width:0.22px;stroke-linecap:butt;stroke-miterlimit:4;"/>
+                <g transform="matrix(2.2183,0,0,2.14557,-54.6413,-32.6181)">
+                    <ellipse cx="53.708" cy="45.963" rx="23.441" ry="24.236" style="fill:rgb(142,147,144);fill-opacity:0;stroke:rgb(45,182,82);stroke-width:0.46px;"/>
                 </g>
-                <g id="path58601" serif:id="path5860" transform="matrix(-0.983571,-0.180519,0.180519,-0.983571,117.544,138.704)">
-                    <path d="M83.464,85.467C80.979,87.619 39.707,73.318 39.085,70.089C38.464,66.86 71.486,38.269 74.593,39.345C77.699,40.422 85.95,83.315 83.464,85.467Z" style="fill-opacity:0.07;fill-rule:nonzero;stroke:black;stroke-opacity:0.07;stroke-width:1px;stroke-linecap:butt;stroke-miterlimit:4;"/>
+                <g transform="matrix(1,0,0,1,13,14.4985)">
+                    <g id="path3019">
+                        <use id="_Image3_" serif:id="_Image3" xlink:href="#_Image3" x="0" y="0" width="103px" height="103px"/>
+                    </g>
                 </g>
-                <g id="path58602" serif:id="path5860" transform="matrix(-0.983571,-0.180519,0.180519,-0.983571,117.544,137.704)">
-                    <path d="M83.464,85.467C80.979,87.619 39.707,73.318 39.085,70.089C38.464,66.86 71.486,38.269 74.593,39.345C77.699,40.422 85.95,83.315 83.464,85.467Z" style="fill:white;fill-rule:nonzero;stroke:white;stroke-width:0.22px;stroke-linecap:butt;stroke-miterlimit:4;"/>
-                </g>
+            </g>
+            <g id="path5860" transform="matrix(-0.983571,-0.180519,0.180519,-0.983571,117.544,138.704)">
+                <path d="M83.464,85.467C80.979,87.619 39.707,73.318 39.085,70.089C38.464,66.86 71.486,38.269 74.593,39.345C77.699,40.422 85.95,83.315 83.464,85.467Z" style="fill-opacity:0.15;fill-rule:nonzero;stroke:black;stroke-opacity:0.15;stroke-width:0.22px;stroke-linecap:butt;stroke-miterlimit:4;"/>
+            </g>
+            <g id="path58601" serif:id="path5860" transform="matrix(-0.983571,-0.180519,0.180519,-0.983571,117.544,138.704)">
+                <path d="M83.464,85.467C80.979,87.619 39.707,73.318 39.085,70.089C38.464,66.86 71.486,38.269 74.593,39.345C77.699,40.422 85.95,83.315 83.464,85.467Z" style="fill-opacity:0.07;fill-rule:nonzero;stroke:black;stroke-opacity:0.07;stroke-width:1px;stroke-linecap:butt;stroke-miterlimit:4;"/>
+            </g>
+            <g id="path58602" serif:id="path5860" transform="matrix(-0.983571,-0.180519,0.180519,-0.983571,117.544,137.704)">
+                <path d="M83.464,85.467C80.979,87.619 39.707,73.318 39.085,70.089C38.464,66.86 71.486,38.269 74.593,39.345C77.699,40.422 85.95,83.315 83.464,85.467Z" style="fill:white;fill-rule:nonzero;stroke:white;stroke-width:0.22px;stroke-linecap:butt;stroke-miterlimit:4;"/>
             </g>
         </g>
     </g>
