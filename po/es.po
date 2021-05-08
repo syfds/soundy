@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.syfds.soundy package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.syfds.soundy\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-10 20:25+0200\n"
+"PO-Revision-Date: 2021-04-29 21:30-0600\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.3\n"
+"Last-Translator: Jeyson Antonio Flores Deras <jeyson.flores@protonmail.com>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: es\n"
+
+#: src/Widget/HeaderBar.vala:35
+msgid "Cannot connect to your speaker"
+msgstr "No se pudo conectar con tu altavoz"
+
+#: src/Widget/HeaderBar.vala:160
+msgid "About"
+msgstr "Acerca de"
+
+#: src/Widget/HeaderBar.vala:166 src/Dialog/ConnectionDialog.vala:103
+msgid "Network address"
+msgstr "Dirección de red"
+
+#: src/Widget/WelcomePanel.vala:31
+msgid "Welcome to Soundy!"
+msgstr "¡Bienvenido a Soundy!"
+
+#: src/Widget/WelcomePanel.vala:34
+msgid "Enjoy your SoundTouch speaker"
+msgstr "Disfruta tu altavoz SoundTouch"
+
+#: src/Dialog/ConnectionDialog.vala:70
+msgid "Test connection"
+msgstr "Probar conexión"
+
+#: src/Dialog/ConnectionDialog.vala:79
+msgid "Do you need help?"
+msgstr "¿Necesitas ayuda?"
+
+#: src/Dialog/ConnectionDialog.vala:84
+msgid "Save"
+msgstr "Guardar"
+
+#: src/Dialog/ConnectionDialog.vala:104
+msgid "Enter the IP-address or the hostname of your speaker"
+msgstr "Ingresa la dirección IP o el nombre del host de tu altavoz"
+
+#: src/Dialog/ConnectionDialog.vala:123
+msgid "Trying to connect to "
+msgstr "Intentando conectar a "
+
+#: src/Dialog/ConnectionDialog.vala:130
+msgid "Connection failed to "
+msgstr "No se pudo conectar a "
+
+#: src/Dialog/ConnectionDialog.vala:137
+msgid "Connection succeeded to "
+msgstr "Conexión exitosa con "
+
+#: data/com.github.syfds.soundy.appdata.xml.in:23
+#: data/com.github.syfds.soundy.desktop.in:4
+#: data/com.github.syfds.soundy.desktop.in:6
+msgid "Soundy"
+msgstr "Soundy"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:24
+msgid "GTK client to control your SoundTouch speaker"
+msgstr "Cliente GTK para controlar tu altavoz SoundTouch"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:39
+msgid "Soundy is small and easy tool to control your SoundTouch network speaker."
+msgstr "Soundy es una pequeña y fácil herramienta para controlar tu altavoz SoudTouch."
+
+#: data/com.github.syfds.soundy.appdata.xml.in:42
+msgid "Features:"
+msgstr "Características:"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:44
+msgid "Power ON/OFF"
+msgstr "Poder ON/OFF"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:45
+msgid "Play/Pause the currently selected track"
+msgstr "Reproducir/Pausar la pista seleccionada"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:46
+msgid "Playing next or previous track"
+msgstr "Reproducir la siguiente o anterior pista"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:47
+msgid "Increasing/decreasing volume"
+msgstr "Aumentar/Disminuir el volumen"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:48
+msgid "Displaying and playing the favourites"
+msgstr "Mostrar y reproducir favoritos"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:59
+msgid "Sergej Dobryak"
+msgstr "Sergej Dobryak"
+
+#: data/com.github.syfds.soundy.desktop.in:5
+msgid "Control your SoundTouch speaker"
+msgstr "Controla tu altavoz SoundTouch"
+
+#: data/com.github.syfds.soundy.desktop.in:8
+msgid "com.github.syfds.soundy"
+msgstr "com.github.syfds.soundy"
+
+#: data/com.github.syfds.soundy.desktop.in:11
+msgid "soundy;IDE;scratch;"
+msgstr "soundy;IDE;scratch;"
