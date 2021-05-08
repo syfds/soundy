@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="106px" height="113px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
-    <g transform="matrix(1,0,0,1,-19.4981,-44.4963)">
-        <g transform="matrix(1,0,0,1,7.21461,34.9438)">
+<svg width="371px" height="219px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,0,-11)">
+        <g id="Artboard1" transform="matrix(1,0,0,1,7.21461,34.9438)">
+            <rect x="-7.215" y="-23.944" width="370.917" height="218.765" style="fill:none;"/>
             <g id="Soundy-HIG-128" serif:id="Soundy HIG 128">
                 <g id="path3818-0-5-0" transform="matrix(1,0,0,1,0.78539,0.0561916)">
                     <path d="M107.212,108.526L107.212,108.532C107.212,115.922 87.747,122.003 64.093,122.003C40.439,122.003 20.975,115.922 20.975,108.532L20.975,108.526C20.975,101.136 40.439,95.054 64.093,95.054C87.747,95.054 107.212,101.136 107.212,108.526Z" style="fill:url(#_Radial1);fill-rule:nonzero;"/>
