@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 30 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
-    <g transform="matrix(1,0,0,1,-394.242,-22.3294)">
-        <g transform="matrix(1,0,0,1,-0.0331587,10.7533)">
-            <g id="Sound-HIG-32" serif:id="Sound HIG 32" transform="matrix(0.491525,0,0,0.48554,388.13,6.83356)">
+<svg width="32px" height="32px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-377.327,-11.0315)">
+        <g id="Artboard3" transform="matrix(0.291537,0,0,0.296973,269.741,14.2249)">
+            <rect x="369.033" y="-10.753" width="109.763" height="107.754" style="fill:none;"/>
+            <g id="Sound-HIG-32" serif:id="Sound HIG 32" transform="matrix(1.68598,0,0,1.63496,352.622,-22.1405)">
                 <g id="path3818-0-5-0" transform="matrix(0.556606,0,0,0.5195,6.61058,9.49036)">
                     <path d="M107.212,108.526L107.212,108.532C107.212,115.922 87.747,122.003 64.093,122.003C40.439,122.003 20.975,115.922 20.975,108.532L20.975,108.526C20.975,101.136 40.439,95.054 64.093,95.054C87.747,95.054 107.212,101.136 107.212,108.526Z" style="fill:url(#_Radial1);fill-rule:nonzero;"/>
                 </g>
