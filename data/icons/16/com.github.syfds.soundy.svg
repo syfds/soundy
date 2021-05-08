@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
-    <g transform="matrix(1,0,0,1,-459.309,-181.396)">
-        <g transform="matrix(1,0,0,1,-0.391412,-0.93168)">
-            <g id="Sound-HIG-16" serif:id="Sound HIG 16" transform="matrix(0.254237,0,0,0.254237,456.523,179.844)">
+<svg width="16px" height="16px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-442.327,-170.031)">
+        <g id="Artboard5" transform="matrix(0.16099,0,0,0.162385,372.395,144.061)">
+            <rect x="434.391" y="159.932" width="99.385" height="98.531" style="fill:none;"/>
+            <g id="Sound-HIG-16" serif:id="Sound HIG 16" transform="matrix(1.57921,0,0,1.56565,417.306,147.269)">
                 <g id="Layer-3" serif:id="Layer 3" transform="matrix(0.567308,0,0,0.567306,5.69404,2.11274)">
                     <g transform="matrix(1,0,0,1,12.5,13.9985)">
                         <g id="path2555-9">
