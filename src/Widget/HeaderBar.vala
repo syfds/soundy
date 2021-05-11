@@ -162,6 +162,7 @@ namespace Soundy {
             var about = new SettingsMenuItem(_("About"), "dialog-information-symbolic");
             about.clicked.connect(() => {
                 var dialog = new AboutDialog();
+                dialog.show_all();
                 dialog.present();
             });
 
@@ -170,7 +171,6 @@ namespace Soundy {
             speaker_host.clicked.connect(() => {
                 var dialog = new ConnectionDialog(Soundy.Settings.get_instance());
                 dialog.run();
-
 
                 new Thread<void*>(null, () => {
                     string updated_host = this.settings.get_speaker_host();

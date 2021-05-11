@@ -23,7 +23,7 @@ public class AvahiBrowser {
 
     public void search() {
         main_loop = new MainLoop();
-        TimeoutSource time = new TimeoutSource(2000);
+        TimeoutSource time = new TimeoutSource.seconds(1);
 
         time.set_callback(() => {
             main_loop.quit();

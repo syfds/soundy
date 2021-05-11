@@ -80,7 +80,7 @@ public class Controller : GLib.Object {
         this.client.play_preset(item_id);
     }
 
-    public async void init() {
+    public void init() {
         this.client.init_ws_connection();
     }
 

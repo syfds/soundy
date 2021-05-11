@@ -123,14 +123,8 @@ public class MainPanel : Gtk.Grid {
         this.remove(welcome_panel);
         this.remove(help_panel);
 
-
         if (!model.connection_established) {
-
             this.attach(help_panel, 0, 0, 1, 2);
-            if (!model.connection_dialog_tried) {
-                model.connection_dialog_tried = true;
-                this.open_connection_dialog();
-            }
         }
         else if (model.is_standby && !model.is_playing) {
             this.attach(welcome_panel, 0, 0, 1, 2);
@@ -155,21 +149,6 @@ public class MainPanel : Gtk.Grid {
         }
 
         this.show_all();
-    }
-
-    private void open_connection_dialog() {
-        var dialog = new ConnectionDialog(this.settings);
-        dialog.run();
-
-
-        new Thread<void*>(null, () => {
-            string updated_host = this.settings.get_speaker_host();
-            var connection = new Soundy.WebsocketConnection(updated_host, "8080");
-            var client = new Soundy.API(connection, updated_host);
-            this.controller.update_client(client);
-            this.controller.init();
-            return null;
-        });
     }
 
     private void show_container_art(string image_url, bool is_buffering_in_progress) {

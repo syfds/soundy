@@ -27,7 +27,7 @@ public class ConnectionDialog : Gtk.Dialog {
     private Gtk.Button help_button;
     private Gtk.Button ok_button;
     private Gtk.Grid main_panel = new Gtk.Grid();
-    private NetworkSpeakerList network_speaker_list = new NetworkSpeakerList();
+    private AvahiBrowser browser;
 
     public ConnectionDialog(Soundy.Settings settings) {
         Object(
@@ -41,13 +41,16 @@ public class ConnectionDialog : Gtk.Dialog {
         this.set_modal(true);
         response.connect((response_id) => {
             if (response_id == Gtk.ResponseType.CANCEL || response_id == Gtk.ResponseType.DELETE_EVENT) {
-                this.hide_on_delete();
+                destroy();
             }
         });
 
         this.settings = settings;
         this.show_dialog();
-        this.try_connection();
+        new Thread<void*>("init connection", () => {
+            this.try_connection();
+            return null;
+        });
     }
 
     public void show_dialog() {
@@ -70,7 +73,10 @@ public class ConnectionDialog : Gtk.Dialog {
         var test_connection_button = new Gtk.Button.with_label(_("Test connection"));
 
         test_connection_button.clicked.connect(() => {
-            this.try_connection();
+            new Thread<void*>("init connection", () => {
+                this.try_connection();
+                return null;
+            });
         });
 
         help_button = new Gtk.Button.from_icon_name("dialog-question");
@@ -103,20 +109,14 @@ public class ConnectionDialog : Gtk.Dialog {
         var host_label = new Gtk.Label(_("Network address") + ":");
         host_label.tooltip_text = _("Enter the IP-address or the hostname of your speaker");
 
-        network_speaker_list.on_speaker_changed.connect((hostname) => {
-            host_input.set_text(hostname);
-        });
 
-        main_panel.attach(network_speaker_list, 0, 0, 3, 1);
-        main_panel.attach(host_label, 0, 1);
-        main_panel.attach(host_input, 1, 1);
-        main_panel.attach(test_connection_button, 2, 1);
-        main_panel.attach(loading_spinner, 0, 2);
-        main_panel.attach(connection_state_label, 1, 2, 2, 1);
-        main_panel.attach(help_button, 1, 3);
-        main_panel.attach(ok_button, 2, 3);
-
-        this.init_speaker_search();
+        main_panel.attach(host_label, 0, 0);
+        main_panel.attach(host_input, 1, 0);
+        main_panel.attach(test_connection_button, 2, 0);
+        main_panel.attach(loading_spinner, 0, 1);
+        main_panel.attach(connection_state_label, 1, 1, 2, 1);
+        main_panel.attach(help_button, 1, 2);
+        main_panel.attach(ok_button, 2, 2);
 
         get_content_area().add(main_panel);
         show_all();
@@ -131,19 +131,26 @@ public class ConnectionDialog : Gtk.Dialog {
         var connection = new Soundy.WebsocketConnection(changed_host, "8080");
 
         connection.connection_failed.connect(() => {
-            message("Connection failed :-(");
-            show_status_icon("dialog-warning");
-            connection_state_label.set_text(_("Connection failed to ") + changed_host);
+            Idle.add(() => {
+                message("Connection failed :-(");
+                show_status_icon("dialog-warning");
+                connection_state_label.set_text(_("Connection failed to ") + changed_host);
+                return false;
+            });
         });
 
         connection.connection_succeeded.connect(() => {
-            message("Connection succeeded to " + changed_host);
-            show_status_icon("process-completed-symbolic");
+            Idle.add(() => {
+                message("Connection succeeded to " + changed_host);
+                show_status_icon("process-completed-symbolic");
 
-            connection_state_label.set_text(_("Connection succeeded to ") + changed_host);
+                connection_state_label.set_text(_("Connection succeeded to ") + changed_host);
+                return false;
+            });
         });
 
         connection.init_ws();
+
     }
 
     public void show_loading_spinner() {
@@ -162,17 +169,5 @@ public class ConnectionDialog : Gtk.Dialog {
         status_icon.gicon = new ThemedIcon(icon);
         main_panel.attach(status_icon, 0, 2);
         main_panel.show_all();
-    }
-
-    public void init_speaker_search() {
-        var browser = new AvahiBrowser();
-        browser.on_found_speaker.connect((name, type, domain, hostname, port, txt) => {
-            network_speaker_list.add_speaker(name, hostname);
-        });
-
-        new Thread<void*>("searching speaker", () => {
-            browser.search();
-            return null;
-        });
     }
 }
