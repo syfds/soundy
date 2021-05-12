@@ -31,7 +31,6 @@ public class FavouriteMenuItem : Gtk.Button {
         this.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
         this.get_style_context().add_class(Gtk.STYLE_CLASS_MENUITEM);
 
-
         this.item_id = preset.item_id;
         this.controller = controller;
 
@@ -46,8 +45,11 @@ public class FavouriteMenuItem : Gtk.Button {
         if (this.image_url != "") {
             new Thread<void*>("loading favourite image", () => {
                 var image = this.create_image_from_url(this.image_url);
-                this.set_image(image);
-                this.show_all();
+                Idle.add(() => {
+                    this.set_image(image);
+                    this.show_all();
+                    return false;
+                });
                 return null;
             });
         } else {

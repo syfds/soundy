@@ -6,6 +6,7 @@ gtk = dependency('gtk+-3.0')
 granite = dependency('granite')
 soup = dependency('libsoup-2.4')
 xml = dependency('libxml-2.0')
+avahi = dependency('avahi-gobject')
 i18n = import('i18n')
 
 # Set our translation domain

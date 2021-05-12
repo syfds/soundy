@@ -18,5 +18,12 @@ namespace Soundy {
             button.can_focus = false;
             return button;
         }
+
+        public static Gtk.Image create_icon(string icon, int size=Gtk.IconSize.BUTTON) {
+            var menu_icon = new Gtk.Image();
+            menu_icon.gicon = new ThemedIcon(icon);
+            menu_icon.pixel_size = size;
+            return menu_icon;
+        }
     }
 }
