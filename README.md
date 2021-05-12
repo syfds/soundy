@@ -14,9 +14,10 @@ app connects to the speaker over SoundTouch API (https://developer.bose.com/guid
 * Displaying and playing the favourites
 * Auto-Discovery of SoundTouch speaker on local network
 
-![Soundy Screenshot](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-1.png)
-![Soundy Screenshot](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-2.png)
-![Soundy Screenshot](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-3.png)
+![Soundy Main](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-1.png)
+![Soundy Volume](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-2.png)
+![Soundy Favourites](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-3.png)
+![Soundy Auto Discovery](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-4.png)
 
 ## Building and Installation
 You'll need the following dependencies:
