@@ -1,5 +1,9 @@
+com.github.syfds.soundy (0.2.0) UNRELEASED; urgency=low
+
+  * Auto-Discovery of SoundTouch speaker added
+  * App icon improved by Suzie97 (https://github.com/Suzie97)
 com.github.syfds.soundy (0.1.5) UNRELEASED; urgency=low
 
-  * Initial Release 
+  * Initial Release
 
  -- Sergej Dobryak <sergej.dobryak@gmail.com>  Sun, 28 Mar 2021 19:52:56 +0200

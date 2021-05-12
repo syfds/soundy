@@ -49,6 +49,12 @@
         <value key="x-appcenter-suggested-price">0</value>
     </custom>
     <releases>
+        <release version="0.2.0" date="2021-05-12">
+            <description>
+                <p>Auto-Discovery of SoundTouch speaker added</p>
+                <p>App icon improved by Suzie97 (https://github.com/Suzie97)</p>
+            </description>
+        </release>
         <release version="0.1.5" date="2021-04-17">
             <description>
                 <p>Fix: in case a preset has no image url a default image will be shown (https://github.com/syfds/soundy/issues/6)</p>
