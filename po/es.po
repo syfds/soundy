@@ -7,26 +7,48 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.syfds.soundy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-10 20:25+0200\n"
+"POT-Creation-Date: 2021-05-12 21:01+0200\n"
 "PO-Revision-Date: 2021-04-29 21:30-0600\n"
+"Last-Translator: Jeyson Antonio Flores Deras <jeyson.flores@protonmail.com>\n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.4.3\n"
-"Last-Translator: Jeyson Antonio Flores Deras <jeyson.flores@protonmail.com>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: es\n"
+
+#: src/Widget/SpeakerPanel.vala:34
+msgid "Hide"
+msgstr ""
+
+#: src/Widget/SpeakerPanel.vala:34
+#, fuzzy
+msgid "List your SoundTouch speaker"
+msgstr "Controla tu altavoz SoundTouch"
+
+#: src/Widget/SpeakerPanel.vala:45
+#, fuzzy
+msgid "Cannot find any SoundTouch speaker."
+msgstr "Controla tu altavoz SoundTouch"
+
+#: src/Widget/SpeakerPanel.vala:150
+msgid "Host "
+msgstr ""
+
+#: src/Widget/SpeakerPanel.vala:153
+msgid "Connect"
+msgstr ""
 
 #: src/Widget/HeaderBar.vala:35
 msgid "Cannot connect to your speaker"
 msgstr "No se pudo conectar con tu altavoz"
 
-#: src/Widget/HeaderBar.vala:160
+#: src/Widget/HeaderBar.vala:162
 msgid "About"
 msgstr "Acerca de"
 
-#: src/Widget/HeaderBar.vala:166 src/Dialog/ConnectionDialog.vala:103
+#: src/Widget/HeaderBar.vala:169 src/Dialog/ConnectionDialog.vala:109
 msgid "Network address"
 msgstr "Dirección de red"
 
@@ -38,75 +60,102 @@ msgstr "¡Bienvenido a Soundy!"
 msgid "Enjoy your SoundTouch speaker"
 msgstr "Disfruta tu altavoz SoundTouch"
 
-#: src/Dialog/ConnectionDialog.vala:70
-msgid "Test connection"
-msgstr "Probar conexión"
-
-#: src/Dialog/ConnectionDialog.vala:79
+#: src/Widget/HelpPanel.vala:13 src/Dialog/ConnectionDialog.vala:85
 msgid "Do you need help?"
 msgstr "¿Necesitas ayuda?"
 
-#: src/Dialog/ConnectionDialog.vala:84
+#: src/Widget/HelpPanel.vala:25
+msgid "You can try to set the correct IP address in "
+msgstr ""
+
+#: src/Widget/HelpPanel.vala:27
+msgid " or seek for help here "
+msgstr ""
+
+#: src/Dialog/ConnectionDialog.vala:73
+msgid "Test connection"
+msgstr "Probar conexión"
+
+#: src/Dialog/ConnectionDialog.vala:90
 msgid "Save"
 msgstr "Guardar"
 
-#: src/Dialog/ConnectionDialog.vala:104
+#: src/Dialog/ConnectionDialog.vala:110
 msgid "Enter the IP-address or the hostname of your speaker"
 msgstr "Ingresa la dirección IP o el nombre del host de tu altavoz"
 
-#: src/Dialog/ConnectionDialog.vala:123
+#: src/Dialog/ConnectionDialog.vala:129
 msgid "Trying to connect to "
 msgstr "Intentando conectar a "
 
-#: src/Dialog/ConnectionDialog.vala:130
+#: src/Dialog/ConnectionDialog.vala:137
 msgid "Connection failed to "
 msgstr "No se pudo conectar a "
 
-#: src/Dialog/ConnectionDialog.vala:137
+#: src/Dialog/ConnectionDialog.vala:147
 msgid "Connection succeeded to "
 msgstr "Conexión exitosa con "
 
-#: data/com.github.syfds.soundy.appdata.xml.in:23
+#: data/com.github.syfds.soundy.appdata.xml.in:6
 #: data/com.github.syfds.soundy.desktop.in:4
 #: data/com.github.syfds.soundy.desktop.in:6
 msgid "Soundy"
 msgstr "Soundy"
 
-#: data/com.github.syfds.soundy.appdata.xml.in:24
-msgid "GTK client to control your SoundTouch speaker"
+#: data/com.github.syfds.soundy.appdata.xml.in:7
+#, fuzzy
+msgid "Simple client to control your SoundTouch speaker"
 msgstr "Cliente GTK para controlar tu altavoz SoundTouch"
 
-#: data/com.github.syfds.soundy.appdata.xml.in:39
-msgid "Soundy is small and easy tool to control your SoundTouch network speaker."
-msgstr "Soundy es una pequeña y fácil herramienta para controlar tu altavoz SoudTouch."
+#: data/com.github.syfds.soundy.appdata.xml.in:22
+msgid ""
+"Soundy is small and easy tool to control your SoundTouch network speaker."
+msgstr ""
+"Soundy es una pequeña y fácil herramienta para controlar tu altavoz "
+"SoudTouch."
 
-#: data/com.github.syfds.soundy.appdata.xml.in:42
+#: data/com.github.syfds.soundy.appdata.xml.in:25
 msgid "Features:"
 msgstr "Características:"
 
-#: data/com.github.syfds.soundy.appdata.xml.in:44
+#: data/com.github.syfds.soundy.appdata.xml.in:27
 msgid "Power ON/OFF"
 msgstr "Poder ON/OFF"
 
-#: data/com.github.syfds.soundy.appdata.xml.in:45
+#: data/com.github.syfds.soundy.appdata.xml.in:28
 msgid "Play/Pause the currently selected track"
 msgstr "Reproducir/Pausar la pista seleccionada"
 
-#: data/com.github.syfds.soundy.appdata.xml.in:46
+#: data/com.github.syfds.soundy.appdata.xml.in:29
 msgid "Playing next or previous track"
 msgstr "Reproducir la siguiente o anterior pista"
 
-#: data/com.github.syfds.soundy.appdata.xml.in:47
+#: data/com.github.syfds.soundy.appdata.xml.in:30
 msgid "Increasing/decreasing volume"
 msgstr "Aumentar/Disminuir el volumen"
 
-#: data/com.github.syfds.soundy.appdata.xml.in:48
+#: data/com.github.syfds.soundy.appdata.xml.in:31
 msgid "Displaying and playing the favourites"
 msgstr "Mostrar y reproducir favoritos"
 
-#: data/com.github.syfds.soundy.appdata.xml.in:59
+#: data/com.github.syfds.soundy.appdata.xml.in:42
 msgid "Sergej Dobryak"
 msgstr "Sergej Dobryak"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:54
+#, fuzzy
+msgid "Auto-Discovery of SoundTouch speaker added"
+msgstr "Disfruta tu altavoz SoundTouch"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:55
+msgid "App icon improved by Suzie97 (https://github.com/Suzie97)"
+msgstr ""
+
+#: data/com.github.syfds.soundy.appdata.xml.in:60
+msgid ""
+"Fix: in case a preset has no image url a default image will be shown "
+"(https://github.com/syfds/soundy/issues/6)"
+msgstr ""
 
 #: data/com.github.syfds.soundy.desktop.in:5
 msgid "Control your SoundTouch speaker"

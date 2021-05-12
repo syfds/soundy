@@ -6,13 +6,20 @@ src/Controller/Controller.vala
 src/Controller/Model.vala
 src/Controller/SoundtouchMessageParser.vala
 src/Controller/Settings.vala
+src/Controller/AvahiBrowser.vala
+src/Widget/NetworkSpeakerList.vala
+src/Widget/SpeakerPanel.vala
 src/Widget/MainPanel.vala
 src/Widget/HeaderBar.vala
+src/Widget/SettingsMenuItem.vala
 src/Widget/FavouriteMenuItem.vala
 src/Widget/LoadableImage.vala
 src/Widget/LoadableImagePanel.vala
 src/Widget/WelcomePanel.vala
+src/Widget/HelpPanel.vala
+src/Widget/Util.vala
 src/Dialog/ConnectionDialog.vala
+src/Dialog/AboutDialog.vala
 
 data/com.github.syfds.soundy.appdata.xml.in
 data/com.github.syfds.soundy.desktop.in
