@@ -14,12 +14,25 @@ app connects to the speaker over SoundTouch API (https://developer.bose.com/guid
 * Displaying and playing the favourites
 * Auto-Discovery of SoundTouch speaker on local network
 
-![Soundy Main](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-1.png)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/syfds/soundy/master/data/screenshot/screenshot-1.png">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/syfds/soundy/master/data/screenshot/screenshot-2.png">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/syfds/soundy/master/data/screenshot/screenshot-3.png">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/syfds/soundy/master/data/screenshot/screenshot-4.png">
+</p>
+
 ![Soundy Volume](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-2.png)
 ![Soundy Favourites](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-3.png)
 ![Soundy Auto Discovery](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-4.png)
 
 ## Building and Installation
+
 You'll need the following dependencies:
 
 * glib-2.0, version: '>=2.40'
