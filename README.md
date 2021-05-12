@@ -12,6 +12,7 @@ app connects to the speaker over SoundTouch API (https://developer.bose.com/guid
 * Playing next or previous track
 * Increasing/decreasing volume
 * Displaying and playing the favourites
+* Auto-Discovery of SoundTouch speaker on local network
 
 ![Soundy Screenshot](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-1.png)
 ![Soundy Screenshot](https://github.com/syfds/soundy/blob/master/data/screenshot/screenshot-2.png)
