@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: com.github.syfds.soundy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-12 21:01+0200\n"
-"PO-Revision-Date: 2021-04-03 14:51+0200\n"
-"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"PO-Revision-Date: 2021-05-13 13:29+0200\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -20,29 +20,27 @@ msgstr ""
 
 #: src/Widget/SpeakerPanel.vala:34
 msgid "Hide"
-msgstr ""
+msgstr "Verbergen"
 
 #: src/Widget/SpeakerPanel.vala:34
-#, fuzzy
 msgid "List your SoundTouch speaker"
-msgstr "Bedien je SoundTouch-luidspreker"
+msgstr "Kies je SoundTouch-luidspreker"
 
 #: src/Widget/SpeakerPanel.vala:45
-#, fuzzy
 msgid "Cannot find any SoundTouch speaker."
-msgstr "Bedien je SoundTouch-luidspreker"
+msgstr "Geen SoundTouch-luidspreker aangetroffen."
 
 #: src/Widget/SpeakerPanel.vala:150
 msgid "Host "
-msgstr ""
+msgstr "Host "
 
 #: src/Widget/SpeakerPanel.vala:153
 msgid "Connect"
-msgstr ""
+msgstr "Verbinden"
 
 #: src/Widget/HeaderBar.vala:35
 msgid "Cannot connect to your speaker"
-msgstr ""
+msgstr "Er kan geen verbinding worden gemaakt"
 
 #: src/Widget/HeaderBar.vala:162
 msgid "About"
@@ -50,7 +48,7 @@ msgstr "Over"
 
 #: src/Widget/HeaderBar.vala:169 src/Dialog/ConnectionDialog.vala:109
 msgid "Network address"
-msgstr ""
+msgstr "Netwerkadres"
 
 #: src/Widget/WelcomePanel.vala:31
 msgid "Welcome to Soundy!"
@@ -62,42 +60,39 @@ msgstr "Geniet van je SoundTouch-luidspreker"
 
 #: src/Widget/HelpPanel.vala:13 src/Dialog/ConnectionDialog.vala:85
 msgid "Do you need help?"
-msgstr ""
+msgstr "Hulp nodig?"
 
 #: src/Widget/HelpPanel.vala:25
 msgid "You can try to set the correct IP address in "
-msgstr ""
+msgstr "Probeer het juiste ip-adres in te stellen in "
 
 #: src/Widget/HelpPanel.vala:27
 msgid " or seek for help here "
-msgstr ""
+msgstr " of zoek hier hulp "
 
 #: src/Dialog/ConnectionDialog.vala:73
-#, fuzzy
 msgid "Test connection"
-msgstr "Geen verbinding"
+msgstr "Verbinding testen"
 
 #: src/Dialog/ConnectionDialog.vala:90
 msgid "Save"
-msgstr ""
+msgstr "Opslaan"
 
 #: src/Dialog/ConnectionDialog.vala:110
 msgid "Enter the IP-address or the hostname of your speaker"
-msgstr ""
+msgstr "Voer het ip-adres of de hostnaam in van je luidspreker"
 
 #: src/Dialog/ConnectionDialog.vala:129
 msgid "Trying to connect to "
-msgstr ""
+msgstr "Bezig met verbinden met "
 
 #: src/Dialog/ConnectionDialog.vala:137
-#, fuzzy
 msgid "Connection failed to "
-msgstr "Verbinding mislukt"
+msgstr "Verbinding mislukt met "
 
 #: src/Dialog/ConnectionDialog.vala:147
-#, fuzzy
 msgid "Connection succeeded to "
-msgstr "Verbonden!"
+msgstr "Verbonden met "
 
 #: data/com.github.syfds.soundy.appdata.xml.in:6
 #: data/com.github.syfds.soundy.desktop.in:4
@@ -106,9 +101,8 @@ msgid "Soundy"
 msgstr "Soundy"
 
 #: data/com.github.syfds.soundy.appdata.xml.in:7
-#, fuzzy
 msgid "Simple client to control your SoundTouch speaker"
-msgstr "Een GTK-toepassing om je SoundTouch-luidspreker mee te bedienen"
+msgstr "Eenvoudige toepassing om je SoundTouch-luidspreker mee te bedienen"
 
 #: data/com.github.syfds.soundy.appdata.xml.in:22
 msgid ""
@@ -146,19 +140,23 @@ msgid "Sergej Dobryak"
 msgstr "Sergej Dobryak"
 
 #: data/com.github.syfds.soundy.appdata.xml.in:54
-#, fuzzy
 msgid "Auto-Discovery of SoundTouch speaker added"
-msgstr "Geniet van je SoundTouch-luidspreker"
+msgstr "[NIEUW] Je SoundTouch-luidspreker wordt automatisch herkend"
 
 #: data/com.github.syfds.soundy.appdata.xml.in:55
 msgid "App icon improved by Suzie97 (https://github.com/Suzie97)"
 msgstr ""
+"[VERBETERD] Toepassingspictogram, met dank aan @Suzie97 (https://github."
+"com/Suzie97)"
 
 #: data/com.github.syfds.soundy.appdata.xml.in:60
 msgid ""
 "Fix: in case a preset has no image url a default image will be shown "
 "(https://github.com/syfds/soundy/issues/6)"
 msgstr ""
+"[OPGELOST] Als een voorinstelling geen afbeeldingsurl bevat, dan wordt "
+"er een standaardafbeelding getoond (https://github.com/syfds/soundy/"
+"issues/6)"
 
 #: data/com.github.syfds.soundy.desktop.in:5
 msgid "Control your SoundTouch speaker"
