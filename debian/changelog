@@ -1,7 +1,8 @@
-com.github.syfds.soundy (0.2.0) UNRELEASED; urgency=low
+com.github.syfds.soundy (0.2.1) UNRELEASED; urgency=low
 
   * Auto-Discovery of SoundTouch speaker added
   * App icon improved by Suzie97 (https://github.com/Suzie97)
+  * Too long artist name and tracks are cut
 com.github.syfds.soundy (0.1.5) UNRELEASED; urgency=low
 
   * Initial Release
