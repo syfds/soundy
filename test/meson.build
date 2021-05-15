@@ -1,6 +1,7 @@
 unit_test_files = [
  'SoundtouchMessageParser',
  'PresetsParser',
+ 'Util',
 ]
 
 foreach name : unit_test_files

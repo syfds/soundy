@@ -87,8 +87,8 @@ public class MainPanel : Gtk.Grid {
         currently_playing_panel.set_orientation(Orientation.HORIZONTAL);
         currently_playing_panel.set_halign(Align.CENTER);
 
-        main_label = Soundy.Util.create_label("", Granite.STYLE_CLASS_H1_LABEL);
-        second_label = Soundy.Util.create_label("", Granite.STYLE_CLASS_H2_LABEL);
+        main_label = Soundy.Util.create_label_with_max_len("", 20, Granite.STYLE_CLASS_H1_LABEL);
+        second_label = Soundy.Util.create_label_with_max_len("", 20, Granite.STYLE_CLASS_H2_LABEL);
 
         currently_playing_panel.attach(main_label, 0, 0);
         currently_playing_panel.attach(second_label, 0, 1);
@@ -140,11 +140,13 @@ public class MainPanel : Gtk.Grid {
             this.prepare_button_panel(model.is_playing, model.is_radio_streaming);
 
             if (model.track != "") {
-                this.main_label.set_text(model.track);
+                this.main_label.set_text(Soundy.Util.cut_label_if_necessary(model.track, 35));
+                this.main_label.set_tooltip_text(model.track);
             }
 
             if (model.artist != "") {
-                this.second_label.set_text(model.artist);
+                this.second_label.set_text(Soundy.Util.cut_label_if_necessary(model.artist, 45));
+                this.second_label.set_tooltip_text(model.artist);
             }
         }
 
