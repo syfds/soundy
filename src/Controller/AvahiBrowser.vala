@@ -3,6 +3,7 @@ public class AvahiBrowser {
     private const string service_type = "_soundtouch._tcp";
 
     public signal void on_found_speaker(string name, string type, string domain, string hostname, uint16 port, StringList? txt);
+    public signal void on_removed_speaker(string name);
 
 
     private Client client;
@@ -64,5 +65,6 @@ public class AvahiBrowser {
 
     public void on_removed_service(Interface @interface, Protocol protocol, string name, string type, string domain, LookupResultFlags flags) {
         message("Removed service %s, type %s domain %s\n", name, type, domain);
+        on_removed_speaker(name);
     }
 }

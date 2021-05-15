@@ -46,9 +46,9 @@ public class SpeakerPanel : Gtk.Box {
                     no_speaker_label.halign = Gtk.Align.CENTER;
                     speaker_item_panel.add(no_speaker_label);
                 } else if (model.is_view_expanded) {
-                    for (var i=0;i < speaker_list.size; i++) {
+                    foreach (var speaker in speaker_list) {
 
-                        var speaker_item = new SpeakerItemView(speaker_list[i]);
+                        var speaker_item = new SpeakerItemView(speaker);
                         speaker_item.halign = Gtk.Align.CENTER;
                         speaker_item.clicked.connect((speaker) => {
                             new Thread<void*>(null, () => {
@@ -92,8 +92,15 @@ public class SpeakerPanel : Gtk.Box {
             browser = new AvahiBrowser();
             browser.on_found_speaker.connect((name, type, domain, hostname, port, txt) => {
                 Idle.add(() => {
-                    model.add_speaker(name, hostname);
                     message("new speaker " + name + " added");
+                    model.add_speaker(name, hostname);
+                    return false;
+                });
+            });
+            browser.on_removed_speaker.connect((name) => {
+                Idle.add(() => {
+                    model.remove_speaker(name);
+                    message("speaker " + name + " removed");
                     return false;
                 });
             });
@@ -105,18 +112,22 @@ public class SpeakerPanel : Gtk.Box {
 
 public class SpeakerModel : Object {
     public signal void model_changed();
-    public Gee.ArrayList<Speaker> speaker_list = new Gee.ArrayList<Speaker>();
+    public Gee.Set<Speaker> speaker_list = new Gee.HashSet<Speaker>((speaker) => speaker.speaker_name.hash(), (speaker1, speaker2) => speaker1.speaker_name == speaker2.speaker_name);
     public bool is_view_expanded {get;set;default=false;}
 
     public void add_speaker(string name, string host) {
-        var speaker = new Speaker();
-        speaker.speaker_name = name;
+        var speaker = new Speaker(name);
         speaker.hostname = host;
         speaker_list.add(speaker);
         model_changed();
     }
 
-    public Gee.ArrayList<Speaker> get_all_speaker() {
+    public void remove_speaker(string name) {
+        speaker_list.remove(new Speaker(name));
+        model_changed();
+    }
+
+    public Gee.Set<Speaker> get_all_speaker() {
         return speaker_list;
     }
 
@@ -126,8 +137,12 @@ public class SpeakerModel : Object {
     }
 }
 public class Speaker : Object {
-    public string speaker_name {get;set;}
+    public string speaker_name {get;construct;}
     public string hostname {get;set;}
+
+    public Speaker(string speaker_name) {
+        Object(speaker_name: speaker_name);
+    }
 }
 
 public class SpeakerItemView: Gtk.Box {
