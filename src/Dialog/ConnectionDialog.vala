@@ -128,18 +128,9 @@ public class ConnectionDialog : Gtk.Dialog {
 
         connection_state_label.set_text(_("Trying to connect to ") + changed_host);
 
-        var connection = new Soundy.WebsocketConnection(changed_host, "8080");
-
-        connection.connection_failed.connect(() => {
-            Idle.add(() => {
-                message("Connection failed :-(");
-                show_status_icon("dialog-warning");
-                connection_state_label.set_text(_("Connection failed to ") + changed_host);
-                return false;
-            });
-        });
-
-        connection.connection_succeeded.connect(() => {
+        Soundy.API client = new Soundy.API.from_host(changed_host);
+        string info = client.get_info();
+        if (info != null && info.length > 0) {
             Idle.add(() => {
                 message("Connection succeeded to " + changed_host);
                 show_status_icon("process-completed-symbolic");
@@ -147,17 +138,21 @@ public class ConnectionDialog : Gtk.Dialog {
                 connection_state_label.set_text(_("Connection succeeded to ") + changed_host);
                 return false;
             });
-        });
-
-        connection.init_ws();
-
+        } else {
+            Idle.add(() => {
+                message("Connection failed :-(");
+                show_status_icon("dialog-warning");
+                connection_state_label.set_text(_("Connection failed to ") + changed_host);
+                return false;
+            });
+        }
     }
 
     public void show_loading_spinner() {
         loading_spinner.start();
         main_panel.remove(status_icon);
         main_panel.remove(loading_spinner);
-        main_panel.attach(loading_spinner, 0, 2);
+        main_panel.attach(loading_spinner, 0, 1);
         main_panel.show_all();
     }
 
@@ -167,7 +162,7 @@ public class ConnectionDialog : Gtk.Dialog {
         main_panel.remove(loading_spinner);
 
         status_icon.gicon = new ThemedIcon(icon);
-        main_panel.attach(status_icon, 0, 2);
+        main_panel.attach(status_icon, 0, 1);
         main_panel.show_all();
     }
 }

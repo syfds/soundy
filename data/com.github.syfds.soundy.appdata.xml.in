@@ -49,7 +49,7 @@
         <value key="x-appcenter-suggested-price">0</value>
     </custom>
     <releases>
-        <release version="0.2.1" date="2021-05-15">
+        <release version="0.2.2" date="2021-05-15">
             <description>
                 <p>Auto-Discovery of SoundTouch speaker added</p>
                 <p>App icon improved by Suzie97 (https://github.com/Suzie97)</p>
