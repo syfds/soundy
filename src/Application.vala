@@ -35,7 +35,7 @@ namespace Soundy {
             main_window.default_height = 300;
             main_window.default_width = 500;
             main_window.window_position = WindowPosition.CENTER;
-            main_window.get_style_context ().add_class ("rounded");
+            main_window.get_style_context().add_class(Granite.STYLE_CLASS_ROUNDED);
 
             var settings = Soundy.Settings.get_instance();
             var speaker_host = settings.get_speaker_host();
