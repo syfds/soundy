@@ -53,9 +53,6 @@ namespace Soundy {
             var header_bar = new Soundy.HeaderBar(controller, model, settings);
             main_window.set_titlebar(header_bar);
             
-            var header_bar_style_context = header_bar.get_style_context ();
-            header_bar_style_context.add_class (Gtk.STYLE_CLASS_FLAT);
-            
             var main_area = new Gtk.Paned(Gtk.Orientation.VERTICAL);
             main_area.pack1(new MainPanel(controller, model, settings), true, false);
             main_area.pack2(new SpeakerPanel(controller), false, false);
