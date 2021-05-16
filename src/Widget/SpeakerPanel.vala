@@ -20,54 +20,25 @@ public class SpeakerPanel : Gtk.Box {
     private Gtk.Button toggle_button;
     private AvahiBrowser browser;
     private Gtk.Box speaker_item_panel;
+    private Gtk.Box toggle_button_panel;
 
     public SpeakerPanel(Controller controller) {
         orientation = Gtk.Orientation.VERTICAL;
         speaker_item_panel = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 10);
         speaker_item_panel.halign = Gtk.Align.CENTER;
+
+        toggle_button_panel = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 10);
+        toggle_button_panel.halign = Gtk.Align.START;
+
         model = new SpeakerModel();
 
         model.model_changed.connect(() => {
             Idle.add(() => {
-
-                toggle_button.set_image(Soundy.Util.create_icon(model.is_view_expanded ? "view-restore-symbolic" : "view-fullscreen-symbolic", 16));
-                toggle_button.tooltip_text = _(model.is_view_expanded ? _("Hide") : _("List your SoundTouch speaker"));
-
-                foreach (Gtk.Widget child in speaker_item_panel.get_children()){
-                    if (child is SpeakerItemView || child is Gtk.Separator || child is Gtk.Label) {
-                        speaker_item_panel.remove(child);
-                    }
-                }
-
                 var speaker_list = model.get_all_speaker();
 
-                if (speaker_list.is_empty && model.is_view_expanded) {
-                    var no_speaker_label = Soundy.Util.create_label(_("Cannot find any SoundTouch speaker."));
-                    no_speaker_label.halign = Gtk.Align.CENTER;
-                    speaker_item_panel.add(no_speaker_label);
-                } else if (model.is_view_expanded) {
-                    foreach (var speaker in speaker_list) {
+                this.update_top_button_panel(speaker_list);
+                this.update_expanded_button_panel(speaker_list, controller);
 
-                        var speaker_item = new SpeakerItemView(speaker);
-                        speaker_item.halign = Gtk.Align.CENTER;
-                        speaker_item.clicked.connect((speaker) => {
-                            new Thread<void*>(null, () => {
-                                string updated_host = speaker.hostname;
-                                Soundy.Settings.get_instance().set_speaker_host(updated_host);
-
-                                var connection = new Soundy.WebsocketConnection(updated_host, "8080");
-                                var client = new Soundy.API(connection, updated_host);
-                                controller.update_client(client);
-                                controller.init();
-                                return null;
-                            });
-                        });
-
-                        speaker_item_panel.pack_start(speaker_item);
-                    }
-                }
-
-                speaker_item_panel.show_all();
                 show_all();
                 return false;
             });
@@ -81,7 +52,9 @@ public class SpeakerPanel : Gtk.Box {
             model.toggle_view();
         });
 
-        pack_start(toggle_button);
+        toggle_button_panel.pack_start(toggle_button);
+
+        pack_start(toggle_button_panel);
         pack_end(speaker_item_panel);
 
         init_speaker_search();
@@ -107,6 +80,59 @@ public class SpeakerPanel : Gtk.Box {
             browser.search();
             return null;
         });
+    }
+
+    public void update_top_button_panel(Gee.Set<Speaker> speaker_list) {
+        toggle_button.set_image(Soundy.Util.create_icon(model.is_view_expanded ? "view-restore-symbolic" : "view-fullscreen-symbolic", 16));
+        toggle_button.tooltip_text = _(model.is_view_expanded ? _("Hide") : _("List your SoundTouch speaker"));
+
+        foreach (Gtk.Widget child in toggle_button_panel.get_children()){
+            if (child is Gtk.Label) {
+                toggle_button_panel.remove(child);
+            }
+        }
+
+        if (!speaker_list.is_empty && !model.is_view_expanded) {
+            toggle_button_panel.add(Soundy.Util.create_label(speaker_list.size.to_string() + _(" SoundTouch speaker available")));
+        } else if (speaker_list.is_empty && !model.is_view_expanded) {
+            toggle_button_panel.add(Soundy.Util.create_label(_("Cannot find any SoundTouch speaker")));
+        }
+    }
+
+    public void update_expanded_button_panel(Gee.Set<Speaker> speaker_list, Controller controller) {
+        foreach (Gtk.Widget child in speaker_item_panel.get_children()){
+            if (child is SpeakerItemView || child is Gtk.Separator || child is Gtk.Label) {
+                speaker_item_panel.remove(child);
+            }
+        }
+
+        if (speaker_list.is_empty && model.is_view_expanded) {
+            var no_speaker_label = Soundy.Util.create_label(_("Cannot find any SoundTouch speaker"));
+            no_speaker_label.halign = Gtk.Align.CENTER;
+            speaker_item_panel.add(no_speaker_label);
+        } else if (model.is_view_expanded) {
+            foreach (var speaker in speaker_list) {
+
+                var speaker_item = new SpeakerItemView(speaker);
+                speaker_item.halign = Gtk.Align.CENTER;
+                speaker_item.clicked.connect((speaker) => {
+                    new Thread<void*>(null, () => {
+                        string updated_host = speaker.hostname;
+                        Soundy.Settings.get_instance().set_speaker_host(updated_host);
+
+                        var connection = new Soundy.WebsocketConnection(updated_host, "8080");
+                        var client = new Soundy.API(connection, updated_host);
+                        controller.update_client(client);
+                        controller.init();
+                        return null;
+                    });
+                });
+
+                speaker_item_panel.pack_start(speaker_item);
+            }
+        }
+
+        speaker_item_panel.show_all();
     }
 }
 
