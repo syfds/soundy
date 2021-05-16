@@ -35,6 +35,7 @@ namespace Soundy {
             main_window.default_height = 300;
             main_window.default_width = 500;
             main_window.window_position = WindowPosition.CENTER;
+            main_window.get_style_context ().add_class ("rounded");
 
             var settings = Soundy.Settings.get_instance();
             var speaker_host = settings.get_speaker_host();
@@ -51,6 +52,7 @@ namespace Soundy {
 
             var header_bar = new Soundy.HeaderBar(controller, model, settings);
             main_window.set_titlebar(header_bar);
+            
             var main_area = new Gtk.Paned(Gtk.Orientation.VERTICAL);
             main_area.pack1(new MainPanel(controller, model, settings), true, false);
             main_area.pack2(new SpeakerPanel(controller), false, false);
