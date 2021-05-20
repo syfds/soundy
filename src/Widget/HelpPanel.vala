@@ -4,6 +4,10 @@ public class HelpPanel: Gtk.Grid {
         this.set_orientation(Gtk.Orientation.VERTICAL);
         this.set_halign(Gtk.Align.CENTER);
         this.set_valign(Gtk.Align.FILL);
+        this.margin_top = 200;
+        this.margin_bottom = 250;
+        this.margin_left = 15;
+        this.margin_right = 15;
 
         var help_button = new Gtk.Button.from_icon_name("dialog-question");
         help_button.halign = Gtk.Align.START;

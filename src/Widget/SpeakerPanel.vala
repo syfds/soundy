@@ -45,7 +45,7 @@ public class SpeakerPanel : Gtk.Box {
         });
 
 
-        toggle_button = Soundy.Util.create_button("view-restore-symbolic", 16);
+        toggle_button = Soundy.Util.create_button("go-up", 16);
         toggle_button.halign = Gtk.Align.START;
         toggle_button.valign = Gtk.Align.START;
         toggle_button.clicked.connect(() => {
@@ -83,7 +83,7 @@ public class SpeakerPanel : Gtk.Box {
     }
 
     public void update_top_button_panel(Gee.Set<Speaker> speaker_list) {
-        toggle_button.set_image(Soundy.Util.create_icon(model.is_view_expanded ? "view-restore-symbolic" : "view-fullscreen-symbolic", 16));
+        toggle_button.set_image(Soundy.Util.create_icon(model.is_view_expanded ? "go-down" : "go-up", 16));
         toggle_button.tooltip_text = _(model.is_view_expanded ? _("Hide") : _("List your SoundTouch speaker"));
 
         foreach (Gtk.Widget child in toggle_button_panel.get_children()){
