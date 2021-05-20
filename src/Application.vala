@@ -32,11 +32,11 @@ namespace Soundy {
 
             var main_window = new Gtk.ApplicationWindow(this);
             main_window.resizable = true;
-            main_window.default_height = 300;
-            main_window.default_width = 500;
+            main_window.default_width = 300;
+            main_window.default_height = 500;
             main_window.window_position = WindowPosition.CENTER;
             main_window.get_style_context().add_class(Granite.STYLE_CLASS_ROUNDED);
-
+            
             var settings = Soundy.Settings.get_instance();
             var speaker_host = settings.get_speaker_host();
             
@@ -54,23 +54,33 @@ namespace Soundy {
             });
 
             message(@"trying to connecto to $speaker_host");
-
+            
             string host = speaker_host;
             var connection = new Soundy.WebsocketConnection(host, "8080");
-
+            
             var client = new Soundy.API(connection, host);
             var controller = new Controller(client);
-
+            
             var model = new Model();
-
+            
             var header_bar = new Soundy.HeaderBar(controller, model, settings);
             main_window.set_titlebar(header_bar);
             
-            var main_area = new Gtk.Paned(Gtk.Orientation.VERTICAL);
-            main_area.pack1(new MainPanel(controller, model, settings), true, false);
-            main_area.pack2(new SpeakerPanel(controller), false, false);
-            main_window.add(main_area);
+            var separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
+            
+            var main_area = new Gtk.Grid();
+            main_area.attach(new MainPanel(controller, model, settings), 0, 0, 1, 1/*, true, false)*/);
+            main_area.attach (separator, 0, 1, 1, 1);
+            main_area.attach(new SpeakerPanelGrid(), 0, 2, 1, 1/*, true, false)*/);
+            // main_area.pack2(new SpeakerPanel(controller), false, false);
+            
+            var main_grid = new Gtk.Grid ();
+            main_grid.attach (main_area, 0, 0, 1, 1);
+            
+            main_window.add(main_grid);
+            
             controller.init();
+            
             main_window.show_all();
         }
 

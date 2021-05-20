@@ -20,6 +20,7 @@ src_files = files([
 'Controller/AvahiBrowser.vala',
 'Widget/NetworkSpeakerList.vala',
 'Widget/SpeakerPanel.vala',
+'Widget/SpeakerPanelGrid.vala',
 'Widget/MainPanel.vala',
 'Widget/HeaderBar.vala',
 'Widget/SettingsMenuItem.vala',
