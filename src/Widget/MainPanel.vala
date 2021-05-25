@@ -32,8 +32,8 @@ public class MainPanel : Gtk.Grid {
     private Gtk.Grid buttons_panel;
     private Gtk.Button play_btn;
     private Gtk.Button pause_btn;
-    private Gtk.Button next_btn;
     private Gtk.Button prev_btn;
+    private Gtk.Button next_btn;
 
     public MainPanel(Controller controller, Model model, Soundy.Settings settings) {
         this.settings = settings;

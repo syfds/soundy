@@ -65,11 +65,15 @@ public class FavouriteMenuItem : Gtk.Button {
         Soup.Message msg = new Soup.Message("GET", image_url);
         Soup.Session session = new Soup.Session();
 
-        var input_stream = session.send(msg);
-
         var image = new Gtk.Image();
-        Gdk.Pixbuf image_pixbuf = new Gdk.Pixbuf.from_stream_at_scale(input_stream, ICON_SIZE, ICON_SIZE, true);
-        image.set_from_pixbuf(image_pixbuf);
+        try {
+            var input_stream = session.send(msg);
+            Gdk.Pixbuf image_pixbuf = new Gdk.Pixbuf.from_stream_at_scale(input_stream, ICON_SIZE, ICON_SIZE, true);
+            image.set_from_pixbuf(image_pixbuf);
+        } catch (Error e) {
+            message("cannot load image for " + image_url);
+        }
+
         return image;
     }
 

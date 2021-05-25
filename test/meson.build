@@ -1,6 +1,8 @@
 unit_test_files = [
  'SoundtouchMessageParser',
  'PresetsParser',
+ 'GetInfoParser',
+ 'GetZoneParser',
  'Util',
 ]
 

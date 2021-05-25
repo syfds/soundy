@@ -101,6 +101,13 @@ namespace Soundy {
         public string get_info() {
             return this.client.invoke(APIMethods.get_info());
         }
+        public string set_zone(string master_device_id_mac_address, Gee.ArrayList<ZoneMember> zone_member_list) {
+            return this.client.invoke(APIMethods.set_zone(master_device_id_mac_address, zone_member_list));
+        }
+
+        public string remove_zone_slave(string master_device_id_mac_address, Gee.ArrayList<ZoneMember> zone_member_list) {
+            return this.client.invoke(APIMethods.remove_zone_slave(master_device_id_mac_address, zone_member_list));
+        }
 
         public string get_now_playing() {
             return this.client.invoke(APIMethods.get_now_playing());
@@ -113,6 +120,11 @@ namespace Soundy {
         public void play_preset(string item_id) {
             this.client.invoke(APIMethods.play_preset(item_id, KeyState.PRESS));
             this.client.invoke(APIMethods.play_preset(item_id, KeyState.RELEASE));
+        }
+
+
+        public string get_zone() {
+            return this.client.invoke(APIMethods.get_zone());
         }
     }
 }

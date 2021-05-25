@@ -80,6 +80,14 @@ public class Controller : GLib.Object {
         this.client.play_preset(item_id);
     }
 
+    public void set_zone(string master_device_id_mac_address, Gee.ArrayList<ZoneMember> zone_member_list) {
+        this.client.set_zone(master_device_id_mac_address, zone_member_list);
+    }
+
+    public void remove_from_zone(string master_device_id_mac_address, Gee.ArrayList<ZoneMember> zone_member_list) {
+        this.client.remove_zone_slave(master_device_id_mac_address, zone_member_list);
+    }
+
     public void init() {
         this.client.init_ws_connection();
     }

@@ -99,16 +99,22 @@ namespace Soundy {
             menu_grid.margin_bottom = 6;
             menu_grid.orientation = Gtk.Orientation.VERTICAL;
 
-            PresetsMessage presets = controller.get_presets();
-            message("count presets loaded " + presets.get_presets().size.to_string());
+            new Thread<void*>("loading presets", () => {
+                PresetsMessage presets = controller.get_presets();
+                message("count presets loaded " + presets.get_presets().size.to_string());
 
-            foreach(Preset p in presets.get_presets()){
-                message(p.item_image_url);
-                var item = new FavouriteMenuItem(p, p.item_image_url, controller);
-                menu_grid.add(item);
-            }
+                Idle.add(() => {
+                    foreach(Preset p in presets.get_presets()){
+                        message(p.item_image_url);
+                        var item = new FavouriteMenuItem(p, p.item_image_url, controller);
+                        menu_grid.add(item);
+                    }
 
-            menu_grid.show_all();
+                    menu_grid.show_all();
+                    return false;
+                });
+                return null;
+            });
 
             var popover = new Gtk.Popover(null);
             popover.add(menu_grid);

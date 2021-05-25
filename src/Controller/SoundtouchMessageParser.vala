@@ -16,6 +16,8 @@
 
 public class SoundtouchMessageParser: GLib.Object {
 
+
+
     public SoundtouchMessage read(string xml) {
 
         if (xml.contains("nowSelectionUpdated")) {
@@ -29,6 +31,11 @@ public class SoundtouchMessageParser: GLib.Object {
         }
 
         return new SoundtouchMessage();
+    }
+
+
+    public GetInfoMessage read_info(string xml) {
+        return new GetInfoMessage.from_rest_api(xml);
     }
 }
 
@@ -101,6 +108,8 @@ public class VolumeUpdatedMessage : SoundtouchMessage {
 public class GetInfoMessage: SoundtouchMessage {
 
     public string speaker_name {get; set;}
+    public string mac_address {get; set;}
+    public string ip_address {get; set;}
 
     public GetInfoMessage.from_rest_api(string xml) {
         this.with_base_path("");
@@ -109,7 +118,66 @@ public class GetInfoMessage: SoundtouchMessage {
 
     private void init(string xml) {
         var ctx = context(xml);
+
         speaker_name = get_value(ctx, "/info/name");
+        mac_address = get_value(ctx, "/info/networkInfo[1]/macAddress/text()");
+        ip_address = get_value(ctx, "/info/networkInfo[1]/ipAddress/text()");
+    }
+}
+
+public class ZoneChangeMessage: SoundtouchMessage {
+    public string mac_address {get; set;}
+
+    public ZoneChangeMessage(string xml) {
+        this.with_base_path("");
+        init(xml);
+    }
+    private void init(string xml) {
+        var ctx = context(xml);
+        this.mac_address = get_value(ctx, "/updates/@deviceID");
+
+    }
+}
+public class GetZoneMessage: SoundtouchMessage {
+
+    public string master_mac_address {get; set;}
+    public bool is_master {get; set;}
+    public Gee.ArrayList<ZoneMember> members {get; set;}
+
+    public GetZoneMessage.from_rest_api(string xml) {
+        this.with_base_path("");
+        init(xml);
+    }
+
+    private void init(string xml) {
+        var ctx = context(xml);
+
+        this.master_mac_address = get_value(ctx, "/zone/@master");
+        this.is_master = get_value(ctx, "/zone/@senderIsMaster") == "true" ? true : false;
+
+        Xml.XPath.Object* result = ctx.eval_expression("count(//member)");
+        double count_member = result->floatval;
+
+        this.members = new Gee.ArrayList<ZoneMember>();
+        for (var i=0; i < (int) count_member; i++) {
+            var member_idx = i + 1;
+            var ip_address = get_value(ctx, @"/zone/member[$member_idx]/@ipaddress");
+            var mac_address = get_value(ctx, @"/zone/member[$member_idx]");
+
+            var member = new ZoneMember();
+
+            member.ip_address = ip_address;
+            member.mac_address = mac_address;
+            members.add(member);
+        }
+    }
+
+    public bool is_in_zone() {
+        return !this.members.is_empty;
+    }
+
+    public bool master() {
+        return this.is_master || !this.members.is_empty && this.master_mac_address == this.members.get(0).mac_address;
     }
 }
 
