@@ -155,6 +155,11 @@ public class SpeakerPanel : Gtk.Box {
     }
 
     public void update_expanded_button_panel(Gee.Set<Speaker> speaker_list, Controller controller) {
+        foreach (Gtk.Widget child in speaker_item_panel.get_children()){
+            if (child is SpeakerItemView || child is Gtk.Separator || child is Gtk.Label) {
+                speaker_item_panel.remove(child);
+            }
+        }
         if (speaker_list.is_empty && model.is_view_expanded) {
             var no_speaker_label = Soundy.Util.create_label(_("Cannot find any SoundTouch speaker"));
             no_speaker_label.halign = Gtk.Align.CENTER;
@@ -192,11 +197,7 @@ public class SpeakerPanel : Gtk.Box {
 
             }
 
-            foreach (Gtk.Widget child in speaker_item_panel.get_children()){
-                if (child is SpeakerItemView || child is Gtk.Separator || child is Gtk.Label) {
-                    speaker_item_panel.remove(child);
-                }
-            }
+
 
             foreach(var speaker_item in speaker_items){
                 speaker_item_panel.pack_start(speaker_item);
@@ -266,14 +267,14 @@ public class SpeakerItemView: Gtk.Box {
 
         pack_start(Soundy.Util.create_label(speaker.speaker_name, "h5"));
 
-        Gtk.Button select_speaker = Soundy.Util.create_button("network-transmit-receive-symbolic", 16);
-        select_speaker.tooltip_text = _("Connect");
-        select_speaker.clicked.connect(() => {
+        Gtk.Button connect_to_speaker = Soundy.Util.create_button("network-transmit-receive-symbolic", 16);
+        connect_to_speaker.tooltip_text = _("Connect");
+        connect_to_speaker.clicked.connect(() => {
             connect_clicked(speaker);
         });
-        pack_start(select_speaker);
 
         speaker_panel.attach(speaker_icon, 0, 0, 1, 2);
+        speaker_panel.attach(connect_to_speaker, 1, 0, 1, 1);
 
         var plus_lbl = Soundy.Util.create_label("+1");
         plus_lbl.halign = Gtk.Align.CENTER;
@@ -281,9 +282,8 @@ public class SpeakerItemView: Gtk.Box {
 
         if (is_in_zone) {
             if (is_master_zone) {
-                speaker_panel.attach(plus_lbl, 1, 0, 1, 1);
+                speaker_panel.attach(plus_lbl, 1, 1, 1, 1);
             } else {
-                speaker_panel.attach(Soundy.Util.create_label("Slave"), 1, 0, 1, 1);
                 var remove_from_zone_button = Soundy.Util.create_button("list-remove-symbolic", 16);
                 remove_from_zone_button.clicked.connect(() => {
                     remove_from_zone_clicked(speaker);
@@ -293,6 +293,7 @@ public class SpeakerItemView: Gtk.Box {
             }
         } else {
             var create_zone_button = Soundy.Util.create_button("network-workgroup-symbolic", 16);
+            create_zone_button.tooltip_text = _("Create zone");
             create_zone_button.clicked.connect(() => {
                 create_zone_clicked(speaker);
             });
