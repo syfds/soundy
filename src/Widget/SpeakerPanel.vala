@@ -285,6 +285,7 @@ public class SpeakerItemView: Gtk.Box {
                 speaker_panel.attach(plus_lbl, 1, 1, 1, 1);
             } else {
                 var remove_from_zone_button = Soundy.Util.create_button("list-remove-symbolic", 16);
+                remove_from_zone_button.tooltip_text = _("Remove from zone");
                 remove_from_zone_button.clicked.connect(() => {
                     remove_from_zone_clicked(speaker);
                 });
