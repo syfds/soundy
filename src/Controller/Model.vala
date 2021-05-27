@@ -17,6 +17,7 @@
 public class Model : GLib.Object {
 
     public signal void model_changed(Model model);
+    public signal void zone_changed();
 
     public bool connection_established {get;set;default=false;}
     public bool connection_dialog_tried {get;set;default=false;}
@@ -79,5 +80,8 @@ public class Model : GLib.Object {
 
     public void fire_changed() {
         this.model_changed(this);
+    }
+    public void fire_zone_changed() {
+        this.zone_changed();
     }
 }

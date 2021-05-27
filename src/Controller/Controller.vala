@@ -95,7 +95,7 @@ public class Controller : GLib.Object {
     public void update_client(Soundy.API client) {
         this.client = client;
         this.client.event_from_soundtouch_received.connect((type, xml) => {
-            message("got: " + xml);
+            message("Event update: " + xml);
             var m = new SoundtouchMessageParser().read(xml);
             if (m is NowPlayingChangeMessage) {
                 NowPlayingChangeMessage nowPlaying = (NowPlayingChangeMessage)m;
@@ -120,8 +120,9 @@ public class Controller : GLib.Object {
                 this.model.track = ((NowSelectionChangeMessage)m).track;
                 this.model.image_url = ((NowSelectionChangeMessage)m).image_url;
                 this.model.fire_changed();
+            } else if (m is ZoneChangeMessage) {
+                this.model.fire_zone_changed();
             }
-
         });
 
         this.client.connection_to_soundtouch_succeeded.connect(() => {

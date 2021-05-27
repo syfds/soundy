@@ -47,6 +47,7 @@ public void test_now_playing_message_read() {
     assert(m.standby == false);
     assert(m.play_state == PlayState.STOP_STATE);
     assert(m.track == "Bayern 3");
+    assert(m.device_id == "689E1991C463");
 }
 
 public void test_now_selection_update_message_read() {

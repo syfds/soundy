@@ -36,7 +36,7 @@ namespace Soundy {
             Soup.Message msg = new Soup.Message(action.get_method(), uri);
 
             if (action.get_body() != null && action.get_body().length > 0) {
-                message("body " + action.get_body());
+                message("with body " + action.get_body());
             }
             if (action.get_body() != null && action.get_body() != "" && action.get_body().length > 0) {
                 msg.set_request("text/xml", MemoryUse.COPY, action.get_body().data);
@@ -57,7 +57,6 @@ namespace Soundy {
             timeout.set_callback(() => {
                 session.queue_message(msg, (sess, msg) => {
                     response = (string) msg.response_body.data;
-                    message("got response " + response);
                     loop.quit();
                 });
 
@@ -67,8 +66,6 @@ namespace Soundy {
             timeout.attach(loop.get_context());
             loop.run();
 
-
-            message("return response " + response);
             return response;
         }
     }

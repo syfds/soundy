@@ -18,12 +18,11 @@ public class SpeakerPanel : Gtk.Box {
 
     private SpeakerModel model;
     private Gtk.Button toggle_button;
-    private Gtk.Button play_all_button;
     private AvahiBrowser browser;
     private Gtk.Box speaker_item_panel;
     private Gtk.Box toggle_button_panel;
 
-    public SpeakerPanel(Controller controller) {
+    public SpeakerPanel(Controller controller, Model m) {
         orientation = Gtk.Orientation.VERTICAL;
         speaker_item_panel = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 10);
         speaker_item_panel.halign = Gtk.Align.CENTER;
@@ -32,6 +31,14 @@ public class SpeakerPanel : Gtk.Box {
         toggle_button_panel.halign = Gtk.Align.START;
 
         model = new SpeakerModel();
+
+        m.zone_changed.connect(() => {
+            var speaker_list = model.get_all_speaker();
+
+            this.update_top_button_panel(speaker_list);
+            this.update_expanded_button_panel(speaker_list, controller);
+        });
+
 
         model.model_changed.connect(() => {
             Idle.add(() => {
@@ -53,15 +60,7 @@ public class SpeakerPanel : Gtk.Box {
             model.toggle_view();
         });
 
-        play_all_button = Soundy.Util.create_button("media-playback-start-symbolic", 16);
-        play_all_button.halign = Gtk.Align.START;
-        play_all_button.valign = Gtk.Align.START;
-        play_all_button.clicked.connect(() => {
-            this.play_all(controller, model);
-        });
-
         toggle_button_panel.pack_start(toggle_button);
-        toggle_button_panel.pack_start(play_all_button);
 
         pack_start(toggle_button_panel);
         pack_end(speaker_item_panel);
@@ -156,24 +155,18 @@ public class SpeakerPanel : Gtk.Box {
     }
 
     public void update_expanded_button_panel(Gee.Set<Speaker> speaker_list, Controller controller) {
-        foreach (Gtk.Widget child in speaker_item_panel.get_children()){
-            if (child is SpeakerItemView || child is Gtk.Separator || child is Gtk.Label) {
-                speaker_item_panel.remove(child);
-            }
-        }
-
         if (speaker_list.is_empty && model.is_view_expanded) {
             var no_speaker_label = Soundy.Util.create_label(_("Cannot find any SoundTouch speaker"));
             no_speaker_label.halign = Gtk.Align.CENTER;
             speaker_item_panel.add(no_speaker_label);
         } else if (model.is_view_expanded) {
+            Gee.ArrayList<SpeakerItemView> speaker_items = new Gee.ArrayList<SpeakerItemView>();
             foreach (var speaker in speaker_list) {
-
                 Soundy.API api_for_current_speaker = new Soundy.API.from_host(speaker.hostname);
                 var now_playing = new NowPlayingChangeMessage.from_rest_api(api_for_current_speaker.get_now_playing());
                 var zone_info = new GetZoneMessage.from_rest_api(api_for_current_speaker.get_zone());
 
-                var speaker_item = new SpeakerItemView(speaker, zone_info.master(), zone_info.is_in_zone(), now_playing.standby);
+                var speaker_item = new SpeakerItemView(speaker, zone_info.master_mac_address == now_playing.device_id, zone_info.is_in_zone());
                 speaker_item.halign = Gtk.Align.CENTER;
                 speaker_item.connect_clicked.connect((speaker) => {
                     new Thread<void*>(null, () => {
@@ -195,6 +188,17 @@ public class SpeakerPanel : Gtk.Box {
                     this.remove_from_zone(controller, model, speaker);
                 });
 
+                speaker_items.add(speaker_item);
+
+            }
+
+            foreach (Gtk.Widget child in speaker_item_panel.get_children()){
+                if (child is SpeakerItemView || child is Gtk.Separator || child is Gtk.Label) {
+                    speaker_item_panel.remove(child);
+                }
+            }
+
+            foreach(var speaker_item in speaker_items){
                 speaker_item_panel.pack_start(speaker_item);
             }
         }
@@ -212,12 +216,19 @@ public class SpeakerPanel : Gtk.Box {
 
             var api = new Soundy.API.from_host(speaker.hostname);
             var info_xml = api.get_info();
-            GetInfoMessage parsed = new SoundtouchMessageParser().read_info(info_xml);
+            GetInfoMessage speaker_info = new SoundtouchMessageParser().read_info(info_xml);
+
+            var zone_info = new GetZoneMessage.from_rest_api(api.get_zone());
+
+            if (speaker_info.device_id == zone_info.master_mac_address) {
+                master_device_mac_address = zone_info.master_mac_address;
+            }
+
 
             if (slave.hostname == speaker.hostname) {
                 ZoneMember item = new ZoneMember();
-                item.mac_address = parsed.mac_address;
-                item.ip_address = parsed.ip_address;
+                item.mac_address = speaker_info.mac_address;
+                item.ip_address = speaker_info.ip_address;
                 zone_member.add(item);
             }
         }
@@ -234,7 +245,7 @@ public class SpeakerItemView: Gtk.Box {
 
     public Speaker speaker {get;construct;}
 
-    public SpeakerItemView(Speaker speaker, bool is_master_zone, bool is_in_zone, bool is_on) {
+    public SpeakerItemView(Speaker speaker, bool is_master_zone, bool is_in_zone) {
         Object(
                 speaker: speaker
         );
@@ -273,24 +284,20 @@ public class SpeakerItemView: Gtk.Box {
                 speaker_panel.attach(plus_lbl, 1, 0, 1, 1);
             } else {
                 speaker_panel.attach(Soundy.Util.create_label("Slave"), 1, 0, 1, 1);
-            }
-        }
-        if (is_on) {
-            speaker_panel.attach(Soundy.Util.create_label("|||"), 1, 1, 1, 1);
-        }
+                var remove_from_zone_button = Soundy.Util.create_button("list-remove-symbolic", 16);
+                remove_from_zone_button.clicked.connect(() => {
+                    remove_from_zone_clicked(speaker);
+                });
+                speaker_panel.attach(remove_from_zone_button, 1, 1, 1, 1);
 
-        if (!is_in_zone) {
+            }
+        } else {
             var create_zone_button = Soundy.Util.create_button("network-workgroup-symbolic", 16);
             create_zone_button.clicked.connect(() => {
                 create_zone_clicked(speaker);
             });
-            pack_end(create_zone_button);
-        } else if (is_in_zone && !is_master_zone) {
-            var remove_from_zone_button = Soundy.Util.create_button("list-remove-symbolic", 16);
-            remove_from_zone_button.clicked.connect(() => {
-                remove_from_zone_clicked(speaker);
-            });
-            pack_end(remove_from_zone_button);
+
+            speaker_panel.attach(create_zone_button, 1, 1, 1, 1);
         }
 
         pack_end(speaker_panel);

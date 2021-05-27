@@ -52,6 +52,7 @@ public void test_get_info() {
             </info>
     """;
     var m = new GetInfoMessage.from_rest_api(xml);
+    assert(m.device_id == "9884E39B4656");
     assert(m.speaker_name == "2 dobrjachnaja kolonka");
     assert(m.mac_address == "9884E39B4656");
     assert(m.ip_address == "192.168.1.251");

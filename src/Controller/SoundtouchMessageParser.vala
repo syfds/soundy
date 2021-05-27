@@ -29,6 +29,9 @@ public class SoundtouchMessageParser: GLib.Object {
         if (xml.contains("volumeUpdated")) {
             return new VolumeUpdatedMessage.from_websocket(xml);
         }
+        if (xml.contains("zoneUpdated")) {
+            return new ZoneChangeMessage.from_websocket(xml);
+        }
 
         return new SoundtouchMessage();
     }
@@ -107,6 +110,7 @@ public class VolumeUpdatedMessage : SoundtouchMessage {
 
 public class GetInfoMessage: SoundtouchMessage {
 
+    public string device_id {get; set;}
     public string speaker_name {get; set;}
     public string mac_address {get; set;}
     public string ip_address {get; set;}
@@ -119,6 +123,7 @@ public class GetInfoMessage: SoundtouchMessage {
     private void init(string xml) {
         var ctx = context(xml);
 
+        device_id = get_value(ctx, "/info/@deviceID");
         speaker_name = get_value(ctx, "/info/name");
         mac_address = get_value(ctx, "/info/networkInfo[1]/macAddress/text()");
         ip_address = get_value(ctx, "/info/networkInfo[1]/ipAddress/text()");
@@ -128,8 +133,13 @@ public class GetInfoMessage: SoundtouchMessage {
 public class ZoneChangeMessage: SoundtouchMessage {
     public string mac_address {get; set;}
 
-    public ZoneChangeMessage(string xml) {
+    public ZoneChangeMessage.from_rest_api(string xml) {
         this.with_base_path("");
+        init(xml);
+    }
+
+    public ZoneChangeMessage.from_websocket(string xml) {
+        this.with_base_path("/updates/zoneUpdated");
         init(xml);
     }
     private void init(string xml) {
@@ -213,6 +223,7 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
     public string track {get;set; default="";}
     public string artist {get;set; default="";}
     public string image_url {get;set; default="";}
+    public string device_id {get;set;}
 
     public NowPlayingChangeMessage.from_rest_api(string xml) {
         this.with_base_path("");
@@ -235,6 +246,7 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
             this.read_artist(ctx);
             this.read_image_url(ctx);
             this.read_radio_streaming(ctx);
+            this.read_device_id(ctx);
         }
     }
 
@@ -270,6 +282,10 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
         } else {
             is_radio_streaming = false;
         }
+    }
+
+    public void read_device_id(Xml.XPath.Context ctx) {
+        device_id = get_value(ctx, @"$base_xpath/nowPlaying/@deviceID");
     }
 }
 

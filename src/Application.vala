@@ -55,7 +55,7 @@ namespace Soundy {
             
             var main_area = new Gtk.Paned(Gtk.Orientation.VERTICAL);
             main_area.pack1(new MainPanel(controller, model, settings), true, false);
-            main_area.pack2(new SpeakerPanel(controller), false, false);
+            main_area.pack2(new SpeakerPanel(controller, model), false, false);
             main_window.add(main_area);
             controller.init();
             main_window.show_all();
