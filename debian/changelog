@@ -1,3 +1,6 @@
+com.github.syfds.soundy (0.3.0) UNRELEASED; urgency=low
+
+  * Multi room pairing feature added
 com.github.syfds.soundy (0.2.2) UNRELEASED; urgency=low
 
   * Auto-Discovery of SoundTouch speaker added

@@ -49,6 +49,11 @@
         <value key="x-appcenter-suggested-price">0</value>
     </custom>
     <releases>
+        <release version="0.3.0" date="2021-05-27">
+            <description>
+                <p>Multi room pairing feature added</p>
+            </description>
+        </release>
         <release version="0.2.2" date="2021-05-15">
             <description>
                 <p>Auto-Discovery of SoundTouch speaker added</p>
