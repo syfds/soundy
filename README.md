@@ -37,6 +37,8 @@ You'll need the following dependencies:
 * libsoup2.4-dev
 * libxml2-dev
 * libavahi-gobject-dev (>=0.7)
+* meson
+* valac
 
 ## Building
 
