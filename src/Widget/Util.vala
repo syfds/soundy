@@ -33,7 +33,11 @@ namespace Soundy {
             return menu_icon;
         }
 
-        public static string cut_label_if_necessary(string label, uint max_characters) {
+        public static string cut_label_if_necessary(string? label, uint max_characters) {
+            if (label == null) {
+                return null;
+            }
+
             if (label.length <= max_characters) {
                 return label;
             }

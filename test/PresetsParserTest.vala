@@ -22,6 +22,30 @@ public void test_presets_read() {
     var m = new PresetsMessage(xml);
     assert(m.get_presets().size == 6);
 }
+public void test_presets_not_complete() {
+    string xml = """
+                <presets>
+                    <preset id="1" createdOn="1610310898" updatedOn="1621700512">
+                        <ContentItem source="TUNEIN" type="stationurl" location="/v1/playback/station/s102918" sourceAccount="" isPresetable="true">
+                            <itemName>Radio Vanya</itemName>
+                            <containerArt>http://cdn-profiles.tunein.com/s102918/images/logoq.jpg?t=155135</containerArt>
+                        </ContentItem>
+                    </preset>
+                    <preset id="6" createdOn="1610822449" updatedOn="1610822449">
+                        <ContentItem source="AMAZON" type="tracklist" location="catalog/playlists/recent/../B08831JDP2/#playable"
+                                     sourceAccount="sergej_dobryak@web.de" isPresetable="true">
+                            <itemName>Beats zur Motivation</itemName>
+                            <containerArt>https://m.media-amazon.com/images/I/715YEyAp+YL._SX150_SY150_.jpg</containerArt>
+                        </ContentItem>
+                    </preset>
+                </presets>
+    """;
+    var m = new PresetsMessage(xml);
+    assert(m.get_presets().size == 2);
+
+    assert(m.get_presets().get(0).item_image_url == "http://cdn-profiles.tunein.com/s102918/images/logoq.jpg?t=155135");
+    assert(m.get_presets().get(1).item_image_url == "https://m.media-amazon.com/images/I/715YEyAp+YL._SX150_SY150_.jpg");
+}
 
 public void test_presets_empty() {
     string xml = "<presets></presets>";
@@ -73,6 +97,7 @@ public int main(string[] args) {
 
     Test.add_func("/test_presets_read", test_presets_read);
     Test.add_func("/test_presets_one_preset", test_presets_one_preset);
+    Test.add_func("/test_presets_not_complete", test_presets_not_complete);
     Test.add_func("/test_presets_empty", test_presets_empty);
     Test.add_func("/test_presets_empty_container_art", test_presets_empty_container_art);
     return Test.run();

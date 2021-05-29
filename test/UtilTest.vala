@@ -20,6 +20,11 @@ public void test_util_cut() {
     assert(Soundy.Util.cut_label_if_necessary("Jason Derulo & David Guetta feat. Nicki Minaj & Willy William", 30) == "Jason Derulo & David Guetta...");
 }
 
+public void test_util_null_or_empty() {
+    assert(Soundy.Util.cut_label_if_necessary(null, 10) == null);
+    assert(Soundy.Util.cut_label_if_necessary("", 10) == "");
+}
+
 public void test_util_cut_not_needed() {
     assert(Soundy.Util.cut_label_if_necessary("abcde", 10) == "abcde");
     assert(Soundy.Util.cut_label_if_necessary("a", 10) == "a");
@@ -30,6 +35,7 @@ public int main(string[] args) {
     Test.init(ref args);
 
     Test.add_func("/test_util", test_util_cut);
+    Test.add_func("/test_util_null_or_empty", test_util_null_or_empty);
     Test.add_func("/test_util_cut_not_needed", test_util_cut_not_needed);
     return Test.run();
 }

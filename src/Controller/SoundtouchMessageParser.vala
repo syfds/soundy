@@ -311,9 +311,9 @@ public class PresetsMessage : SoundtouchMessage {
 
         for (var i=0; i < (int) count_preset; i++) {
             var preset_id = i + 1;
-            var item_id = get_value(ctx, @"/presets/preset[@id='$preset_id']/@id");
-            var item_name = get_value(ctx, @"/presets/preset[@id='$preset_id']/ContentItem/itemName");
-            var item_image_url = get_value(ctx, @"/presets/preset[@id='$preset_id']/ContentItem/containerArt");
+            var item_id = get_value(ctx, @"/presets/preset[$preset_id]/@id");
+            var item_name = get_value(ctx, @"/presets/preset[$preset_id]/ContentItem/itemName");
+            var item_image_url = get_value(ctx, @"/presets/preset[$preset_id]/ContentItem/containerArt");
             var preset = new Preset();
 
             preset.item_id = item_id;
