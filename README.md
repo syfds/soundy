@@ -31,12 +31,12 @@ app connects to the speaker over SoundTouch API (https://developer.bose.com/guid
 
 You'll need the following dependencies:
 
-* glib-2.0, version: '>=2.40'
-* gobject-2.0, version: '>=2.40'
-* gtk+-3.0
-* granite, version: '>= 0.5.1'
-* libsoup-2.4
-* libxml-2.0
+* libglib2.0-dev
+* libgtk-3-dev
+* libgranite-dev
+* libsoup2.4-dev
+* libxml2-dev
+* libavahi-gobject-dev (>=0.7)
 
 ## Building
 
@@ -53,7 +53,7 @@ To install, use `ninja install`
 
 To execute the tests
 ```
-cd build || exit
+cd build
 ninja test
 ```
 
