@@ -272,7 +272,7 @@ public class SpeakerItemView: Gtk.Box {
 
         var speaker_panel = new Gtk.Grid();
         speaker_panel.orientation = Gtk.Orientation.HORIZONTAL;
-        speaker_panel.halign = Gtk.Align.FILL;
+        speaker_panel.halign = Gtk.Align.CENTER;
         speaker_panel.valign = Gtk.Align.FILL;
 
         var speaker_icon = Soundy.Util.create_icon("audio-subwoofer", 48);
@@ -284,6 +284,7 @@ public class SpeakerItemView: Gtk.Box {
         pack_start(Soundy.Util.create_label(speaker.speaker_name, "h5"));
 
         Gtk.Button connect_to_speaker = Soundy.Util.create_button("network-transmit-receive-symbolic", 16);
+        connect_to_speaker.halign = Gtk.Align.CENTER;
         connect_to_speaker.tooltip_text = _("Connect");
         connect_to_speaker.clicked.connect(() => {
             connect_clicked(speaker);
@@ -292,13 +293,13 @@ public class SpeakerItemView: Gtk.Box {
         speaker_panel.attach(speaker_icon, 0, 0, 1, 2);
         speaker_panel.attach(connect_to_speaker, 1, 0, 1, 1);
 
-        var plus_lbl = Soundy.Util.create_label("+1");
-        plus_lbl.halign = Gtk.Align.CENTER;
-        plus_lbl.valign = Gtk.Align.CENTER;
 
         if (is_in_zone) {
             if (is_master_zone) {
-                speaker_panel.attach(plus_lbl, 1, 1, 1, 1);
+                var master_speaker_in_zone = Soundy.Util.create_icon("user-available", 16);
+                master_speaker_in_zone.halign = Gtk.Align.CENTER;
+                master_speaker_in_zone.valign = Gtk.Align.CENTER;
+                speaker_panel.attach(master_speaker_in_zone, 1, 1, 1, 1);
             } else {
                 var remove_from_zone_button = Soundy.Util.create_button("list-remove-symbolic", 16);
                 remove_from_zone_button.tooltip_text = _("Remove from zone");
@@ -306,11 +307,10 @@ public class SpeakerItemView: Gtk.Box {
                     remove_from_zone_clicked(speaker);
                 });
                 speaker_panel.attach(remove_from_zone_button, 1, 1, 1, 1);
-
             }
         } else {
-            var create_zone_button = Soundy.Util.create_button("network-workgroup-symbolic", 16);
-            create_zone_button.tooltip_text = _("Create zone");
+            var create_zone_button = Soundy.Util.create_button("list-add-symbolic", 16);
+            create_zone_button.tooltip_text = _("Create multiroom zone");
             create_zone_button.clicked.connect(() => {
                 create_zone_clicked(speaker);
             });
