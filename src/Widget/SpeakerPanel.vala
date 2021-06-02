@@ -221,7 +221,17 @@ public class SpeakerPanel : Gtk.Box {
                 return s.hostname != speaker.hostname;
             });
 
-            var speaker_item = new SpeakerItemView(speaker, without_current_speaker);
+            uint count_connected_slaves = 0;
+            if (speaker.is_master) {
+                speaker_list.foreach(s => {
+                    if (s.hostname != speaker.hostname && s.is_in_zone && s.master_device_id == speaker.device_id) {
+                        count_connected_slaves++;
+                    }
+                    return true;
+                });
+            }
+
+            var speaker_item = new SpeakerItemView(speaker, without_current_speaker, count_connected_slaves);
             speaker_item.halign = Gtk.Align.CENTER;
             speaker_item.connect_clicked.connect((speaker) => {
                 Soundy.Util.execute_in_new_thread("connect to speaker", () => {
@@ -266,6 +276,7 @@ public class SpeakerPanel : Gtk.Box {
         speaker.device_id = speaker_info.device_id;
         speaker.ip_address = speaker_info.ip_address;
         speaker.is_in_zone = zone_info.is_in_zone();
+        speaker.master_device_id = zone_info.master_mac_address;
     }
 }
 
@@ -277,7 +288,7 @@ public class SpeakerItemView: Gtk.Box {
 
     public Speaker speaker {get;construct;}
 
-    public SpeakerItemView(Speaker speaker, Gee.Iterator<Speaker> available_speaker) {
+    public SpeakerItemView(Speaker speaker, Gee.Iterator<Speaker> available_speaker, uint count_connected_slaves) {
         Object(
                 speaker: speaker
         );
@@ -315,7 +326,7 @@ public class SpeakerItemView: Gtk.Box {
                 var master_speaker_in_zone = Soundy.Util.create_icon("user-available", 16);
                 master_speaker_in_zone.halign = Gtk.Align.CENTER;
                 master_speaker_in_zone.valign = Gtk.Align.CENTER;
-                speaker_panel.attach(master_speaker_in_zone, 1, 1, 1, 1);
+                speaker_panel.attach(Soundy.Util.create_label("+" + count_connected_slaves.to_string()), 1, 1, 1, 1);
             } else {
                 var remove_from_zone_button = Soundy.Util.create_button("list-remove-symbolic", 16);
                 remove_from_zone_button.tooltip_text = _("Remove from zone");
@@ -386,6 +397,7 @@ public class Speaker : Object {
     public string hostname {get;set;}
     public string device_id {get;set;}
     public string ip_address {get;set;}
+    public string master_device_id {get;set; default="";}
     public bool is_master {get;set;default=false;}
     public bool is_in_zone {get;set;default=false;}
 
