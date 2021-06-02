@@ -17,7 +17,7 @@
 namespace Soundy {
     public class Settings {
         public const string APP_ID = "com.github.syfds.soundy";
-        public const string VERSION = "0.3.1";
+        public const string VERSION = "0.3.2";
 
         private const string HOST_SETTING_NAME = "soundtouch-host";
 
