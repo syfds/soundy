@@ -20,7 +20,7 @@ namespace Soundy {
         private Soundy.Settings settings;
         private Controller controller;
 
-        private Gtk.Label title;
+        private Gtk.Label mytitle;
         private Gtk.Button power_on_off;
         private Gtk.VolumeButton volume_button;
         private Gtk.MenuButton favourites;
@@ -32,14 +32,7 @@ namespace Soundy {
             this.controller = controller;
 
             set_show_close_button(true);
-            title = new Gtk.Label(_("Cannot connect to your speaker") + " :-/");
-
-            model.model_changed.connect((model) => {
-                Idle.add(() => {
-                    this.update_gui(controller, model);
-                    return false;
-                });
-            });
+            mytitle = new Gtk.Label(_("Cannot connect to your speaker") + " :-/");
 
             power_on_off = create_button("system-shutdown-symbolic", 16);
             power_on_off.clicked.connect((event) => {
@@ -47,7 +40,6 @@ namespace Soundy {
             });
 
             volume_button = new Gtk.VolumeButton();
-
             volume_button.use_symbolic = true;
             volume_button.adjustment = new Gtk.Adjustment(0.0, 0.0, 100.0, 2.0, 2.0, 2.0);
             volume_button.value_changed.connect((value) => {
@@ -65,7 +57,7 @@ namespace Soundy {
             main_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 6);
             main_box.halign = Gtk.Align.CENTER;
 
-            main_box.pack_start(title);
+            main_box.pack_start(mytitle);
             main_box.pack_start(power_on_off);
 
             pack_end(settings_button);
@@ -73,10 +65,20 @@ namespace Soundy {
             pack_end(volume_button);
 
             custom_title = main_box;
+
+            this.create_preset_items(controller);
+
+            model.model_changed.connect((model) => {
+                Idle.add(() => {
+                    this.update_gui(controller, model);
+                    show_all();
+                    return false;
+                });
+            });
         }
 
         public void update_title(string soundtouch_speaker_name) {
-            title.set_text(soundtouch_speaker_name);
+            mytitle.set_text(soundtouch_speaker_name);
         }
 
         private Gtk.Button create_button(string icon, int size) {
@@ -133,7 +135,6 @@ namespace Soundy {
                 update_title(model.soundtouch_speaker_name);
                 power_on_off.sensitive = true;
                 volume_button.sensitive = true;
-                this.create_preset_items(controller);
                 favourites.sensitive = true;
             }
 

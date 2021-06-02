@@ -126,5 +126,10 @@ namespace Soundy {
         public string get_zone() {
             return this.client.invoke(APIMethods.get_zone());
         }
+
+
+        public string add_to_zone(string device_id, Gee.ArrayList<ZoneMember> zone_member) {
+            return this.client.invoke(APIMethods.add_to_zone(device_id, zone_member));
+        }
     }
 }

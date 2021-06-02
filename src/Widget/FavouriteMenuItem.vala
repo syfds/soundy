@@ -42,7 +42,7 @@ public class FavouriteMenuItem : Gtk.Button {
     }
 
     private void load_image_asynchronously() {
-        if (this.image_url != "") {
+        if (this.image_url != null && this.image_url != "") {
             new Thread<void*>("loading favourite image", () => {
                 var image = this.create_image_from_url(this.image_url);
                 Idle.add(() => {

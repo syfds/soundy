@@ -57,6 +57,9 @@ public class APIMethods : GLib.Object {
     public static Soundy.APIMethod set_zone(string master_device_id_mac_address, Gee.ArrayList<ZoneMember> zone_member_list) {
         return new SetZone(master_device_id_mac_address, zone_member_list);
     }
+    public static Soundy.APIMethod add_to_zone(string master_device_id_mac_address, Gee.ArrayList<ZoneMember> zone_member_list) {
+        return new AddToZone(master_device_id_mac_address, zone_member_list);
+    }
     public static Soundy.APIMethod remove_zone_slave(string master_device_id_mac_address, Gee.ArrayList<ZoneMember> zone_member_list) {
         return new RemoveZone(master_device_id_mac_address, zone_member_list);
     }
@@ -141,6 +144,30 @@ internal class RemoveZone : Soundy.APIMethod, GLib.Object {
     public Gee.ArrayList<ZoneMember> zone_member_list {set construct; get;}
 
     public RemoveZone(string master_device_id_mac_address, Gee.ArrayList<ZoneMember> zone_member_list) {
+        this.master_device_id_mac_address = master_device_id_mac_address;
+        this.zone_member_list = zone_member_list;
+    }
+
+    public string get_method() {return "POST";}
+    public string get_body() {
+        string start_tag = @"<zone master=\"$master_device_id_mac_address\">";
+        string members = "";
+        foreach(var member in zone_member_list){
+            string mac_address = member.mac_address;
+            string ip_address = member.ip_address;
+            members += @"<member ipaddress=\"$ip_address\">$mac_address</member>";
+        }
+        string end_tag = "</zone>";
+
+        return start_tag + members + end_tag;
+    }
+}
+internal class AddToZone : Soundy.APIMethod, GLib.Object {
+    public string get_path() {return "/addZoneSlave";}
+    public string master_device_id_mac_address {set construct; get;}
+    public Gee.ArrayList<ZoneMember> zone_member_list {set construct; get;}
+
+    public AddToZone(string master_device_id_mac_address, Gee.ArrayList<ZoneMember> zone_member_list) {
         this.master_device_id_mac_address = master_device_id_mac_address;
         this.zone_member_list = zone_member_list;
     }

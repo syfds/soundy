@@ -1,5 +1,14 @@
 namespace Soundy {
     public class Util {
+
+        public static void execute_in_new_thread(string desc, owned ThreadFunc func) {
+            new Thread<void*>(desc, func);
+        }
+
+        public static void execute_in_ui_thread(owned SourceFunc function) {
+            Idle.add(function);
+        }
+
         public static Gtk.Label create_label(string text, string style_class=Granite.STYLE_CLASS_H4_LABEL) {
             var label = new Gtk.Label(text);
             label.get_style_context().add_class(style_class);
@@ -46,5 +55,7 @@ namespace Soundy {
 
             return label.substring(0, max_characters - suffix.length) + suffix;
         }
+
+
     }
 }

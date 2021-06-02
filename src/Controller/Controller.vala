@@ -154,4 +154,8 @@ public class Controller : GLib.Object {
         var volume_message = new VolumeUpdatedMessage.from_rest_api(response);
         return volume_message.actual_volume;
     }
+
+    public void add_to_zone(string device_id, Gee.ArrayList<ZoneMember> zone_member) {
+        this.client.add_to_zone(device_id, zone_member);
+    }
 }
