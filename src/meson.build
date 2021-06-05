@@ -18,7 +18,6 @@ src_files = files([
 'Controller/SoundtouchMessageParser.vala',
 'Controller/Settings.vala',
 'Controller/AvahiBrowser.vala',
-'Widget/NetworkSpeakerList.vala',
 'Widget/SpeakerPanel.vala',
 'Widget/MainPanel.vala',
 'Widget/HeaderBar.vala',
