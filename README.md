@@ -13,7 +13,7 @@ app connects to the speaker over SoundTouch API (https://developer.bose.com/guid
 * Increasing/decreasing volume
 * Displaying and playing the favourites
 * Auto-Discovery of SoundTouch speaker on local network
-* Creation of a multi-room zone
+* Multi-room zone(s)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/syfds/soundy/master/data/screenshot/screenshot-1.png">
