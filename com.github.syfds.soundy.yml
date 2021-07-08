@@ -16,8 +16,12 @@ command: com.github.syfds.soundy
 # only need permission to draw our app on screen using either X11 or Wayland.
 finish-args:
   - '--share=ipc'
+  - '--share=network'
   - '--socket=fallback-x11'
   - '--socket=wayland'
+  - '--socket=system-bus'
+  - '--socket=session-bus'
+  - '--filesystem=host'
   - '--system-talk-name=org.freedesktop.Avahi'
 
 
@@ -26,23 +30,28 @@ finish-args:
 # them here.
 modules:
   - name: avahi
+    buildsystem: autotools
     config-opts:
       - '--with-distro=none'
+      - '--enable-compat-libdns_sd'
       - '--disable-libdaemon'
+      - '--disable-libevent'
       - '--disable-core-docs'
       - '--disable-manpages'
       - '--disable-mono'
       - '--disable-qt3'
       - '--disable-qt4'
+      - '--disable-qt5'
       - '--disable-python'
-      - '--disable-gtk'
-      - '--disable-gtk3'
+
+    cleanup:
+
     cleanup:
       - /bin
     sources:
-      - type: archive
-        url: https://avahi.org/download/avahi-0.7.tar.gz
-        sha256: 57a99b5dfe7fdae794e3d1ee7a62973a368e91e414bd0dfa5d84434de5b14804
+      - type: git
+        url: https://github.com/lathiat/avahi
+        tag: v0.8
 
   - name: soundy
     buildsystem: meson
