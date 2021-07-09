@@ -22,7 +22,7 @@ finish-args:
   - '--socket=system-bus'
   - '--socket=session-bus'
   - '--filesystem=host'
-  - '--system-talk-name=org.freedesktop.Avahi'
+
 
 
 # This section is where you list all the source code required to build your app.
@@ -33,7 +33,6 @@ modules:
     buildsystem: autotools
     config-opts:
       - '--with-distro=none'
-      - '--enable-compat-libdns_sd'
       - '--disable-libdaemon'
       - '--disable-libevent'
       - '--disable-core-docs'
@@ -42,8 +41,7 @@ modules:
       - '--disable-qt3'
       - '--disable-qt4'
       - '--disable-qt5'
-      - '--disable-python'
-
+      - '--disable-python-dbus'
     cleanup:
       - /bin
     sources:
