@@ -68,7 +68,7 @@ namespace Soundy {
                             });
                         }
                     } catch (Error e) {
-                        message("Remote error");
+                        message("Remote error: " + e.message + " " + e.code.to_string());
                         connection_failed();
                         loop.quit();
                     }
