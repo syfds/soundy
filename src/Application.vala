@@ -59,13 +59,16 @@ namespace Soundy {
             var connection = new Soundy.WebsocketConnection(host, "8080");
 
             var client = new Soundy.API(connection, host);
+
+            message("####################" + client.get_info());
+
             var controller = new Controller(client);
 
             var model = new Model();
 
             var header_bar = new Soundy.HeaderBar(controller, model, settings);
             main_window.set_titlebar(header_bar);
-            
+
             var main_area = new Gtk.Paned(Gtk.Orientation.VERTICAL);
             main_area.pack1(new MainPanel(controller, model, settings), true, false);
             main_area.pack2(new SpeakerPanel(controller, model), false, false);
