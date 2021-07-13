@@ -22,6 +22,7 @@ finish-args:
   - '--socket=system-bus'
   - '--socket=session-bus'
   - '--filesystem=host'
+  - '--system-talk-name=org.freedesktop.Avahi'
 
 
 
@@ -29,6 +30,25 @@ finish-args:
 # If we had external dependencies that weren't included in our SDK, we would list
 # them here.
 modules:
+
+  - name: python-dbus
+    buildsystem: simple
+    build-commands:
+      - python3 setup.py install --prefix=/app --root=/
+    sources:
+      - type: archive
+        url: "https://dbus.freedesktop.org/releases/dbus-python/dbus-python-1.2.16.tar.gz"
+        sha256: 11238f1d86c995d8aed2e22f04a1e3779f0d70e587caffeab4857f3c662ed5a4
+        
+  - name: libnss-mdns
+    buildsystem: autotools      
+    cleanup:
+      - '*'
+    sources:
+      - type: git
+        url: https://github.com/lathiat/nss-mdns
+        tag: v0.14.1
+                
   - name: avahi
     buildsystem: autotools
     config-opts:
@@ -41,7 +61,8 @@ modules:
       - '--disable-qt3'
       - '--disable-qt4'
       - '--disable-qt5'
-      - '--disable-python-dbus'
+      - '--enable-dbus'
+      - '--enable-compat-libdns_sd'
     cleanup:
       - /bin
     sources:
@@ -49,8 +70,10 @@ modules:
         url: https://github.com/lathiat/avahi
         tag: v0.8
 
+
   - name: soundy
     buildsystem: meson
     sources:
       - type: dir
         path: .
+    
