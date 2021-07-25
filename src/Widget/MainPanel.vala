@@ -55,6 +55,8 @@ public class MainPanel : Gtk.Grid {
         this.set_halign(Gtk.Align.CENTER);
         this.set_valign(Gtk.Align.CENTER);
 
+        margin_top = 15;
+
         this.prev_btn = Soundy.Util.create_button("media-skip-backward-symbolic", 32);
         this.prev_btn.clicked.connect((event) => {
             this.controller.prev_clicked();
