@@ -38,7 +38,6 @@ public class MainPanel : Gtk.Grid {
     public MainPanel(Controller controller, Model model, Soundy.Settings settings) {
         this.settings = settings;
         this.controller = controller;
-
         model.model_changed.connect((model) => {
             Idle.add(() => {
                 this.update_gui(model);

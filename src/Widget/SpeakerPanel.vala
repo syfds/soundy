@@ -18,6 +18,7 @@ public class SpeakerPanel : Gtk.Box {
 
     private SpeakerModel speaker_model;
     private Gtk.Button toggle_button;
+    private Gtk.Revealer speaker_item_revealer;
     private AvahiBrowser browser;
     private Gtk.Box speaker_item_panel;
     private Gtk.Box toggle_button_panel;
@@ -29,6 +30,7 @@ public class SpeakerPanel : Gtk.Box {
 
         toggle_button_panel = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 10);
         toggle_button_panel.halign = Gtk.Align.START;
+        toggle_button_panel.valign = Gtk.Align.START;
 
         speaker_model = new SpeakerModel();
 
@@ -71,12 +73,17 @@ public class SpeakerPanel : Gtk.Box {
         toggle_button.valign = Gtk.Align.START;
         toggle_button.clicked.connect(() => {
             speaker_model.toggle_view();
+
         });
 
         toggle_button_panel.pack_start(toggle_button);
 
         pack_start(toggle_button_panel);
-        pack_end(speaker_item_panel);
+
+        speaker_item_revealer = new Gtk.Revealer();
+        speaker_item_revealer.set_transition_type(Gtk.RevealerTransitionType.SLIDE_DOWN);
+        speaker_item_revealer.show_all();
+        speaker_item_revealer.add(speaker_item_panel);
 
         init_speaker_search();
     }
@@ -109,7 +116,8 @@ public class SpeakerPanel : Gtk.Box {
     }
 
     public void update_top_button_panel(Gee.Set<Speaker> speaker_list) {
-        toggle_button.set_image(Soundy.Util.create_icon(speaker_model.is_view_expanded ? "view-restore-symbolic" : "view-fullscreen-symbolic", 16));
+        speaker_item_revealer.set_reveal_child(speaker_model.is_view_expanded);
+        toggle_button.set_image(Soundy.Util.create_icon(speaker_model.is_view_expanded ? "pane-hide-symbolic" : "pane-show-symbolic", 16));
         toggle_button.tooltip_text = _(speaker_model.is_view_expanded ? _("Hide") : _("List your SoundTouch speaker"));
 
         foreach (Gtk.Widget child in toggle_button_panel.get_children()){
@@ -126,6 +134,8 @@ public class SpeakerPanel : Gtk.Box {
     }
 
     public void update_expanded_button_panel(Gee.Set<Speaker> speaker_list, Controller controller) {
+
+
         foreach (Gtk.Widget child in speaker_item_panel.get_children()){
             if (child is SpeakerItemView || child is Gtk.Label) {
                 speaker_item_panel.remove(child);
@@ -154,6 +164,12 @@ public class SpeakerPanel : Gtk.Box {
                 });
                 return null;
             });
+        }
+
+        if (speaker_model.is_view_expanded) {
+            pack_end(speaker_item_revealer);
+        } else {
+            remove(speaker_item_revealer);
         }
     }
 
