@@ -25,8 +25,11 @@ public class SpeakerPanel : Gtk.Box {
 
     public SpeakerPanel(Controller controller, Model model) {
         orientation = Gtk.Orientation.VERTICAL;
+        valign = Gtk.Align.START;
+
         speaker_item_panel = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 10);
         speaker_item_panel.halign = Gtk.Align.CENTER;
+        speaker_item_panel.valign = Gtk.Align.START;
 
         toggle_button_panel = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 10);
         toggle_button_panel.halign = Gtk.Align.START;
@@ -167,7 +170,7 @@ public class SpeakerPanel : Gtk.Box {
         }
 
         if (speaker_model.is_view_expanded) {
-            pack_end(speaker_item_revealer);
+            pack_start(speaker_item_revealer);
         } else {
             remove(speaker_item_revealer);
         }
