@@ -71,7 +71,7 @@ public class SpeakerPanel : Gtk.Box {
         });
 
 
-        toggle_button = Soundy.Util.create_button("view-restore-symbolic", 16);
+        toggle_button = Soundy.Util.create_button("pane-show-symbolic", 16);
         toggle_button.halign = Gtk.Align.START;
         toggle_button.valign = Gtk.Align.START;
         toggle_button.clicked.connect(() => {
@@ -138,18 +138,13 @@ public class SpeakerPanel : Gtk.Box {
 
     public void update_expanded_button_panel(Gee.Set<Speaker> speaker_list, Controller controller) {
 
-
         foreach (Gtk.Widget child in speaker_item_panel.get_children()){
             if (child is SpeakerItemView || child is Gtk.Label) {
                 speaker_item_panel.remove(child);
             }
         }
 
-        if (speaker_list.is_empty && speaker_model.is_view_expanded) {
-            var no_speaker_label = Soundy.Util.create_label(_("Cannot find any SoundTouch speaker"));
-            no_speaker_label.halign = Gtk.Align.CENTER;
-            speaker_item_panel.add(no_speaker_label);
-        } else if (speaker_model.is_view_expanded) {
+        if (speaker_model.is_view_expanded) {
             new Thread<void*>("init speaker items", () => {
                 Gee.ArrayList<SpeakerItemView> speaker_items = this.build_speaker_items(controller, speaker_list);
                 Idle.add(() => {
