@@ -47,20 +47,18 @@ namespace Soundy {
                 granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK
             );
             
-            granite_settings.notify["prefers-color-scheme"].connect (() => {
+            granite_settings.notify["prefers-color-scheme"].connect(() => {
                 gtk_settings.gtk_application_prefer_dark_theme = (
                     granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK
                 );
             });
 
-            message(@"trying to connecto to $speaker_host");
+            message(@"trying to connect to $speaker_host");
 
             string host = speaker_host;
             var connection = new Soundy.WebsocketConnection(host, "8080");
 
             var client = new Soundy.API(connection, host);
-
-            message("####################" + client.get_info());
 
             var controller = new Controller(client);
 
@@ -69,10 +67,11 @@ namespace Soundy {
             var header_bar = new Soundy.HeaderBar(controller, model, settings);
             main_window.set_titlebar(header_bar);
 
-            var main_area = new Gtk.Paned(Gtk.Orientation.VERTICAL);
-            main_area.pack1(new MainPanel(controller, model, settings), true, false);
-            main_area.pack2(new SpeakerPanel(controller, model), false, false);
-            main_window.add(main_area);
+            var main_grid = new Gtk.Box(Orientation.VERTICAL, 5);
+            main_grid.pack_start(new MainPanel(controller, model, settings), false, true);
+            main_grid.pack_end(new SpeakerPanel(controller, model), true, true);
+
+            main_window.add(main_grid);
             controller.init();
             main_window.show_all();
         }
