@@ -20,8 +20,9 @@ public class Controller : GLib.Object {
 
     public Model model {get; set;}
 
-    public Controller(Soundy.API client) {
-        this.update_client(client);
+    public Controller(Model model, Soundy.API api_client) {
+        this.model = model;
+        this.client = api_client;
     }
 
     private void update_speaker_name() {
@@ -29,7 +30,6 @@ public class Controller : GLib.Object {
         var info_message = new GetInfoMessage.from_rest_api(response);
 
         this.model.soundtouch_speaker_name = info_message.speaker_name;
-        this.model.fire_changed();
     }
 
     public void power_on_clicked() {
@@ -45,6 +45,7 @@ public class Controller : GLib.Object {
     }
 
     private void update_currently_playing_track() {
+
         var xml = this.client.get_now_playing();
         var m = new NowPlayingChangeMessage.from_rest_api(xml);
 
@@ -60,7 +61,6 @@ public class Controller : GLib.Object {
             this.model.image_url = m.image_url;
             this.model.is_radio_streaming = m.is_radio_streaming;
         }
-        this.model.fire_changed();
     }
 
     public void next_clicked() {
@@ -89,11 +89,6 @@ public class Controller : GLib.Object {
     }
 
     public void init() {
-        this.client.init_ws_connection();
-    }
-
-    public void update_client(Soundy.API client) {
-        this.client = client;
         this.client.event_from_soundtouch_received.connect((type, xml) => {
             message("Event update: " + xml);
             var m = new SoundtouchMessageParser().read(xml);
@@ -113,7 +108,7 @@ public class Controller : GLib.Object {
                 this.model.actual_volume = ((VolumeUpdatedMessage)m).actual_volume;
                 this.model.target_volume = ((VolumeUpdatedMessage)m).target_volume;
                 this.model.mute_enabled = ((VolumeUpdatedMessage)m).mute_enabled;
-                this.model.fire_changed();
+                this.model.fire_header_model_changed();
             } else if (m is NowSelectionChangeMessage) {
                 this.model.is_standby = false;
                 this.model.is_buffering_in_progress = true;
@@ -126,15 +121,25 @@ public class Controller : GLib.Object {
         });
 
         this.client.connection_to_soundtouch_succeeded.connect(() => {
+            message("controller got connection succeeded");
             this.model.connection_established = true;
             this.update_speaker_name();
             this.update_currently_playing_track();
             this.update_actual_volume();
+            this.model.fire_changed();
+            this.model.fire_header_model_changed();
         });
         this.client.connection_to_soundtouch_failed.connect(() => {
             this.model.connection_established = false;
             this.model.fire_changed();
+            this.model.fire_header_model_changed();
         });
+
+        this.client.init_ws_connection();
+    }
+
+    public void update_host(string new_host) {
+        this.client.set_host(new_host);
     }
 
     public void update_volume(uint8 actual_volume) {
@@ -146,7 +151,6 @@ public class Controller : GLib.Object {
         var volume_message = new VolumeUpdatedMessage.from_rest_api(response);
         this.model.actual_volume = volume_message.actual_volume;
         this.model.target_volume = volume_message.target_volume;
-        this.model.fire_changed();
     }
 
     public double get_volume() {

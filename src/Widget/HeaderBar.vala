@@ -47,9 +47,8 @@ namespace Soundy {
                 controller.update_volume((uint8)(value));
             });
 
-            volume_button.value = controller.get_volume();
-
             favourites = this.create_menu_button("non-starred-symbolic", 16);
+            //            volume_button.value = controller.get_volume();
 
             settings_button = this.create_menu_button("preferences-system-symbolic", 16);
             this.create_settings_items();
@@ -66,14 +65,9 @@ namespace Soundy {
 
             custom_title = main_box;
 
-            this.create_preset_items(controller);
 
-            model.model_changed.connect((model) => {
-                Idle.add(() => {
-                    this.update_gui(controller, model);
-                    show_all();
-                    return false;
-                });
+            model.header_model_changed.connect((model) => {
+                this.update_gui(controller, model);
             });
         }
 
@@ -96,31 +90,34 @@ namespace Soundy {
 
         public void create_preset_items(Controller controller) {
 
-            var menu_grid = new Gtk.Grid();
-            menu_grid.margin_top = 6;
-            menu_grid.margin_bottom = 6;
-            menu_grid.orientation = Gtk.Orientation.VERTICAL;
+            bool is_not_yet_initialized = favourites.popover == null;
+            if (is_not_yet_initialized) {
+                var menu_grid = new Gtk.Grid();
+                menu_grid.margin_top = 6;
+                menu_grid.margin_bottom = 6;
+                menu_grid.orientation = Gtk.Orientation.VERTICAL;
 
-            new Thread<void*>("loading presets", () => {
-                PresetsMessage presets = controller.get_presets();
-                message("count presets loaded " + presets.get_presets().size.to_string());
+                new Thread<void*>("loading presets", () => {
+                    PresetsMessage presets = controller.get_presets();
+                    message("count presets loaded " + presets.get_presets().size.to_string());
 
-                Idle.add(() => {
-                    foreach(Preset p in presets.get_presets()){
-                        message(p.item_image_url);
-                        var item = new FavouriteMenuItem(p, p.item_image_url, controller);
-                        menu_grid.add(item);
-                    }
+                    Timeout.add(100, () => {
+                        foreach(Preset p in presets.get_presets()){
+                            message(p.item_image_url);
+                            var item = new FavouriteMenuItem(p, p.item_image_url, controller);
+                            menu_grid.add(item);
+                        }
 
-                    menu_grid.show_all();
-                    return false;
+                        menu_grid.show_all();
+                        return false;
+                    });
+                    return null;
                 });
-                return null;
-            });
 
-            var popover = new Gtk.Popover(null);
-            popover.add(menu_grid);
-            favourites.popover = popover;
+                var popover = new Gtk.Popover(null);
+                popover.add(menu_grid);
+                favourites.popover = popover;
+            }
         }
 
         public void update_gui(Controller controller, Model model) {
@@ -132,6 +129,7 @@ namespace Soundy {
                 favourites.popover = popover;
                 favourites.sensitive = false;
             } else {
+                create_preset_items(controller);
                 update_title(model.soundtouch_speaker_name);
                 power_on_off.sensitive = true;
                 volume_button.sensitive = true;
@@ -182,10 +180,7 @@ namespace Soundy {
                 new Thread<void*>(null, () => {
                     string updated_host = this.settings.get_speaker_host();
 
-                    var connection = new Soundy.WebsocketConnection(updated_host, "8080");
-                    var client = new Soundy.API(connection, updated_host);
-                    this.controller.update_client(client);
-                    this.controller.init();
+                    this.controller.update_host(updated_host);
                     return null;
                 });
             });

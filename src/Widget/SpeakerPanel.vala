@@ -38,6 +38,7 @@ public class SpeakerPanel : Gtk.Box {
         speaker_model = new SpeakerModel();
 
         model.zone_changed.connect(() => {
+            message("zone changed");
             Soundy.Util.execute_in_new_thread("", () => {
                 var speaker_list = speaker_model.get_all_speaker();
 
@@ -250,12 +251,10 @@ public class SpeakerPanel : Gtk.Box {
             speaker_item.connect_clicked.connect((speaker) => {
                 Soundy.Util.execute_in_new_thread("connect to speaker", () => {
                     string updated_host = speaker.hostname;
+                    message("########" + updated_host);
                     Soundy.Settings.get_instance().set_speaker_host(updated_host);
 
-                    var connection = new Soundy.WebsocketConnection(updated_host, "8080");
-                    var client = new Soundy.API(connection, updated_host);
-                    controller.update_client(client);
-                    controller.init();
+                    controller.update_host(updated_host);
                     return null;
                 });
             });
