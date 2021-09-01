@@ -17,14 +17,13 @@
 public class SpeakerPanel : Gtk.Box {
 
     private SpeakerModel speaker_model;
-    private Gtk.Button toggle_button;
-    private Gtk.Revealer speaker_item_revealer;
     private AvahiBrowser browser;
     private Gtk.Box speaker_item_panel;
     private Gtk.Box toggle_button_panel;
 
     public SpeakerPanel(Controller controller, Model model) {
         orientation = Gtk.Orientation.VERTICAL;
+        halign = Gtk.Align.CENTER;
         valign = Gtk.Align.START;
 
         speaker_item_panel = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 10);
@@ -32,7 +31,7 @@ public class SpeakerPanel : Gtk.Box {
         speaker_item_panel.valign = Gtk.Align.START;
 
         toggle_button_panel = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 10);
-        toggle_button_panel.halign = Gtk.Align.START;
+        toggle_button_panel.halign = Gtk.Align.CENTER;
         toggle_button_panel.valign = Gtk.Align.START;
 
         speaker_model = new SpeakerModel();
@@ -71,23 +70,8 @@ public class SpeakerPanel : Gtk.Box {
             });
         });
 
-
-        toggle_button = Soundy.Util.create_button("pane-show-symbolic", 16);
-        toggle_button.halign = Gtk.Align.START;
-        toggle_button.valign = Gtk.Align.START;
-        toggle_button.clicked.connect(() => {
-            speaker_model.toggle_view();
-
-        });
-
-        toggle_button_panel.pack_start(toggle_button);
-
         pack_start(toggle_button_panel);
-
-        speaker_item_revealer = new Gtk.Revealer();
-        speaker_item_revealer.set_transition_type(Gtk.RevealerTransitionType.SLIDE_DOWN);
-        speaker_item_revealer.show_all();
-        speaker_item_revealer.add(speaker_item_panel);
+        pack_start(speaker_item_panel);
 
         init_speaker_search();
     }
@@ -120,20 +104,14 @@ public class SpeakerPanel : Gtk.Box {
     }
 
     public void update_top_button_panel(Gee.Set<Speaker> speaker_list) {
-        speaker_item_revealer.set_reveal_child(speaker_model.is_view_expanded);
-        toggle_button.set_image(Soundy.Util.create_icon(speaker_model.is_view_expanded ? "pane-hide-symbolic" : "pane-show-symbolic", 16));
-        toggle_button.tooltip_text = _(speaker_model.is_view_expanded ? _("Hide") : _("List your SoundTouch speaker"));
-
         foreach (Gtk.Widget child in toggle_button_panel.get_children()){
-            if (child is Gtk.Label) {
-                toggle_button_panel.remove(child);
-            }
+            toggle_button_panel.remove(child);
         }
 
-        if (!speaker_list.is_empty && !speaker_model.is_view_expanded) {
-            toggle_button_panel.add(Soundy.Util.create_label(speaker_list.size.to_string() + _(" SoundTouch speaker available")));
-        } else if (speaker_list.is_empty && !speaker_model.is_view_expanded) {
-            toggle_button_panel.add(Soundy.Util.create_label(_("Cannot find any SoundTouch speaker")));
+        if (!speaker_list.is_empty) {
+            toggle_button_panel.pack_start(Soundy.Util.create_label(speaker_list.size.to_string() + _(" SoundTouch speaker available")));
+        } else if (speaker_list.is_empty) {
+            toggle_button_panel.pack_start(Soundy.Util.create_label(_("Cannot find any SoundTouch speaker")));
         }
     }
 
@@ -145,31 +123,23 @@ public class SpeakerPanel : Gtk.Box {
             }
         }
 
-        if (speaker_model.is_view_expanded) {
-            new Thread<void*>("init speaker items", () => {
-                Gee.ArrayList<SpeakerItemView> speaker_items = this.build_speaker_items(controller, speaker_list);
+        new Thread<void*>("init speaker items", () => {
+            Gee.ArrayList<SpeakerItemView> speaker_items = this.build_speaker_items(controller, speaker_list);
                 Idle.add(() => {
-                    foreach (Gtk.Widget child in speaker_item_panel.get_children()){
-                        if (child is SpeakerItemView) {
-                            speaker_item_panel.remove(child);
-                        }
+                foreach (Gtk.Widget child in speaker_item_panel.get_children()){
+                    if (child is SpeakerItemView) {
+                        speaker_item_panel.remove(child);
                     }
+                }
 
-                    foreach(var speaker_item in speaker_items){
-                        speaker_item_panel.pack_start(speaker_item);
-                    }
-                    speaker_item_panel.show_all();
-                    return false;
-                });
-                return null;
+                foreach(var speaker_item in speaker_items){
+                    speaker_item_panel.pack_start(speaker_item);
+                }
+                speaker_item_panel.show_all();
+                return false;
             });
-        }
-
-        if (speaker_model.is_view_expanded) {
-            pack_start(speaker_item_revealer);
-        } else {
-            remove(speaker_item_revealer);
-        }
+            return null;
+        });
     }
 
     public void remove_from_zone(Controller controller, SpeakerModel speaker_model, Speaker slave) {
@@ -202,7 +172,6 @@ public class SpeakerPanel : Gtk.Box {
     }
 
     public Gee.ArrayList<SpeakerItemView> build_speaker_items(Controller controller, Gee.Set<Speaker> speaker_list) {
-        Gee.ArrayList<SpeakerItemView> speaker_items = new Gee.ArrayList<SpeakerItemView>();
         return this.create_speaker_items(speaker_list, controller);
     }
 
@@ -251,7 +220,6 @@ public class SpeakerPanel : Gtk.Box {
             speaker_item.connect_clicked.connect((speaker) => {
                 Soundy.Util.execute_in_new_thread("connect to speaker", () => {
                     string updated_host = speaker.hostname;
-                    message("########" + updated_host);
                     Soundy.Settings.get_instance().set_speaker_host(updated_host);
 
                     controller.update_host(updated_host);
@@ -384,7 +352,7 @@ public class SpeakerItemView: Gtk.Box {
 public class SpeakerModel : Object {
     public signal void model_changed();
     public Gee.Set<Speaker> speaker_list = new Gee.HashSet<Speaker>((speaker) => speaker.speaker_name.hash(), (speaker1, speaker2) => speaker1.speaker_name == speaker2.speaker_name);
-    public bool is_view_expanded {get;set;default=false;}
+    public bool is_view_expanded {get;set;default=true;}
 
     public void add_speaker(Speaker speaker) {
         speaker_list.add(speaker);
@@ -398,11 +366,6 @@ public class SpeakerModel : Object {
 
     public Gee.Set<Speaker> get_all_speaker() {
         return speaker_list;
-    }
-
-    public void toggle_view() {
-        this.is_view_expanded = !this.is_view_expanded;
-        model_changed();
     }
 }
 public class Speaker : Object {

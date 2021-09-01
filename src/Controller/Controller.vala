@@ -15,6 +15,7 @@
 */
 
 public class Controller : GLib.Object {
+    public signal void speaker_panel_toggled(bool show);
 
     private Soundy.API client;
 
@@ -23,6 +24,11 @@ public class Controller : GLib.Object {
     public Controller(Model model, Soundy.API api_client) {
         this.model = model;
         this.client = api_client;
+    }
+
+
+    public void toggle_speaker_panel(bool show){
+        this.speaker_panel_toggled(show);
     }
 
     private void update_speaker_name() {

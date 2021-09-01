@@ -39,15 +39,7 @@ public class MainPanel : Gtk.Grid {
         this.settings = settings;
         this.controller = controller;
         model.model_changed.connect((model) => {
-            //            new Thread<void*>("found_local_music_file", () => {
-//                Idle.add(() => {
                     this.update_gui(model);
-            //                    return false;
-//                });
-
-            //                return null;
-//            });
-
         });
 
         this.create_gui();
@@ -56,7 +48,7 @@ public class MainPanel : Gtk.Grid {
     public void create_gui() {
         set_orientation(Gtk.Orientation.VERTICAL);
         this.set_halign(Gtk.Align.CENTER);
-        this.set_valign(Gtk.Align.CENTER);
+        this.set_valign(Gtk.Align.START);
 
         margin_top = 15;
 

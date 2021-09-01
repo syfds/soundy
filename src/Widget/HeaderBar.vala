@@ -17,6 +17,7 @@
 namespace Soundy {
     public class HeaderBar : Gtk.HeaderBar {
 
+        private bool toggle_state = false;
         private Soundy.Settings settings;
         private Controller controller;
 
@@ -48,10 +49,23 @@ namespace Soundy {
             });
 
             favourites = this.create_menu_button("non-starred-symbolic", 16);
-            //            volume_button.value = controller.get_volume();
 
             settings_button = this.create_menu_button("preferences-system-symbolic", 16);
             this.create_settings_items();
+
+            var speaker_button = new Gtk.ToggleButton() {
+                image = new Gtk.Image.from_icon_name ("pane-show-symbolic", Gtk.IconSize.MENU),
+                tooltip_text = _("Show extended functionality")
+            };
+
+            speaker_button.toggled.connect(()=>{
+                this.toggle_state = !this.toggle_state;
+                speaker_button.set_image(Soundy.Util.create_icon(this.toggle_state ? "pane-hide-symbolic" : "pane-show-symbolic", 16));
+                speaker_button.tooltip_text = _(this.toggle_state ? _("Hide") : _("List your SoundTouch speaker"));
+
+                controller.toggle_speaker_panel(this.toggle_state);
+                
+            });
 
             main_box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 6);
             main_box.halign = Gtk.Align.CENTER;
@@ -59,6 +73,7 @@ namespace Soundy {
             main_box.pack_start(mytitle);
             main_box.pack_start(power_on_off);
 
+            pack_end(speaker_button);
             pack_end(settings_button);
             pack_end(favourites);
             pack_end(volume_button);

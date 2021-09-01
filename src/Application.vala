@@ -63,11 +63,8 @@ namespace Soundy {
             var header_bar = new Soundy.HeaderBar(controller, model, settings);
             main_window.set_titlebar(header_bar);
 
-            var main_grid = new Gtk.Box(Orientation.VERTICAL, 5);
-            main_grid.pack_start(new MainPanel(controller, model, settings), false, true);
-            main_grid.pack_end(new SpeakerPanel(controller, model), true, true);
-            main_window.add(main_grid);
-
+            main_window.add(new GlobalGrid(controller, model, settings, main_window));
+            
             controller.init();
 
             main_window.show_all();
