@@ -45,7 +45,7 @@ public class FavouriteMenuItem : Gtk.Button {
         if (this.image_url != null && this.image_url != "") {
             new Thread<void*>("loading favourite image", () => {
                 var image = this.create_image_from_url(this.image_url);
-                Idle.add(() => {
+                Timeout.add(100, () => {
                     this.set_image(image);
                     this.show_all();
                     return false;

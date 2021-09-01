@@ -47,25 +47,17 @@ namespace Soundy {
             message("got from SoundTouch API: " + response);
 
             return response;
-
         }
 
         private string communicate_with_server(Session session, Message msg) {
             string response = "";
             MainLoop loop = new MainLoop();
-            TimeoutSource timeout = new TimeoutSource(100);
-            timeout.set_callback(() => {
                 session.queue_message(msg, (sess, msg) => {
                     response = (string) msg.response_body.data;
                     loop.quit();
                 });
 
-                return Source.REMOVE;
-            });
-
-            timeout.attach(loop.get_context());
             loop.run();
-
             return response;
         }
     }

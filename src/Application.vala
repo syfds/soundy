@@ -39,14 +39,14 @@ namespace Soundy {
 
             var settings = Soundy.Settings.get_instance();
             var speaker_host = settings.get_speaker_host();
-            
-            var granite_settings = Granite.Settings.get_default ();
-            var gtk_settings = Gtk.Settings.get_default ();
-            
+
+            var granite_settings = Granite.Settings.get_default();
+            var gtk_settings = Gtk.Settings.get_default();
+
             gtk_settings.gtk_application_prefer_dark_theme = (
                 granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK
             );
-            
+
             granite_settings.notify["prefers-color-scheme"].connect(() => {
                 gtk_settings.gtk_application_prefer_dark_theme = (
                     granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK
@@ -55,26 +55,21 @@ namespace Soundy {
 
             message(@"trying to connect to $speaker_host");
 
-            string host = speaker_host;
-            var connection = new Soundy.WebsocketConnection(host, "8080");
-
-            var client = new Soundy.API(connection, host);
-
-            var controller = new Controller(client);
-
             var model = new Model();
+
+            var api = new Soundy.API(speaker_host);
+            var controller = new Controller(model, api);
 
             var header_bar = new Soundy.HeaderBar(controller, model, settings);
             main_window.set_titlebar(header_bar);
 
-            var main_grid = new Gtk.Box(Orientation.VERTICAL, 5);
-            main_grid.pack_start(new MainPanel(controller, model, settings), false, true);
-            main_grid.pack_end(new SpeakerPanel(controller, model), true, true);
-
-            main_window.add(main_grid);
+            main_window.add(new GlobalGrid(controller, model, settings, main_window));
+            
             controller.init();
+
             main_window.show_all();
         }
+
 
         public static int main(string[] args) {
             var app = new SoundyApp();

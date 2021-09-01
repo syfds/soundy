@@ -23,7 +23,6 @@ namespace Soundy {
 
         private WebsocketConnection connection;
 
-        private string host;
         private HttpClient client;
 
         public signal void event_from_soundtouch_received(int type, string message);
@@ -33,19 +32,22 @@ namespace Soundy {
 
 
         public API.from_host(string host) {
-            this.host = host;
             this.client = new HttpClient(host, "8090");
         }
 
-        public API(WebsocketConnection connection, string host) {
-            this.connection = connection;
-            this.host = host;
+        public API(string host) {
+            this.connection = new Soundy.WebsocketConnection(host);
             this.client = new HttpClient(host, "8090");
+        }
+
+        public void set_host(string new_host) {
+            this.client = new HttpClient(new_host, "8090");
+            this.connection.set_host(new_host);
         }
 
         public void init_ws_connection() {
             this.connection.ws_message.connect((type, mes) => {
-                debug(@"received $mes");
+                message(@"received $mes");
                 this.event_from_soundtouch_received(type, mes);
             });
 
@@ -67,7 +69,7 @@ namespace Soundy {
                 this.connection_to_soundtouch_established();
             });
 
-            this.connection.init_ws();
+            this.connection.init_ws.begin();
         }
 
         public void power_on_clicked() {

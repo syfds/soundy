@@ -17,6 +17,7 @@
 public class Model : GLib.Object {
 
     public signal void model_changed(Model model);
+    public signal void header_model_changed(Model model);
     public signal void zone_changed();
 
     public bool connection_established {get;set;default=false;}
@@ -78,10 +79,27 @@ public class Model : GLib.Object {
         }
     }
 
+    public Model() {
+    }
+
     public void fire_changed() {
-        this.model_changed(this);
+        Idle.add(() => {
+            message("model fire changed");
+            this.model_changed(this);
+            return Source.REMOVE;
+        });
+    }
+    public void fire_header_model_changed() {
+        Idle.add(() => {
+            message("header model fire changed");
+            this.header_model_changed(this);
+            return Source.REMOVE;
+        });
     }
     public void fire_zone_changed() {
-        this.zone_changed();
+        Idle.add(() => {
+            this.zone_changed();
+            return Source.REMOVE;
+        });
     }
 }
