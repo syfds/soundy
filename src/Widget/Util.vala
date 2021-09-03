@@ -31,7 +31,6 @@ namespace Soundy {
 
             button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
             button.image = menu_icon;
-            button.can_focus = false;
             return button;
         }
 

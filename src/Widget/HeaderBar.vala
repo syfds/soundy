@@ -35,14 +35,15 @@ namespace Soundy {
             set_show_close_button(true);
             mytitle = new Gtk.Label(_("Cannot connect to your speaker") + " :-/");
 
-            power_on_off = create_button("system-shutdown-symbolic", 16);
+            power_on_off = Soundy.Util.create_button("system-shutdown-symbolic", 16);
             power_on_off.clicked.connect((event) => {
                 controller.power_on_clicked();
             });
 
             volume_button = new Gtk.VolumeButton();
+
             volume_button.use_symbolic = true;
-            volume_button.adjustment = new Gtk.Adjustment(0.0, 0.0, 100.0, 2.0, 2.0, 2.0);
+            volume_button.adjustment = new Gtk.Adjustment(1.0, 0.0, 100.0, 2.0, 2.0, 2.0);
             volume_button.value_changed.connect((value) => {
                 message("updates volume to " + value.to_string());
                 controller.update_volume((uint8)(value));
@@ -54,13 +55,13 @@ namespace Soundy {
             this.create_settings_items();
 
             var speaker_button = new Gtk.ToggleButton() {
-                image = new Gtk.Image.from_icon_name ("pane-show-symbolic", Gtk.IconSize.MENU),
+                image = new Gtk.Image.from_icon_name ("pane-hide-symbolic", Gtk.IconSize.MENU),
                 tooltip_text = _("Show extended functionality")
             };
 
             speaker_button.toggled.connect(()=>{
                 this.toggle_state = !this.toggle_state;
-                speaker_button.set_image(Soundy.Util.create_icon(this.toggle_state ? "pane-hide-symbolic" : "pane-show-symbolic", 16));
+                speaker_button.set_image(Soundy.Util.create_icon(this.toggle_state ? "pane-show-symbolic" : "pane-hide-symbolic", 16));
                 speaker_button.tooltip_text = _(this.toggle_state ? _("Hide") : _("List your SoundTouch speaker"));
 
                 controller.toggle_speaker_panel(this.toggle_state);
@@ -148,6 +149,7 @@ namespace Soundy {
                 update_title(model.soundtouch_speaker_name);
                 power_on_off.sensitive = true;
                 volume_button.sensitive = true;
+                volume_button.value = controller.get_volume();
                 favourites.sensitive = true;
             }
 
