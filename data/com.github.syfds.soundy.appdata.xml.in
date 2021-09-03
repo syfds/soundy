@@ -75,6 +75,11 @@
         <release version="0.1.4" date="2021-04-10"/>
     </releases>
 
+
+    <custom>
+        <value key="x-appcenter-stripe">pk_live_51IcFIiIqMChVQlNMbFVRZxeO6KFevglvTJOHnHtyFeRUTHCIF5rO1HaKYvx1O0OP5VMIxB6a5Mvi8Wxb8M7pT2nP00d0Pc0Sq2</value>
+    </custom>
+
     <content_rating type="oars-1.1">
         <content_attribute id="violence-cartoon">none</content_attribute>
         <content_attribute id="violence-fantasy">none</content_attribute>
