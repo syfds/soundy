@@ -49,6 +49,12 @@
         <value key="x-appcenter-suggested-price">0</value>
     </custom>
     <releases>
+        <release version="0.3.3" date="2021-09-03">
+            <description>
+                <p>Flatpak integration added</p>
+                <p>Small UI improvements</p>
+            </description>
+        </release>
         <release version="0.3.2" date="2021-05-27">
             <description>
                 <p>Multi room pairing feature added</p>

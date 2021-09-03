@@ -1,3 +1,8 @@
+com.github.syfds.soundy (0.3.3) UNRELEASED; urgency=low
+
+  * Flatpak integration added
+  * Small UI improvements
+
 com.github.syfds.soundy (0.3.2) UNRELEASED; urgency=low
 
   * Multi room pairing feature added
