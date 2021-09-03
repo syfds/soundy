@@ -24,15 +24,6 @@ app connects to the speaker over SoundTouch API (https://developer.bose.com/guid
 <p align="center">
   <img src="https://raw.githubusercontent.com/syfds/soundy/master/data/screenshot/screenshot-3.png">
 </p>
-<p align="center">
-  <img src="https://raw.githubusercontent.com/syfds/soundy/master/data/screenshot/screenshot-4.png">
-</p>
-<p align="center">
-  <img src="https://raw.githubusercontent.com/syfds/soundy/master/data/screenshot/screenshot-5.png">
-</p>
-<p align="center">
-  <img src="https://raw.githubusercontent.com/syfds/soundy/master/data/screenshot/screenshot-6.png">
-</p>
 
 ## Building and Installation
 
