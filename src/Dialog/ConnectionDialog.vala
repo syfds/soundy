@@ -19,15 +19,12 @@ public class ConnectionDialog : Gtk.Dialog {
     private Soundy.Settings settings;
 
     private Gtk.Label connection_state_label;
-    private Gtk.Box connection_state_container;
-    private Gtk.Image connection_state_icon;
     private Gtk.Entry host_input;
     private Gtk.Image status_icon;
     private Gtk.Spinner loading_spinner;
     private Gtk.Button help_button;
     private Gtk.Button ok_button;
     private Gtk.Grid main_panel = new Gtk.Grid();
-    private AvahiBrowser browser;
 
     public ConnectionDialog(Soundy.Settings settings) {
         Object(
@@ -36,6 +33,8 @@ public class ConnectionDialog : Gtk.Dialog {
                 deletable: true,
                 window_position: Gtk.WindowPosition.CENTER_ON_PARENT
         );
+
+        title = _("Network address");
 
         this.set_destroy_with_parent(true);
         this.set_modal(true);
