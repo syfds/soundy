@@ -3,6 +3,7 @@ public class GlobalGrid : Gtk.Grid{
     private Gtk.Grid container;
 
     private MainPanel main_panel;
+    private SpeakerPanel speaker_panel;
     private Gtk.ApplicationWindow main_window;
 
     public GlobalGrid(Controller controller, Model model, Soundy.Settings settings, Gtk.ApplicationWindow main_window){
@@ -20,6 +21,7 @@ public class GlobalGrid : Gtk.Grid{
         
 
         main_panel = new MainPanel(controller, model, settings);
+        speaker_panel = new SpeakerPanel(controller, model);
         this.main_window = main_window;
 
         container.attach(main_panel, 0, 0, 1, 1);
@@ -33,7 +35,7 @@ public class GlobalGrid : Gtk.Grid{
             container.attach(main_panel, 0, 0, 1, 1);
             
             if(show) {
-                container.attach(new SpeakerPanel(controller, model), 0, 1, 2, 1);
+                container.attach(speaker_panel, 0, 1, 2, 1);
             }
 
             this.container.show_all();

@@ -91,23 +91,8 @@ namespace Soundy {
             mytitle.set_text(soundtouch_speaker_name);
         }
 
-        private Gtk.Button create_button(string icon, int size) {
-            var button = new Gtk.Button();
-
-            var menu_icon = new Gtk.Image();
-            menu_icon.gicon = new ThemedIcon(icon);
-            menu_icon.pixel_size = size;
-
-            button.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
-            button.image = menu_icon;
-            button.can_focus = false;
-            return button;
-        }
-
         public void create_preset_items(Controller controller) {
 
-            bool is_not_yet_initialized = favourites.popover == null;
-            if (is_not_yet_initialized) {
                 var menu_grid = new Gtk.Grid();
                 menu_grid.margin_top = 6;
                 menu_grid.margin_bottom = 6;
@@ -133,7 +118,6 @@ namespace Soundy {
                 var popover = new Gtk.Popover(null);
                 popover.add(menu_grid);
                 favourites.popover = popover;
-            }
         }
 
         public void update_gui(Controller controller, Model model) {
