@@ -1,0 +1,6 @@
+theme: jekyll-theme-tactile
+show_downloads: true
+github.is_project_page: true
+github.public: true
+github.repository_url: https://github.com/syfds/soundy
+github.zip_url: https://github.com/syfds/soundy/releases/download
