@@ -1,6 +1,5 @@
 theme: jekyll-theme-tactile
 title: Soundy
-show_downloads: true
 github.is_project_page: true
 github.public: true
 github.repository_url: https://github.com/syfds/soundy

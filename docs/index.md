@@ -6,6 +6,8 @@ Get Soundy for elementary OS
 
 [![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.syfds.soundy)
 
+or as .deb file from [latest releases on Github](https://github.com/syfds/soundy/releases)
+
 ## Features
 
 * Power ON/OFF
@@ -14,7 +16,7 @@ Get Soundy for elementary OS
 * Increasing/decreasing volume
 * Displaying and playing the favourites
 * Auto-Discovery of SoundTouch speaker on local network
-* Multi-room zone(s)
+* Multi-room zone(s) (working only in non-flatpak version!)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/syfds/soundy/master/data/screenshot/screenshot-1.png">
