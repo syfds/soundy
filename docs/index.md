@@ -6,7 +6,7 @@ Get Soundy for elementary OS
 
 [![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.syfds.soundy)
 
-or as .deb file from [latest releases on Github](https://github.com/syfds/soundy/releases)
+or as .deb file from [latest releases on GitHub](https://github.com/syfds/soundy/releases)
 
 ## Features
 
