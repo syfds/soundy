@@ -1,3 +1,5 @@
+## elementary OS
+Get Soundy for elementary OS 
 
 [![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.syfds.soundy)
 
