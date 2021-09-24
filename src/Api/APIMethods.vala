@@ -43,6 +43,10 @@ public class APIMethods : GLib.Object {
         return new GetNowPlaying();
     }
 
+    public static Soundy.APIMethod get_recents() {
+        return new GetRecents();
+    }
+
     public static Soundy.APIMethod get_volume() {
         return new GetMethod("/volume");
     }
@@ -62,6 +66,9 @@ public class APIMethods : GLib.Object {
     }
     public static Soundy.APIMethod remove_zone_slave(string master_device_id_mac_address, Gee.ArrayList<ZoneMember> zone_member_list) {
         return new RemoveZone(master_device_id_mac_address, zone_member_list);
+    }
+    public static Soundy.APIMethod select_source(string source, string source_account, string item_type, string location, string item_name) {
+        return new SelectSource(source, source_account, item_type, location, item_name);
     }
 
     public static Soundy.APIMethod play_preset(string item_id, KeyState state) {
@@ -137,6 +144,32 @@ internal class SetZone : Soundy.APIMethod, GLib.Object {
         return start_tag + members + end_tag;
     }
 }
+internal class SelectSource : Soundy.APIMethod, GLib.Object {
+    public string source {set construct; get;}
+    public string source_account {set construct; get;}
+    public string item_type {set construct; get;}
+    public string location {set construct; get;}
+    public string item_name {set construct; get;}
+
+    public SelectSource(string source, string source_account, string item_type, string location, string item_name) {
+        this.source = source;
+        this.source_account = source_account;
+        this.item_type = item_type;
+        this.location = location;
+        this.item_name = item_name;
+    }
+
+    public string get_path() {return "/select";}
+    public string get_method() {return "POST";}
+    public string get_body() {
+        string body = @"<ContentItem source=\"$source\" type=\"$item_type\" sourceAccount=\"$source_account\"  location=\"$location\">";
+        if(item_name != ""){
+            body += @"<itemName>$item_name</itemName>";
+        }
+        body += "</ContentItem>";
+        return body;
+    }
+}
 
 internal class RemoveZone : Soundy.APIMethod, GLib.Object {
     public string get_path() {return "/removeZoneSlave";}
@@ -196,6 +229,12 @@ internal class GetZone : GetMethod {
 internal class GetNowPlaying : GetMethod {
     public GetNowPlaying() {
         base("/now_playing");
+    }
+}
+
+internal class GetRecents : GetMethod {
+    public GetRecents() {
+        base("/recents");
     }
 }
 

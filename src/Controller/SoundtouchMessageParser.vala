@@ -218,8 +218,12 @@ public class NowSelectionChangeMessage : SoundtouchMessage {
 
 public class NowPlayingChangeMessage : SoundtouchMessage {
     public PlayState play_state {get;set;}
+    public StreamingSource source {get;set;}
+    public ConnectionStatus connection_status {get;set;}
     public bool standby {get;set; default=false;}
+    public bool image_present {get;set; default=true;}
     public bool is_radio_streaming {get;set; default=false;}
+    public string station_name {get;set; default="";}
     public string track {get;set; default="";}
     public string artist {get;set; default="";}
     public string image_url {get;set; default="";}
@@ -242,6 +246,10 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
             this.standby = true;
         } else {
             this.read_play_state(ctx);
+            this.read_connection_status(ctx);
+            this.read_source(ctx);
+            this.read_image_present(ctx);
+            this.read_station_name(ctx);
             this.read_track(ctx);
             this.read_artist(ctx);
             this.read_image_url(ctx);
@@ -261,6 +269,32 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
             play_state = PlayState.PLAY_STATE;
         }
 
+    }
+    private void read_connection_status(Xml.XPath.Context ctx) {
+        string value = get_value(ctx, @"$base_xpath/nowPlaying/connectionStatusInfo/@status");
+
+        if (value == "CONNECTING") {
+            connection_status =  ConnectionStatus.CONNECTING;
+        } else {
+            connection_status =  ConnectionStatus.CONNECTED;
+        }
+
+    }
+    private void read_source(Xml.XPath.Context ctx) {
+        string value = get_value(ctx, @"$base_xpath/nowPlaying/ContentItem/@source");
+
+        if (value == "TUNEIN") {
+            source = StreamingSource.TUNEIN;
+        } else {
+            source = StreamingSource.BLUETOOTH;
+        }
+    }
+    private void read_image_present(Xml.XPath.Context ctx) {
+        string value = get_value(ctx, @"$base_xpath/nowPlaying/art/@artImageStatus");
+        image_present = value != "SHOW_DEFAULT_IMAGE";
+    }
+    private void read_station_name(Xml.XPath.Context ctx) {
+        station_name = get_value(ctx, @"$base_xpath/nowPlaying/stationName");
     }
 
     public void read_track(Xml.XPath.Context ctx) {
@@ -294,9 +328,54 @@ public enum PlayState {
     BUFFERING_STATE,
     PLAY_STATE
 }
+public enum StreamingSource {
+    TUNEIN,
+    BLUETOOTH
+}
+
+public enum ConnectionStatus {
+    CONNECTING,
+    CONNECTED
+}
 
 public enum NotificationType {
     NOW_PLAYING_CHANGE
+}
+
+public class RecentsMessage : SoundtouchMessage {
+
+    private Gee.ArrayList<RecentItem> recents = new Gee.ArrayList<RecentItem>();
+
+    public RecentsMessage(string xml) {
+        base();
+        var ctx = context(xml);
+        Xml.XPath.Object* result = ctx.eval_expression("count(//recent)");
+        double count_recent = result->floatval;
+
+        for (var i=0; i < (int) count_recent; i++) {
+            var recent_id = i + 1;
+            var recent = new RecentItem();
+            recent.source = get_value(ctx, @"/recents/recent[$recent_id]/contentItem/@source");
+            recent.source_account = get_value(ctx, @"/recents/recent[$recent_id]/contentItem/@sourceAccount");
+            recent.item_type = get_value(ctx, @"/recents/recent[$recent_id]/contentItem/@type");
+            recent.location = get_value(ctx, @"/recents/recent[$recent_id]/contentItem/@location");
+            recent.item_name = get_value(ctx, @"/recents/recent[$recent_id]/contentItem/itemName");
+
+            recents.add(recent);
+        }
+    }
+
+    public Gee.ArrayList<RecentItem> get_recents() {
+        return this.recents;
+    }
+}
+
+public class RecentItem : GLib.Object {
+    public string source {get;set;}
+    public string source_account {get;set;}
+    public string item_type {get;set;}
+    public string location {get;set;}
+    public string item_name {get;set;}
 }
 
 public class PresetsMessage : SoundtouchMessage {
@@ -333,3 +412,4 @@ public class Preset : GLib.Object {
     public string item_name {get;set;}
     public string item_image_url {get;set;}
 }
+

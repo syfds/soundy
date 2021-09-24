@@ -20,6 +20,7 @@ public class MainPanel : Gtk.Grid {
     private Soundy.Settings settings;
     private Controller controller;
 
+    private SourcePanel source_panel;
     private WelcomePanel welcome_panel;
     private HelpPanel help_panel;
 
@@ -90,6 +91,8 @@ public class MainPanel : Gtk.Grid {
         currently_playing_panel.attach(second_label, 0, 1);
         currently_playing_panel.show_all();
 
+        source_panel = new SourcePanel(this.controller);
+
         buttons_panel = new Gtk.Grid();
         buttons_panel.set_orientation(Gtk.Orientation.HORIZONTAL);
         buttons_panel.set_halign(Gtk.Align.CENTER);
@@ -110,10 +113,12 @@ public class MainPanel : Gtk.Grid {
         message("playing: '" + model.is_playing.to_string() + "'");
         message("radio streaming: '" + model.is_radio_streaming.to_string() + "'");
         message("track: '" + model.track + "'");
+        message("station name: '" + model.station_name + "'");
         message("artist: '" + model.artist + "'");
         message("image_url: '" + model.image_url + "'");
 
         this.remove(currently_playing_panel);
+        this.remove(source_panel);
         this.remove(title_panel);
         this.remove(buttons_panel);
         this.remove(welcome_panel);
@@ -127,17 +132,18 @@ public class MainPanel : Gtk.Grid {
         } else {
             this.attach(title_panel, 0, 0);
             this.attach(currently_playing_panel, 0, 1);
-            this.attach(buttons_panel, 0, 2);
+            this.attach(source_panel, 0, 2);
+            this.attach(buttons_panel, 0, 3);
 
-            if (model.image_url != "") {
-                this.show_container_art(model.image_url, model.is_buffering_in_progress);
-            }
-
+            this.show_container_art(model.image_present, model.image_url, model.is_buffering_in_progress);
             this.prepare_button_panel(model.is_playing, model.is_radio_streaming);
 
             if (model.track != "") {
                 this.main_label.set_text(Soundy.Util.cut_label_if_necessary(model.track, 35));
                 this.main_label.set_tooltip_text(model.track);
+            }else if (model.station_name != "") {
+                this.main_label.set_text(Soundy.Util.cut_label_if_necessary(model.station_name, 35));
+                this.main_label.set_tooltip_text(model.station_name);
             }
 
             if (model.artist != "") {
@@ -149,20 +155,26 @@ public class MainPanel : Gtk.Grid {
         this.show_all();
     }
 
-    private void show_container_art(string image_url, bool is_buffering_in_progress) {
-        if (image_container != null) {
-            currently_playing_panel.remove(image_container);
+    private void show_container_art(bool image_present, string image_url, bool is_buffering_in_progress) {
+
+        foreach(Gtk.Widget child in currently_playing_panel.get_children()){
+            if(child != main_label && child != second_label){
+                currently_playing_panel.remove(child);
+            }
         }
 
-        image_container = new LoadableImagePanel(image_url, 250, 250);
-
+        if(image_present && image_url != ""){
+            image_container = new LoadableImagePanel.from_url(image_url, 250, 250);
+        } else {
+            image_container = new LoadableImagePanel.from_image(Soundy.Util.create_icon("multimedia-player", 250), 250, 250);
+        }
+        
+        currently_playing_panel.attach(image_container, 0, 2);
         if (is_buffering_in_progress) {
             image_container.start_loading_spinner();
         } else {
             image_container.stop_loading_spinner();
         }
-
-        currently_playing_panel.attach(image_container, 0, 2);
     }
 
     private void prepare_button_panel(bool is_playing, bool is_radio_streaming) {

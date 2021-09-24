@@ -21,6 +21,7 @@ src_files = files([
 'Widget/SpeakerPanel.vala',
 'Widget/GlobalGrid.vala',
 'Widget/MainPanel.vala',
+'Widget/SourcePanel.vala',
 'Widget/HeaderBar.vala',
 'Widget/SettingsMenuItem.vala',
 'Widget/FavouriteMenuItem.vala',

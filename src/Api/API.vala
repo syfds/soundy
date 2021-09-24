@@ -115,6 +115,10 @@ namespace Soundy {
             return this.client.invoke(APIMethods.get_now_playing());
         }
 
+        public string get_recents() {
+            return this.client.invoke(APIMethods.get_recents());
+        }
+
         public string get_presets() {
             return this.client.invoke(new GetMethod("/presets"));
         }
@@ -132,6 +136,10 @@ namespace Soundy {
 
         public string add_to_zone(string device_id, Gee.ArrayList<ZoneMember> zone_member) {
             return this.client.invoke(APIMethods.add_to_zone(device_id, zone_member));
+        }
+
+        public void select_source(string source, string source_account, string item_type, string location, string item_name){
+            this.client.invoke(APIMethods.select_source(source, source_account, item_type, location, item_name));
         }
     }
 }

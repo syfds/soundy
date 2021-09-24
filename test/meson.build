@@ -3,6 +3,8 @@ unit_test_files = [
  'PresetsParser',
  'GetInfoParser',
  'GetZoneParser',
+ 'NowPlayingParser',
+ 'RecentsParser',
  'Util',
 ]
 

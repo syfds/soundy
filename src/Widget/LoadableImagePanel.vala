@@ -23,12 +23,20 @@ public class LoadableImagePanel : Gtk.Grid {
 
     private Gdk.Pixbuf image_pixbuf;
 
-    public LoadableImagePanel(string image_url, int width, int height) {
+    public LoadableImagePanel.from_url(string image_url, int width, int height) {
         this.width = width;
         this.height = height;
 
         this.init_gui();
         this.create_image_from_url(image_url, width, height);
+    }
+
+    public LoadableImagePanel.from_image(Gtk.Image image, int width, int height) {
+        this.width = width;
+        this.height = height;
+
+        this.init_gui();
+        this.image_pixbuf = Gtk.IconTheme.get_default().load_icon("multimedia-player", 250, Gtk.IconLookupFlags.NO_SVG);
     }
 
     private void init_gui() {

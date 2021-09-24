@@ -61,11 +61,14 @@ public class Controller : GLib.Object {
         } else {
             this.model.is_standby = false;
             this.model.is_playing = m.play_state == PlayState.PLAY_STATE;
-            this.model.is_buffering_in_progress = m.play_state == PlayState.BUFFERING_STATE;
+            this.model.is_buffering_in_progress = m.play_state == PlayState.BUFFERING_STATE || m.connection_status == ConnectionStatus.CONNECTING;
             this.model.track = m.track;
             this.model.artist = m.artist;
             this.model.image_url = m.image_url;
             this.model.is_radio_streaming = m.is_radio_streaming;
+            this.model.source = m.source;
+            this.model.station_name = m.station_name;
+            this.model.image_present = m.image_present;
         }
     }
 
@@ -80,6 +83,11 @@ public class Controller : GLib.Object {
     public PresetsMessage get_presets() {
         string xml = this.client.get_presets();
         return new PresetsMessage(xml);
+    }
+
+    public RecentsMessage get_recents() {
+        string xml = this.client.get_recents();
+        return new RecentsMessage(xml);
     }
 
     public void play_preset(string item_id) {
@@ -103,11 +111,14 @@ public class Controller : GLib.Object {
 
                 this.model.is_standby = nowPlaying.standby;
                 this.model.is_playing = nowPlaying.play_state == PlayState.PLAY_STATE;
-                this.model.is_buffering_in_progress = nowPlaying.play_state == PlayState.BUFFERING_STATE;
+                this.model.is_buffering_in_progress = nowPlaying.play_state == PlayState.BUFFERING_STATE || nowPlaying.connection_status == ConnectionStatus.CONNECTING;
                 this.model.track = nowPlaying.track;
                 this.model.artist = nowPlaying.artist;
                 this.model.image_url = nowPlaying.image_url;
                 this.model.is_radio_streaming = nowPlaying.is_radio_streaming;
+                this.model.source = nowPlaying.source;
+                this.model.station_name = nowPlaying.station_name;
+                this.model.image_present = nowPlaying.image_present;
                 this.model.fire_changed();
             } else if (m is VolumeUpdatedMessage) {
                 this.model.is_standby = false;
@@ -167,5 +178,8 @@ public class Controller : GLib.Object {
 
     public void add_to_zone(string device_id, Gee.ArrayList<ZoneMember> zone_member) {
         this.client.add_to_zone(device_id, zone_member);
+    }
+    public void select_source(string source, string source_account, string item_type, string location, string item_name) {
+        this.client.select_source(source, source_account, item_type, location, item_name);
     }
 }
