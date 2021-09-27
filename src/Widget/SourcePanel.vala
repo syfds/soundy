@@ -16,7 +16,6 @@
 
 public class SourcePanel : Gtk.Box{
 
-
     private Controller controller;
 
     private Gtk.Button source_speaker;
@@ -31,10 +30,15 @@ public class SourcePanel : Gtk.Box{
         this.controller = controller;
         
         source_speaker = Soundy.Util.create_button ("audio-subwoofer", 24);
+        source_speaker.tooltip_text = _("Select TUNEIN");
         source_speaker.clicked.connect (speaker_clicked);
+        
         source_bluetooth = Soundy.Util.create_button ("bluetooth-symbolic", 24);
+        source_bluetooth.tooltip_text = _("Select Bluetooth");
         source_bluetooth.clicked.connect (bluetooth_clicked);
+
         source_aux = new Gtk.Button.with_label ("AUX");
+        source_aux.tooltip_text = _("Select AUX");
         source_aux.clicked.connect (aux_clicked);
         source_aux.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT);
         
@@ -55,5 +59,4 @@ public class SourcePanel : Gtk.Box{
     private void aux_clicked(){
         this.controller.select_source("AUX", "AUX", "", "", "");
     }
-
 }

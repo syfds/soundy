@@ -36,7 +36,7 @@ public class LoadableImagePanel : Gtk.Grid {
         this.height = height;
 
         this.init_gui();
-        this.image_pixbuf = Gtk.IconTheme.get_default().load_icon("multimedia-player", 250, Gtk.IconLookupFlags.NO_SVG);
+        this.image_pixbuf = Gtk.IconTheme.get_default().load_icon("multimedia-player", 250, Gtk.IconLookupFlags.FORCE_SIZE);
     }
 
     private void init_gui() {

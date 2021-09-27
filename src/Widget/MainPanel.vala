@@ -52,6 +52,7 @@ public class MainPanel : Gtk.Grid {
         this.set_valign(Gtk.Align.START);
 
         margin_top = 15;
+        row_spacing = 10;
 
         this.prev_btn = Soundy.Util.create_button("media-skip-backward-symbolic", 32);
         this.prev_btn.clicked.connect((event) => {
@@ -78,18 +79,17 @@ public class MainPanel : Gtk.Grid {
         title_panel.set_orientation(Orientation.HORIZONTAL);
         title_panel.set_halign(Align.CENTER);
 
+        main_label = Soundy.Util.create_label_with_max_len("", 20, Granite.STYLE_CLASS_H1_LABEL);
+        second_label = Soundy.Util.create_label_with_max_len("", 20, Granite.STYLE_CLASS_H2_LABEL);
+
+        title_panel.attach(main_label, 0, 0);
+        title_panel.attach(second_label, 0, 1);
         title_panel.show_all();
 
         currently_playing_panel = new Gtk.Grid();
         currently_playing_panel.set_orientation(Orientation.HORIZONTAL);
         currently_playing_panel.set_halign(Align.CENTER);
 
-        main_label = Soundy.Util.create_label_with_max_len("", 20, Granite.STYLE_CLASS_H1_LABEL);
-        second_label = Soundy.Util.create_label_with_max_len("", 20, Granite.STYLE_CLASS_H2_LABEL);
-
-        currently_playing_panel.attach(main_label, 0, 0);
-        currently_playing_panel.attach(second_label, 0, 1);
-        currently_playing_panel.show_all();
 
         source_panel = new SourcePanel(this.controller);
 
@@ -117,9 +117,9 @@ public class MainPanel : Gtk.Grid {
         message("artist: '" + model.artist + "'");
         message("image_url: '" + model.image_url + "'");
 
+        this.remove(title_panel);
         this.remove(currently_playing_panel);
         this.remove(source_panel);
-        this.remove(title_panel);
         this.remove(buttons_panel);
         this.remove(welcome_panel);
         this.remove(help_panel);
@@ -131,8 +131,8 @@ public class MainPanel : Gtk.Grid {
             this.attach(welcome_panel, 0, 0, 1, 2);
         } else {
             this.attach(title_panel, 0, 0);
-            this.attach(currently_playing_panel, 0, 1);
-            this.attach(source_panel, 0, 2);
+            this.attach(source_panel, 0, 1);
+            this.attach(currently_playing_panel, 0, 2);
             this.attach(buttons_panel, 0, 3);
 
             this.show_container_art(model.image_present, model.image_url, model.is_buffering_in_progress);
@@ -158,9 +158,7 @@ public class MainPanel : Gtk.Grid {
     private void show_container_art(bool image_present, string image_url, bool is_buffering_in_progress) {
 
         foreach(Gtk.Widget child in currently_playing_panel.get_children()){
-            if(child != main_label && child != second_label){
-                currently_playing_panel.remove(child);
-            }
+            currently_playing_panel.remove(child);
         }
 
         if(image_present && image_url != ""){

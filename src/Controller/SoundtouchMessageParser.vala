@@ -283,10 +283,12 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
     private void read_source(Xml.XPath.Context ctx) {
         string value = get_value(ctx, @"$base_xpath/nowPlaying/ContentItem/@source");
 
-        if (value == "TUNEIN") {
-            source = StreamingSource.TUNEIN;
-        } else {
+        if(value == "BLUETOOTH") {
             source = StreamingSource.BLUETOOTH;
+        }else if(value == "AUX"){
+            source = StreamingSource.AUX;
+        }else{
+            source = StreamingSource.TUNEIN;
         }
     }
     private void read_image_present(Xml.XPath.Context ctx) {
@@ -330,7 +332,8 @@ public enum PlayState {
 }
 public enum StreamingSource {
     TUNEIN,
-    BLUETOOTH
+    BLUETOOTH, 
+    AUX
 }
 
 public enum ConnectionStatus {

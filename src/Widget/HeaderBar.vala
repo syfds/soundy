@@ -44,6 +44,7 @@ namespace Soundy {
 
             volume_button.use_symbolic = true;
             volume_button.adjustment = new Gtk.Adjustment(1.0, 0.0, 100.0, 2.0, 2.0, 2.0);
+            volume_button.value = controller.get_volume();
             volume_button.value_changed.connect((value) => {
                 message("updates volume to " + value.to_string());
                 controller.update_volume((uint8)(value));
@@ -133,7 +134,6 @@ namespace Soundy {
                 update_title(model.soundtouch_speaker_name);
                 power_on_off.sensitive = true;
                 volume_button.sensitive = true;
-                volume_button.value = controller.get_volume();
                 favourites.sensitive = true;
             }
 
