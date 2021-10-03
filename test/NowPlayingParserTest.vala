@@ -37,6 +37,7 @@ public void test_now_playing_message_bluetooth_source() {
     assert(m.image_present == false);
     assert(m.image_url == "");
     assert(m.station_name == "Precision-5530-44d6a2b6");
+    assert(m.item_name == "Precision-5530-44d6a2b6");
     assert(m.artist == "");
     assert(m.source == StreamingSource.BLUETOOTH);
     assert(m.standby == false);

@@ -114,6 +114,7 @@ public class MainPanel : Gtk.Grid {
         message("radio streaming: '" + model.is_radio_streaming.to_string() + "'");
         message("track: '" + model.track + "'");
         message("station name: '" + model.station_name + "'");
+        message("item name: '" + model.item_name + "'");
         message("artist: '" + model.artist + "'");
         message("image_url: '" + model.image_url + "'");
 
@@ -146,10 +147,15 @@ public class MainPanel : Gtk.Grid {
                 this.main_label.set_tooltip_text(model.station_name);
             }
 
+            var second_label = "";
             if (model.artist != "") {
-                this.second_label.set_text(Soundy.Util.cut_label_if_necessary(model.artist, 45));
-                this.second_label.set_tooltip_text(model.artist);
+                second_label = model.artist;
+            } else if (model.item_name != ""){
+                second_label = model.item_name;
             }
+
+            this.second_label.set_text(Soundy.Util.cut_label_if_necessary(second_label, 45));
+            this.second_label.set_tooltip_text(second_label);
         }
 
         this.show_all();

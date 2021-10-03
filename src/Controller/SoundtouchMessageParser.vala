@@ -224,6 +224,7 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
     public bool image_present {get;set; default=true;}
     public bool is_radio_streaming {get;set; default=false;}
     public string station_name {get;set; default="";}
+    public string item_name {get;set; default="";}
     public string track {get;set; default="";}
     public string artist {get;set; default="";}
     public string image_url {get;set; default="";}
@@ -250,6 +251,7 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
             this.read_source(ctx);
             this.read_image_present(ctx);
             this.read_station_name(ctx);
+            this.read_item_name(ctx);
             this.read_track(ctx);
             this.read_artist(ctx);
             this.read_image_url(ctx);
@@ -301,6 +303,10 @@ public class NowPlayingChangeMessage : SoundtouchMessage {
 
     public void read_track(Xml.XPath.Context ctx) {
         track = get_value(ctx, @"$base_xpath/nowPlaying/track");
+    }
+
+    public void read_item_name(Xml.XPath.Context ctx) {
+        item_name = get_value(ctx, @"$base_xpath/nowPlaying/ContentItem/itemName");
     }
 
     public void read_artist(Xml.XPath.Context ctx) {
@@ -376,7 +382,7 @@ public class RecentsMessage : SoundtouchMessage {
 public class RecentItem : GLib.Object {
     public string source {get;set;}
     public string source_account {get;set;}
-    public string item_type {get;set;}
+    public string item_type {get;set;default="";}
     public string location {get;set;}
     public string item_name {get;set;}
 }

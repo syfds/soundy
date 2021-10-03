@@ -68,6 +68,7 @@ public class Controller : GLib.Object {
             this.model.is_radio_streaming = m.is_radio_streaming;
             this.model.source = m.source;
             this.model.station_name = m.station_name;
+            this.model.item_name = m.item_name;
             this.model.image_present = m.image_present;
         }
     }
@@ -118,6 +119,7 @@ public class Controller : GLib.Object {
                 this.model.is_radio_streaming = nowPlaying.is_radio_streaming;
                 this.model.source = nowPlaying.source;
                 this.model.station_name = nowPlaying.station_name;
+                this.model.item_name = nowPlaying.item_name;
                 this.model.image_present = nowPlaying.image_present;
                 this.model.fire_changed();
             } else if (m is VolumeUpdatedMessage) {

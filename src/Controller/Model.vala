@@ -33,6 +33,7 @@ public class Model : GLib.Object {
     public bool is_standby {get;set;default=false;}
     public bool image_present {get;set;default=true;}
     public string station_name{get;set;}
+    public string item_name{get;set;}
     public StreamingSource source{get;set;}
 
     bool _is_playing = false;

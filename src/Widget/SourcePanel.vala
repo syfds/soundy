@@ -49,7 +49,12 @@ public class SourcePanel : Gtk.Box{
 
     private void speaker_clicked(){
         RecentItem last_heard_source = this.controller.get_recents().get_recents().get(0);
-        this.controller.select_source(last_heard_source.source, last_heard_source.source_account, last_heard_source.item_type, last_heard_source.location, last_heard_source.item_name);
+        var type = last_heard_source.item_type;
+        if(type == null){
+            type = "";
+        }
+        
+        this.controller.select_source(last_heard_source.source, last_heard_source.source_account, type, last_heard_source.location, last_heard_source.item_name);
     }
 
     private void bluetooth_clicked(){
