@@ -1,6 +1,6 @@
 theme: jekyll-theme-minimal
 title: Soundy
-logo: https://github.com/syfds/soundy/blob/master/data/icons/128/com.github.syfds.soundy.svg
+logo: https://raw.githubusercontent.com/syfds/soundy/master/data/logo.png
 github.is_project_page: true
 github.public: true
 github.repository_url: https://github.com/syfds/soundy
