@@ -3,6 +3,6 @@ title: Soundy
 logo: https://raw.githubusercontent.com/syfds/soundy/master/data/logo.png
 github.is_project_page: true
 github.public: true
-show_downloads: true
+show_downloads: false
 github.repository_url: https://github.com/syfds/soundy
 github.zip_url: https://github.com/syfds/soundy/releases/download
