@@ -1,6 +1,6 @@
 theme: jekyll-theme-minimal
 title: Soundy
-description: Bose SoundTouch desktop client for linux based operating systems
+description: Bose SoundTouch desktop client for Linux
 logo: https://raw.githubusercontent.com/syfds/soundy/master/data/logo.png
 github.is_project_page: true
 github.public: true
