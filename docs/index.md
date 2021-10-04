@@ -1,4 +1,4 @@
-Soundy is a simple GTK client written in Vala to control a SoundTouch network speaker. It is a free and simple alternative to the official client. The
+Soundy is a simple desktop client written in Vala to control your SoundTouch speaker. It is a free and simple alternative to the official client for linux based operating systems. The
 app connects to the speaker over [SoundTouch API](https://developer.bose.com/guides/bose-soundtouch-api/bose-soundtouch-api-reference).
 
 ## Features
