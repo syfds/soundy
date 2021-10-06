@@ -4,7 +4,7 @@ app connects to the speaker over [SoundTouch API](https://developer.bose.com/gui
 ## How to install
 
 You can 
-* install on elementary OS from AppCenter [![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.syfds.soundy)
+* install on elementary OS from [AppCenter](https://appcenter.elementary.io/com.github.syfds.soundy)
 * or grab a .deb file from [latest release on GitHub](https://github.com/syfds/soundy/releases)
 * or compile by your own like described on [GitHub](https://github.com/syfds/soundy#building)
 
