@@ -17,6 +17,7 @@ You can
 * Increasing/decreasing volume
 * Displaying and playing the favourites
 * Auto-Discovery of SoundTouch speaker on local network
+* Source selection for Bluetooth and AUX
 * Multi-room zone(s) (working only in non-flatpak version!)
 
 <p align="center">
