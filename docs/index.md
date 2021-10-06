@@ -1,6 +1,14 @@
 Soundy is a simple desktop client written in Vala to control your SoundTouch speaker. It is a free and simple alternative to the official client for linux based operating systems. The
 app connects to the speaker over [SoundTouch API](https://developer.bose.com/guides/bose-soundtouch-api/bose-soundtouch-api-reference).
 
+## How to install
+
+You can 
+* install on elementary OS from AppCenter [![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.syfds.soundy)
+* or grab a .deb file from [latest release on GitHub](https://github.com/syfds/soundy/releases)
+* or compile by your own like described on [GitHub](https://github.com/syfds/soundy#building)
+
+
 ## Features
 
 * Power ON/OFF
@@ -20,11 +28,3 @@ app connects to the speaker over [SoundTouch API](https://developer.bose.com/gui
 <p align="center">
   <img src="https://raw.githubusercontent.com/syfds/soundy/master/data/screenshot/screenshot-3.png">
 </p>
-
-
-## elementary OS
-Get Soundy for elementary OS 
-
-[![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.syfds.soundy)
-
-or as .deb file from [latest releases on GitHub](https://github.com/syfds/soundy/releases)
