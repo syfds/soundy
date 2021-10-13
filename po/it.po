@@ -1,0 +1,169 @@
+# German translations for com.github.syfds.soundy package.
+# Copyright (C) 2021 THE com.github.syfds.soundy'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.syfds.soundy package.
+# Automatically generated, 2021.
+# Saverio <saverio.morelli@outlook.it>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.syfds.soundy\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-12 21:01+0200\n"
+"PO-Revision-Date: 2021-10-13 09:08+0200\n"
+"Last-Translator: Saverio <saverio.morelli@outlook.it>\n"
+"Language-Team: Italian <->\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Generator: Gtranslator 41.0\n"
+
+#: src/Widget/SpeakerPanel.vala:34
+msgid "Hide"
+msgstr "Nascondi"
+
+#: src/Widget/SpeakerPanel.vala:34
+msgid "List your SoundTouch speaker"
+msgstr "Elenca il tuo speaked SoundTouch"
+
+#: src/Widget/SpeakerPanel.vala:45
+msgid "Cannot find any SoundTouch speaker."
+msgstr "Non è possibile trovare alcuno speaker SoundTouch."
+
+#: src/Widget/SpeakerPanel.vala:150
+msgid "Host "
+msgstr "Host"
+
+#: src/Widget/SpeakerPanel.vala:153
+msgid "Connect"
+msgstr "Connetti"
+
+#: src/Widget/HeaderBar.vala:35
+msgid "Cannot connect to your speaker"
+msgstr "Non è possibile connettersi al tuo speaker"
+
+#: src/Widget/HeaderBar.vala:162
+msgid "About"
+msgstr "Info"
+
+#: src/Widget/HeaderBar.vala:169 src/Dialog/ConnectionDialog.vala:109
+msgid "Network address"
+msgstr "Indiritto di rete"
+
+#: src/Widget/WelcomePanel.vala:31
+msgid "Welcome to Soundy!"
+msgstr "Benvenuto in Soundy!"
+
+#: src/Widget/WelcomePanel.vala:34
+msgid "Enjoy your SoundTouch speaker"
+msgstr "Divertiti con il tuo speaker SoundTouch"
+
+#: src/Widget/HelpPanel.vala:13 src/Dialog/ConnectionDialog.vala:85
+msgid "Do you need help?"
+msgstr "Hai bisogno di aiuto?"
+
+#: src/Widget/HelpPanel.vala:25
+msgid "You can try to set the correct IP address in "
+msgstr "Puoi provare a impostare il corretto indirizzo IP in "
+
+#: src/Widget/HelpPanel.vala:27
+msgid " or seek for help here "
+msgstr "oppure cercare aiuto qui "
+
+#: src/Dialog/ConnectionDialog.vala:73
+msgid "Test connection"
+msgstr "Verifica connessione"
+
+#: src/Dialog/ConnectionDialog.vala:90
+msgid "Save"
+msgstr "Salva"
+
+#: src/Dialog/ConnectionDialog.vala:110
+msgid "Enter the IP-address or the hostname of your speaker"
+msgstr "Digita l'indirizzo IP oppure l'hostname del tuo speaker"
+
+#: src/Dialog/ConnectionDialog.vala:129
+msgid "Trying to connect to "
+msgstr "Verificando la connessione a "
+
+#: src/Dialog/ConnectionDialog.vala:137
+msgid "Connection failed to "
+msgstr "Connessione fallita a "
+
+#: src/Dialog/ConnectionDialog.vala:147
+msgid "Connection succeeded to "
+msgstr "Connessione avvenuta con successo a "
+
+#: data/com.github.syfds.soundy.appdata.xml.in:6
+#: data/com.github.syfds.soundy.desktop.in:4
+#: data/com.github.syfds.soundy.desktop.in:6
+msgid "Soundy"
+msgstr "Soundy"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:7
+msgid "Simple client to control your SoundTouch speaker"
+msgstr "Semplice client per controllare il tuo speaker SoundTouch"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:22
+msgid ""
+"Soundy is small and easy tool to control your SoundTouch network speaker."
+msgstr ""
+"Soundy è un piccolo e facile strumento di controllo per il tuo speaker di "
+"rete SoundTouch."
+
+#: data/com.github.syfds.soundy.appdata.xml.in:25
+msgid "Features:"
+msgstr "Caratteristiche:"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:27
+msgid "Power ON/OFF"
+msgstr "Accendi/Spegni"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:28
+msgid "Play/Pause the currently selected track"
+msgstr "Metti in pausa/riprendi la traccia al momento selezionata"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:29
+msgid "Playing next or previous track"
+msgstr "Riproducendo la prossima o la precedente traccia"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:30
+msgid "Increasing/decreasing volume"
+msgstr "Aumentando/Diminuendo il volume"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:31
+msgid "Displaying and playing the favourites"
+msgstr "Mostrando e riproducendo i preferiti"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:42
+msgid "Sergej Dobryak"
+msgstr "Sergej Dobryak"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:54
+msgid "Auto-Discovery of SoundTouch speaker added"
+msgstr "Rilevazione automaticamente dello speaker SoundTouch aggiunto"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:55
+msgid "App icon improved by Suzie97 (https://github.com/Suzie97)"
+msgstr "Icona dell'app migliorata da Suzie97 - (https://github.com/Suzie97)"
+
+#: data/com.github.syfds.soundy.appdata.xml.in:60
+msgid ""
+"Fix: in case a preset has no image url a default image will be shown "
+"(https://github.com/syfds/soundy/issues/6)"
+msgstr ""
+"Risolto: nel caso in cui una preset non abbia una URL immagine, viene "
+"mostrata una immagine predefinita (https://github.com/syfds/soundy/issue/6)"
+
+#: data/com.github.syfds.soundy.desktop.in:5
+msgid "Control your SoundTouch speaker"
+msgstr "Controlla il tuo speaker SoundTouch"
+
+#: data/com.github.syfds.soundy.desktop.in:8
+msgid "com.github.syfds.soundy"
+msgstr "com.github.syfds.soundy"
+
+#: data/com.github.syfds.soundy.desktop.in:11
+msgid "soundy;IDE;scratch;"
+msgstr "soundy;IDE;scratch;"
