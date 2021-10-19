@@ -1,3 +1,9 @@
+com.github.syfds.soundy (0.4.1) UNRELEASED; urgency=low
+
+  * Italian translation added (thanks to Saverio Morelli!)
+  
+ -- Sergej Dobryak <sergej.dobryak@gmail.com>  Sun, 27 May 2021 19:52:56 +0200
+
 com.github.syfds.soundy (0.4.0) UNRELEASED; urgency=low
 
   * Source selection for Bluetooth and AUX added
