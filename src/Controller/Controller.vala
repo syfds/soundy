@@ -145,13 +145,13 @@ public class Controller : GLib.Object {
             this.update_speaker_name();
             this.update_currently_playing_track();
             this.update_actual_volume();
-            this.model.fire_changed();
             this.model.fire_header_model_changed();
+            this.model.fire_changed();
         });
         this.client.connection_to_soundtouch_failed.connect(() => {
             this.model.connection_established = false;
-            this.model.fire_changed();
             this.model.fire_header_model_changed();
+            this.model.fire_changed();
         });
 
         this.client.init_ws_connection();
