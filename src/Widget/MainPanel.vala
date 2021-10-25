@@ -168,8 +168,10 @@ public class MainPanel : Gtk.Grid {
         }
 
         if(image_present && image_url != ""){
+            currently_playing_panel.get_style_context().add_class(Granite.STYLE_CLASS_CARD);
             image_container = new LoadableImagePanel.from_url(image_url, 250, 250);
         } else {
+            currently_playing_panel.get_style_context().remove_class(Granite.STYLE_CLASS_CARD);
             image_container = new LoadableImagePanel.from_image(Soundy.Util.create_icon("multimedia-player", 250), 250, 250);
         }
         
